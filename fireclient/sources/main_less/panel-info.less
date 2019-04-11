@@ -1,0 +1,48 @@
+.container{
+
+    > .panel{
+
+        .popup-node-box-shadow;
+    }
+
+    > .panel-info{
+        border: 1px solid darken(@panel-heading-background, 10%);
+
+        > .panel-heading{
+            height: auto !important;
+            padding: 3px 0;
+            color: rgba(255, 255, 255, 1);
+            background: @panel-heading-background;
+            border-bottom: 1px solid darken(@panel-heading-background, 10%);
+
+            .text-shadow-on-light;
+
+            &:before,
+            &:after{
+                content: " ";
+                display: table;
+            }
+
+            &:after{
+                clear: both;
+            }
+
+            button{
+                border: 0;
+                border-bottom: 1px solid rgba(0, 0, 0, .4);
+            }
+        }
+
+        > .panel-body{
+            background-color: #ececec;
+        }
+
+        table.ng-table{
+
+            th,
+            td{
+                text-align: left;
+            }
+        }
+    }
+}

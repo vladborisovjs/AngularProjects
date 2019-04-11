@@ -1,0 +1,25 @@
+<div class="modal-window modal-info">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">{{notesCtrl.title}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="row">
+            <div class="col-sm-2 text-right">
+                Дата:
+            </div>
+            <div class="col-sm-10">
+                <input id="notesDatePicker" date-range-picker
+                       class="form-control protocol-date-picker full-width"
+                       type="text"
+                       ng-model="notesCtrl.data.notesDate"
+                       min="'1970-01-01'"
+                       options="notesCtrl.singleDatePickerOptions"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="button" ng-click="notesCtrl.ok()">Показать</button>
+            <button class="btn btn-warning" type="button" ng-click="notesCtrl.cancel()">Отмена</button>
+        </div>
+    </div>
+</div>
+</div>

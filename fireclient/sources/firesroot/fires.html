@@ -1,0 +1,683 @@
+<div class="fullscreen-preloader no-print" ng-if="!fires.storage.hideLoadingOverlay">
+    <div class="fullscreen-preloader-spinner">
+        <i class="fa fa-circle-o-notch fa-spin fa-5x"></i>
+    </div>
+</div>
+
+<div class="fullscreen-connection-problem no-print" ng-show="fires.storage.socketStatus.isReconnecting"
+     id="fullscreen-connection-problem">
+    <div>
+        Нарушено соединение с сервером. <span class="blink_me">Ожидайте.</span>
+    </div>
+</div>
+
+<h1 class="marquee" id="marquee" ng-show="fires.showMarquee()">
+    <!--<span ng-bind="fires.storage.dictionary['1']"></span>-->
+    <span>{{fires.getWord('Произошло изменение версии программы. Выйдите на страницу входа. Нажмите Shift-F5.')}}</span>
+</h1>
+<!--<h1 class="marquee" id="marquee" ng-show="fires.showMarquee()">-->
+<!--<span ng-bind="fires.storage.dictionary['1']"></span>-->
+<!--</h1>-->
+
+
+<div class="showSentTicket" ng-show="!!fires.showSentTicket === true">
+    <div>
+        <span>{{fires.getWord('Номер сокета')}}</span>
+        <span ng-bind="fires.storage.socketStatus.socketId"></span>
+    </div>
+</div>
+
+
+<!--
+<div class="showSentTicket" ng-click="fires.switchViewTicketList()" ng-show="fires.showSentTicket == true">
+    <div ng-show="fires.storage.socketStatus.showTicketList == true">
+        <div>Список тикетов</div>
+        <table>
+
+            <tr ng-repeat="ticket in fires.storage.socketStatus.lastTicket">
+                <td>
+                     {{ticket.from}}:
+                </td>
+                <td>
+                    {{ticket.emit}}
+                </td>
+                <td>
+                    {{ticket.time}}
+                </td>
+                <td>
+                    {{ticket.ticket}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-hide="fires.storage.socketStatus.showTicketList == true">
+        <div>Последний тикет</div>
+        <table>
+            <tr>
+
+                <td>
+                    {{fires.storage.socketStatus.lastTicket[fires.storage.socketStatus.lastTicket.length - 1].from}}:
+                </td>
+                <td>
+                    {{fires.storage.socketStatus.lastTicket[fires.storage.socketStatus.lastTicket.length - 1].emit}}
+                </td>
+                <td>
+                    {{fires.storage.socketStatus.lastTicket[fires.storage.socketStatus.lastTicket.length - 1].time}}
+                </td>
+                <td>
+                    {{fires.storage.socketStatus.lastTicket[fires.storage.socketStatus.lastTicket.length - 1].ticket}}
+                </td>
+
+
+            </tr>
+        </table>
+    </div>
+</div>
+-->
+
+
+<!--<div class="container-fluid hw100">-->
+<div class="hw100 main-layout-wrapper"
+     ng-class="!!fires.storage.clientSettings.blackAndWhiteClient === true ? 'blackAndWhite' : ''" ng-keydown="fires.keyboardControl($event)">
+    <div class="about no-print" id="aboutLayout" ng-show="fires.storage.fireUser.ACCESS.wrappers.selectedFireInfo">
+        <div class="incoming-call" ng-if="fires.storage.incomingCall" ng-click="fires.pickUpThePhone()">
+            <div class="bg">
+                <i class="fa fa-phone fa-4x"></i>
+            </div>
+        </div>
+        <table ng-table class="table nopm table-bordered hw100">
+            <thead>
+            <tr>
+                <th style="width: 5%" ng-if="fires.storage.fireUser.ACCESS.showPCHnumber === true">
+                    {{fires.getWord(fires.storage.fireUser.ACCESS.words.pch)}}&nbsp;№
+                </th>
+                <th style="width: 5%"
+                    ng-click="fires.getCrashedEngineTypes()"
+                    ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.guard">{{fires.getWord('Караул')}}
+                </th>
+<!--
+                <th style="width: 5%" ng-click="fires.simulateEmit()"
+                    ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.guard">{{fires.getWord('Караул')}}
+                </th>
+-->
+                <th style="width: 5%" ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.number">№
+                </th>
+                <th style="width: 25%" ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.address">{{fires.getWord('Адрес')}}
+                </th>
+                <th style="width: 16%" ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.state">{{fires.getWord('Состояние')}}
+                </th>
+                <th style="width: 4%" ng-show="fires.storage.fireUser.ACCESS.cards112Alert"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.externalSystem">{{fires.getWord('Внеш.Сист.')}}
+                </th>
+                <th style="width: 5%" ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.pch">{{fires.getWord(fires.storage.fireUser.ACCESS.words.pch)}}
+                </th>
+                <th style="width: 19%" ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.district">{{fires.getWord('Район')}}
+                </th>
+                <th style="width: 13%" ng-hide="!!fires.storage.fireUser.ACCESS.fireInfo.rank === false || !!fires.storage.fireUser.ACCESS.selectedFireInfo === false">{{fires.getWord('Ранг')}}
+                </th>
+                <th style="width: 5%" ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.type">{{fires.getWord('Тип')}}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center">
+                <td ng-if="fires.storage.fireUser.ACCESS.showPCHnumber === true">
+                    <b>
+                        {{fires.getSplitetRole(fires.storage.fireUser.roles[0])}}
+                    </b>
+                </td>
+                <td ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.guard">
+                    <b>
+                        {{fires.storage.globalSettings.currentCaraul}}
+                    </b>
+                </td>
+                <td ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.number">
+                    <b ng-show="fires.storage.selectedFire">
+                        {{fires.storage.selectedFire.numFireAct}}
+                    </b>
+                    <b ng-hide="fires.storage.selectedFire">-</b>
+                </td>
+                <td ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.address">
+                    <b ng-show="fires.storage.selectedFire">
+                        {{fires.storage.selectedFire.firePlace.address.street}}
+                        {{fires.storage.selectedFire.firePlace.address.house}}
+                    </b>
+                    <b ng-hide="fires.storage.selectedFire">-</b>
+                </td>
+                <td ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.state">
+                    <b ng-show="fires.storage.selectedFire">
+                        <i ng-style="{color:fires.storage.selectedFire.fireStatus.iconColor}"
+                           ng-class="fires.storage.selectedFire.fireStatus.icon" class=""></i>
+                        {{fires.storage.selectedFire.fireStatus.status}}
+                    </b>
+                    <b ng-hide="fires.storage.selectedFire">-</b>
+                </td>
+                <td class="btn-112-td warning" ng-show="fires.storage.fireUser.ACCESS.cards112Alert" id="cards112Btn">
+                    <button
+                            ng-class="{'new-112': fires.storage.cards112.length > 0}"
+                            popover-placement="bottom" popover-trigger="outsideClick"
+                            uib-popover-template="fires.templateUrl" type="button"
+                            class="btn btn-default btn-112">
+                    <span class="glyphicon glyphicon-warning-sign">
+
+                    </span>
+                        {{fires.storage.cards112.length}}
+                    </button>
+                </td>
+                <td ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.pch">
+                    <b ng-show="fires.storage.selectedFire">
+                        {{fires.storage.selectedFire.firePlace.pchName}}
+                    </b>
+                    <b ng-hide="fires.storage.selectedFire">-</b>
+                </td>
+                <td ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.district">
+                    <b ng-show="fires.storage.selectedFire">
+                        {{fires.storage.selectedFire.firePlace.address.district}}
+                    </b>
+                    <b ng-hide="fires.storage.selectedFire">-</b>
+                </td>
+                <td  ng-hide="!!fires.storage.fireUser.ACCESS.fireInfo.rank === false || !!fires.storage.fireUser.ACCESS.selectedFireInfo === false">
+                    <b ng-show="fires.storage.selectedFire">
+                        {{fires.storage.selectedFire.rank.sidfirerank}}
+                        (MAX:{{fires.storage.selectedFire.maxRank}})
+                    </b>
+                    <b ng-hide="fires.storage.selectedFire">-</b>
+                </td>
+                <td ng-show="fires.storage.fireUser.ACCESS.selectedFireInfo"
+                    ng-hide="!fires.storage.fireUser.ACCESS.fireInfo.type">
+                    <b ng-show="fires.storage.selectedFire">
+                        {{fires.storage.selectedFire.incidentType.name |
+                        abbreviation}}</b>
+                    <b ng-hide="fires.storage.selectedFire">-</b>
+                </td>
+                <script type="text/ng-template" id="myPopoverTemplate.html">
+                    <div class="cards112-popover-container">
+
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <!--<th>Состояние</th>-->
+                                <th>{{fires.getWord('Адрес')}}</th>
+                                <th>{{fires.getWord('Просмотрено')}}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--ng-class="fires.card112BGColor(card)"-->
+                            <tr ng-repeat="card in fires.storage.cards112 | orderBy:'-card112.dtCreate'">
+                                <!--<tr ng-repeat="card in fires.storage.cards112 track by card.id">-->
+                                <!--<td>{{card.card112 | textOf112nCardState}}</td>-->
+                                <!--
+                                                                <td>{{fires.storage.lockedCard112[fires.selectedCard112.id + ':card112']}}</td>
+                                -->
+                                <!--<td>{{card.id}}</td>-->
+                                <!--<td>{{card.card112.dtCreate}}</td>-->
+                                <td>
+                                    <div>{{card.card112 | address112Filter}}</div>
+                                    <span ng-show="fires.storage.listLocksObj[card.id + ':card112']"
+                                          class="lockCard112">
+                                    {{fires.getWord('Заблокировал:')}}&nbsp;
+                                    {{fires.storage.listLocksObj[card.id + ':card112'].firstName}}&nbsp;
+                                    {{fires.storage.listLocksObj[card.id + ':card112'].lastName}}
+                                        </span>
+                                </td>
+
+                                <td>{{card.isViewed | viewedOrNot}} {{card.whoViewed.lastName | viewedByDecorator}}</td>
+                                <td>
+                                    <!--<td ng-class="{'lockedDoc': card.storage.listLocksObj[card.selectedCard112.id + ':card112']}">-->
+                                    <div ng-class="{'lockedDoc': fires.storage.listLocksObj[card.id + ':card112']}">
+                                        <button ng-click="fires.goToCard112(card);" class="btn btn-default"
+                                                ng-hide="fires.storage.listLocksObj[card.id + ':card112']"><span
+                                                class="glyphicon glyphicon-arrow-right"></span></button>
+
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </script>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <div style="position: fixed; right: 0; bottom: 0; background: rgba(23,34,65,0.8); color: #ffffff; padding: 3px 5px; text-shadow: 1px 1px 0 #000000; font-size: 1.2rem;z-index: 99999; border: 1px solid rgba(23,34,65,0.8); border-bottom: 0; border-right: 0; display: none;">
+        <div>
+            States: {{fires.storage.stateKeeper.oldState}} > {{fires.storage.stateKeeper.newState}}
+        </div>
+
+    </div>
+
+
+    <div id="navbarLayout" class="navbar navbar-inverse no-print">
+        <div class="row hw100">
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="navbar-nav nav make-nav-cute noselect" ng-show="fires.storage.fireUser.ACCESS.mainMenu">
+                                <li ui-sref-active="active" ng-show="fires.storage.fireUser.ACCESS.mainMenu.fires"><a
+                                        ui-sref="fires.firesbase">{{fires.getWord(fires.storage.fireUser.ACCESS.words.fires)}} <span
+                                        class="nav-hot-keys">(F1)</span></a></li>
+                                <li ui-sref-active="active"
+                                    ng-show="::fires.storage.fireUser.ACCESS.mainMenu.newApplication">
+
+
+                                    <a ng-click="fires.newFireCard()">{{fires.getWord('Новая заявка')}}<span
+                                            class="nav-hot-keys"> (F2)</span></a></li>
+                                            <!--                                <li ui-sref-active="active"
+                                    ng-show="::fires.storage.fireUser.ACCESS.mainMenu.newApplication"><a
+                                        ui-sref="fires.newFireOrder({deptId: undefined, fireId: undefined, fireType: 'new'})">{{fires.getWord('Новая заявка')}}<span
+                                            class="nav-hot-keys"> (F2)</span></a></li>-->
+                                <li ui-sref-active="active"><a ui-sref="fires.chooseTech.bydept"
+                                                               ng-show="fires.storage.fireUser.ACCESS.mainMenu.technique">{{fires.getWord('Техника')}}
+                                    <span
+                                            class="nav-hot-keys">(F3)</span></a>
+                                </li>
+                                <!--
+                                                                <li ui-sref-active="active" ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation">
+                                                                    <a ui-sref="fires.docs">Документы
+                                                                        <span class="nav-hot-keys">(F4)</span>
+                                                                    </a>
+                                                                </li>
+                                -->
+                                <li ng-show="::fires.check()"></li>
+
+                                <li class="dropdown"
+                                    ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.view">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false" tooltip="Документы" tooltip-trigger="mouseenter"
+                                       tooltip-placement="bottom">{{fires.getWord('Документы')}}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.subMenu.reports">
+                                            <a ui-sref="fires.docs">{{fires.getWord('Отчеты')}}
+                                        </li>
+
+
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.subMenu.reports">
+                                            <a class="dropdown-toggle" ui-sref="fires.requestReports"  data-toggle="dropdown" role="button" aria-haspopup="true"
+                                               aria-expanded="false" tooltip="Документы" tooltip-trigger="mouseenter"
+                                               tooltip-placement="bottom">Запрос отчетов
+                                            </a>
+                                        </li>
+
+
+
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.subMenu.downloadFromSHS">
+                                            <a ngf-select="fires.uploadEvent($file)">{{fires.getWord('Загрузить из ШС')}}</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                       aria-haspopup="true"
+                                       aria-expanded="false" tooltip="Архивы пожаров, форм6, карточки пожара"
+                                       tooltip-trigger="mouseenter" tooltip-placement="bottom"
+                                       ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.view">{{fires.getWord('Архивы')}}<span
+                                            class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li ui-sref-active="active"><a ui-sref="fires.archive"
+                                                                       ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.archiveOfFires">{{fires.getWord('Архив ' + fires.storage.fireUser.ACCESS.words.incidents)}}
+                                            <!--<span
+                                                    class="nav-hot-keys">(F6)</span>--></a>
+                                        </li>
+<!--
+                                        <li ui-sref-active="active"><a ui-sref="fires.formaedit"
+                                                                       ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.editingForms6">{{fires.getWord('Редактирование форм 6')}}
+                                            &lt;!&ndash;<span
+                                                    class="nav-hot-keys">(F7)</span>&ndash;&gt;</a>
+                                        </li>
+-->
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.cards"><a
+                                                ui-sref="fires.fireCards">{{fires.getWord('Карточки ' + fires.storage.fireUser.ACCESS.words.incidents)}}</a>
+                                        </li>
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.warNotes">
+                                            <a ng-click="fires.archiveNotes()">{{fires.getWord('Строевые записки')}}</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+
+
+
+<!--
+                                <li ui-sref-active="active"
+                                    ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.view">
+                                    &lt;!&ndash;<a ui-sref="fires.deptsNote.bydept">Строевые записки <span class="nav-hot-keys">(F8)</span>&ndash;&gt;
+                                    <a ng-click="fires.goCombatNotes()">{{fires.getWord(fires.storage.fireUser.ACCESS.words.frontNotes)}}<span
+                                            class="nav-hot-keys">(F8)</span>
+                                    </a>
+                                </li>
+-->
+
+
+
+
+                                <li ui-sref-active="active"
+                                    ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.view">
+                                    <!--<a ui-sref="fires.deptsNote.bydept">Строевые записки <span class="nav-hot-keys">(F8)</span>-->
+                                    <a ng-click="fires.goDeptsNotes()">
+                                        Строевые записки <span class="nav-hot-keys">(F8)</span>
+                                    </a>
+                                </li>
+
+                                <li ui-sref-active="active"><a ui-sref="fires.bridges"
+                                                               ng-show="fires.storage.fireUser.ACCESS.mainMenu.bridges">{{fires.getWord('Мосты')}}</a>
+                                </li>
+                                <!--<li class="full-width-on-large-screen">-->
+                                <li>
+
+
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false" tooltip="Гидранты" tooltip-trigger="mouseenter"
+                                       tooltip-placement="bottom"
+                                       ng-show="fires.storage.fireUser.ACCESS.mainMenu.hydrants">{{fires.getWord('Гидранты')}}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li ui-sref-active="active">
+                                            <a ui-sref="fires.opo">{{fires.getWord('Список районов/объектов')}}</a>
+                                        </li>
+                                        <li ui-sref-active="active">
+                                            <a ui-sref="fires.hydrants">{{fires.getWord('Данные о гидрантах')}}</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+
+
+                                <!--
+
+                                                                <li ui-sref-active="active"><a ui-sref="fires.opo" ng-show="fires.storage.fireUser.ACCESS.mainMenu.hydrants
+                                ">Гидранты</a></li>
+
+                                -->
+
+
+                                <!--<li class="full-width-on-large-screen">-->
+                                <li>
+
+                                    <ul class="navbar-nav nav main-sub-menu" ng-show="!!fires.storage.selectedFire === true">
+
+                                        <!--
+                                                                                <li ui-sref-active="active" ng-show="fires.storage.selectedFire != undefined && fires.storage.dataOfStates.archiveCommand.activeFire == undefined">
+                                                                                    <a ng-click="fires.getDocumentBySource('order')">Заявка</a>
+                                                                                </li>
+
+                                                                                <li ui-sref-active="active"
+                                                                                    ng-show="(fires.storage.selectedFire != undefined && fires.storage.dataOfStates.archiveCommand.activeFire == undefined) || (fires.storage.selectedFire == undefined && fires.storage.dataOfStates.archiveCommand.activeFire != undefined) || (fires.storage.selectedFire != undefined && fires.storage.dataOfStates.archiveCommand.activeFire != undefined)">
+                                                                                    <a ng-click="fires.getDocumentBySource('protocol')">Протокол</a>
+                                                                                    &lt;!&ndash;<a ng-click="fires.goProtocol()">Протокол</a>&ndash;&gt;
+                                                                                </li>-->
+
+
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.activeOrArchive() && fires.storage.dataOfStates.archiveCommand.activeFire == undefined">
+                                            <a ng-click="fires.getDocumentBySource('newFireCard')">{{fires.getWord('Заявка')}}<span
+                                                    class="nav-hot-keys">(F9)</span></a>
+                                        </li>
+
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.activeOrArchive()">
+                                            <a ng-click="fires.getDocumentBySource('protocol')">{{fires.getWord('Протокол')}} <span
+                                                    class="nav-hot-keys">(F10)</span></a>
+                                        </li>
+
+
+                                        <!--
+                                                                                <li ui-sref-active="active" ng-show="
+                                                                                fires.storage.stateKeeper.newState == 'fires.firesbase' && fires.storage.selectedFire != undefined">
+                                                                                    <a ng-click="fires.getDocumentBySource('order')">Заявка</a>
+                                                                                </li>
+
+                                                                                <li ui-sref-active="active"
+                                                                                    ng-show="(fires.storage.selectedFire!=undefined && fires.storage.stateKeeper.newState == 'fires.firesbase') || fires.storage.dataOfStates.archiveCommand.activeFire != undefined">
+                                                                                    <a ng-click="fires.getDocumentBySource('protocol')">Протокол</a>
+                                                                                </li>
+                                        -->
+
+
+<!--
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.selectedFire!=undefined && fires.storage.selectedFire.isReadyForF6===true">
+                                            <button class="btn btn-link"
+                                                    ng-click="fires.goToForma(fires.storage.selectedFire.id)">{{fires.getWord('Форма 6')}}
+                                                <span
+                                                        class="nav-hot-keys">(F6)</span></a>
+                                            </button>
+                                        </li>
+-->
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.selectedFire!=undefined && fires.storage.selectedFire.isReadyForF6===true">
+                                            <button class="btn btn-link"
+                                                    ng-click="fires.toArch()">Перенос в архив&nbsp;
+                                                <span
+                                                        class="nav-hot-keys">(F6)</span></a>
+                                            </button>
+                                        </li>
+
+
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="row">
+                    <button class="btn btn-link" ng-click="fires.openMap()" ng-show="fires.storage.fireUser.ACCESS.map">
+                        {{fires.getWord('Карта')}}
+                    </button>
+                </div>
+<!--
+                <div class="row">
+                    <button class="btn btn-link" ng-click="fires.openMessageBox()"
+                            ng-show="fires.storage.fireUser.ACCESS.messages">
+                        {{fires.getWord('Сообщения')}}
+                    </button>
+&lt;!&ndash;
+                    <button class="btn btn-link" ng-click="fires.killServer()"
+                            ng-show="!!fires.showSentTicket === true && !!fires.storage.controllers.bydept === true">
+                        Завалить
+                    </button>
+&ndash;&gt;
+                </div>
+-->
+            </div>
+            <div class="col-sm-2">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-right authorized-user"
+                             ng-click="fires.showCurrentConnection = !fires.showCurrentConnection">
+                            {{fires.storage.fireUser.uid}}
+                            {{fires.storage.fireUser.firstName}}
+                            {{fires.storage.fireUser.lastName}}
+                            <div class="current-server-connection"
+                                 ng-bind="fires.storage.socketStatus.currentConnection"
+                                 ng-show="fires.showCurrentConnection === true"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-right account-actioons">
+                            <button ng-click="fires.goToChangePasswordState()" class="btn btn-default"
+                                    uib-tooltip="Сменить пароль"
+                                    tooltip-placement="auto"><span
+                                    class="glyphicon glyphicon-cog"></span></button>
+                            <button ng-click="fires.closeOneSession()" class="btn btn-info"
+                                    uib-tooltip="Выйти из сессии"
+                                    tooltip-placement="auto"><span
+                                    class="glyphicon glyphicon-log-out"></span></button>
+                            <!--
+                                                        <button ng-click="fires.closeAllSessions()" class="btn btn-info "
+                                                                uib-tooltip="Выйти из всех сессий" tooltip-placement="auto"
+                                                                tooltip-class="logout-btn-tooltip">
+                                                            <span class="glyphicon glyphicon-new-window"></span></button>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="middle" id="middleLayout">
+
+
+        <div class="middle-inner">
+
+            <div class="content-wrapper clearfix">
+
+                <div ui-view="content" class="printable content-view"
+                     ng-class="fires.contentClass()"></div>
+                <div ui-view="command" class="no-print panel-commands"
+                     ng-class="fires.commandClass()"></div>
+
+            </div>
+
+        </div>
+
+        <!--message-box-resizable="{maxHeight: 700,maxWidth: 900,minWidth: 600,minHeight: 300}"-->
+        <div message-box-draggable="{ containment: 'document', scroll: false, cursor: 'move',handle:'.panel-heading' }"
+             ng-if="fires.storage.fireUser"
+             ng-show="fires.storage.dataOfStates.fires.showMessageBox"
+             class="operational-messages-box"
+             message-box-resizable="{maxHeight: 700,maxWidth: 900,minWidth: 600,minHeight: 300}">
+            <div class="panel panel-default" style="height: 100%;">
+                <div class="panel-heading" style="height: 41px;">
+                    <div class="panel-title">
+                        {{fires.getWord('Оперативные сообщения')}}
+                        <button ng-click="fires.closeMessageBox()"
+                                type="button" class="close"><span>&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body" style="height:calc(100% - 58px); overflow: auto;">
+                    <div class="container-fluid">
+                        <div class="row operational-messages-box-header">
+                            <div class="operational-messages-box-cell col-xs-3">{{fires.getWord('Дата')}}</div>
+                            <div class="operational-messages-box-cell col-xs-1">№</div>
+                            <div class="operational-messages-box-cell col-xs-5">{{fires.getWord('Сообщение')}}</div>
+                            <div class="operational-messages-box-cell col-xs-3">{{fires.getWord('Исполнитель')}}</div>
+                        </div>
+                        <div id="message-row-{{$index}}" class="row pulse"
+                             ng-repeat="message in fires.storage.operationalMessages track by message.id">
+                            <div class="operational-messages-box-cell col-xs-3">{{message.date |
+                                    toTimeStringFromTimestamp}}
+                            </div>
+                            <div class="operational-messages-box-cell col-xs-1">{{message.fire}}</div>
+                            <div class="operational-messages-box-cell col-xs-5">{{message.text}}</div>
+                            <div class="operational-messages-box-cell col-xs-3">{{message.user.uid}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div message-box-draggable="{ containment: 'document', scroll: false, cursor: 'move',handle:'.panel-heading' }"
+             ng-show="fires.showCheckCommandBox"
+             class="check-command-box"
+             ng-keypress="fires.ctrlEnterMsgBox($event)"
+             message-box-resizable="{maxHeight: 700,maxWidth: 900,minWidth: 600,minHeight: 300}">
+            <div class="panel panel-default full-height">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        {{fires.getWord('Проверьте правильность ввода команды')}}
+                        <button ng-click="fires.showCheckCommandBox = false"
+                                type="button" class="close"><span>&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="container-fluid full-height">
+                        <textarea id="command-textarea" ng-model="fires.messageBox"></textarea>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" ng-click="fires.runCallback()">{{fires.getWord('Отправить')}}</button>
+                    <button type="button" class="btn btn-default" ng-click="fires.cancelCommand()">{{fires.getWord('Отмена')}}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="messagesLayout" class="footer-messages" ng-show="fires.storage.fireUser.ACCESS.wrappers.fastCommandLine">
+        <div class="input-group" ng-show="fires.storage.fireUser.ACCESS.fastCommandLine">
+<!--            <div class="input-group-btn ui-select-footer">
+                <ui-select theme="bootstrap"
+                           ng-model="fires.selectedCommand"
+                           on-select="fires.onSelectCommand($item)"
+                           focus-on='cmd_ui_select_focus' id="command-select-button">
+                    <ui-select-match placeholder="{{fires.getWord('Команда')}} (F4)">
+                        {{fires.selectedCommand.name}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            ng-style="{top:fires.calculateTopPropOfDropdown($select.search),position:absolute}"
+                            repeat="command in fires.cmdLineElements | filter: $select.search | orderBy: fires.sortByShortCut($select.search)">
+                        <span ng-bind-html="fires.getWord(command.name + ' ' + command.shortCut) | highlight: $select.search "></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>-->
+            <div class="commands-input-area">
+                <div id="commands-input-tooltip" ng-bind="fires.messageBox" ng-show="fires.messageBox.length"
+                     content-editable-model ng-focus="fires.switchCommndInputFocus()" ng-blur="fires.switchCommndInputFocus()"></div>
+                <input id="messagebox" type="text" class="form-control message-field" ng-model="fires.messageBox"
+                       placeholder="НЗ - новая заявка, СЗ - строевая записка, СТ - состояние техники, НТ - набор техники, КР - карта" ng-focus="fires.updateDelta()" autocomplete="off" >
+            </div>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" id="checkCommand" ng-click="fires.checkCommand()">{{fires.getWord('Отправить')}}</button>
+            </span>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="reset" ng-click="fires.cancelCommand()">{{fires.getWord('Отмена')}}</button>
+            </span>
+        </div>
+    </div>
+    <div id="wrapperLayout" class="footer-wrapper" ng-show="fires.storage.fireUser.ACCESS.wrappers.fastAdditionOfCars">
+        <div class="footer no-print" ng-include src="'sources/firesroot/footer/footer.html'"
+             ng-show="fires.storage.fireUser.ACCESS.fastAdditionOfCars" ></div>
+
+    </div>
+
+</div>
+

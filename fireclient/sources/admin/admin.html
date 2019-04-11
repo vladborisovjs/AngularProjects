@@ -1,0 +1,51 @@
+<div class="hw100 main-layout-wrapper">
+
+    <div id="navbarLayout" class="navbar navbar-inverse no-print">
+        <div class="row hw100">
+            <div class="col-sm-9"></div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-right authorized-user clearfix">
+                            {{admin.storage.fireUser.uid}}
+                            {{admin.storage.fireUser.firstName}}
+                            {{admin.storage.fireUser.lastName}}
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-right account-actioons">
+                            <button ng-click="admin.closeOneSession()" class="btn btn-info"
+                                    uib-tooltip="Выйти из сессии"
+                                    tooltip-placement="auto">
+                                <span class="glyphicon glyphicon-log-out"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="middle" id="middleLayout">
+
+
+        <div class="middle-inner">
+
+            <div class="admin content-wrapper">
+
+                <div ui-view="content" class="content printable content-view"></div>
+                <div ui-view="command" class="command no-print panel-commands"></div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+

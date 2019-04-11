@@ -1,0 +1,143 @@
+@import 'settings';
+
+.form6-content-wrapper{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100%;
+
+    .form6-buttons-panel{
+        position: relative;
+        height: 100%;
+        border-right: 1px solid rgba(8, 8, 8, 1);
+        background: @panels-background;
+        width: 60px;
+        padding: 5px;
+        margin: 0 10px 0 0;
+        .btn{
+            display: block;
+            width: 100%;
+            border: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, .4);
+            margin: 0 auto 2px;
+            padding: 2px;
+            .text-shadow-on-light;
+            &.highlightButton{
+                background: rgba(209, 0, 0, 1);
+            }
+        }
+    }
+    .last-edit{
+        margin-top: 15px;
+        font-size: 1.2rem;
+        span{
+            font-weight: bold;
+        }
+    }
+    .form6{
+        padding: 5px 5px 0 0;
+        .form-group{
+            margin-bottom: 5px;
+        }
+        fieldset{
+            border: 1px solid #000000;
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 5px;
+
+            box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.16);
+            background: @panels-background;
+            border-right: 1px solid rgba(8, 8, 8, .35);
+            border-bottom: 1px solid rgba(8, 8, 8, .35);
+            border-top: 1px solid rgba(255, 255, 255, .45);
+            border-left: 1px solid rgba(255, 255, 255, .45);
+            border-radius: 4px;
+
+            legend{
+                width: auto;
+                margin-left: 10px;
+                margin-bottom: 0;
+                padding: 3px 6px;
+                border: none;
+                border-radius: 50%;
+                font-size: 1.3rem;
+                /*
+                background: @panels-background;
+                color: #337ab7;
+                border: 1px solid #337ab7;
+                */
+
+                /*
+                border-top: 1px solid rgba(255, 255, 255, .45);
+                border-left: 1px solid rgba(255, 255, 255, .45);
+                border-right: 1px solid rgba(255, 255, 255, .45);
+                border-bottom: 1px solid rgba(255, 255, 255, .45);
+                */
+
+                color: #ffffff;
+                background: #337ab7;
+                box-shadow: 1px 1px 0 rgba(0, 0, 0, .4);
+
+                .text-shadow-on-light;
+
+                &.highlightButton{
+                    background: rgba(209, 0, 0, 1);
+                }
+
+            }
+
+            input{
+                background: @panels-background;
+
+                &:focus{
+                    background: #ffffff;
+                }
+
+                &[disabled*="disabled"]{
+                    background: #c3c3c3 !important;
+                }
+            }
+
+        }
+    }
+}
+
+.forma-date-time-picker{
+    display: flex;
+    .forma-date-picker{
+        min-width: 130px;
+        margin-right: 10px;
+    }
+    .forma-time-picker{
+        .uib-timepicker{
+            background: none;
+        }
+        .uib-time{
+            padding: 0;
+            input{
+                width: 40px;
+            }
+        }
+        .f6-invalid{
+            .uib-time input{
+                .f6-invalid-shadow();
+            }
+        }
+        .f6-valid{
+            .uib-time input{
+                .f6-valid-shadow();
+                background: #ffffff;
+            }
+        }
+    }
+}
+
+.f6-transparent-panel,
+.f6-transparent-panel .panel-heading,
+.f6-transparent-panel .panel-body,
+.f6-transparent-panel .panel-body table,
+.f6-transparent-panel .panel-body td{
+    background: none !important;
+    //border-color: transparent !important;
+}

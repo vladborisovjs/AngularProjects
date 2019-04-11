@@ -1,0 +1,78 @@
+.common-tabs-style{
+
+    ul.nav-tabs{
+
+        height: auto;
+        background: @panels-background;
+        border-bottom: 1px solid rgba(0, 0, 0, 1);
+
+        > li.uib-tab{
+            height: initial;
+            padding: 0;
+            border: 1px solid rgba(0, 0, 0, 0);
+            border-bottom: none;
+            position: relative;
+
+            &.active{
+                border: 0;
+                background: #e6e6e6;
+                border-top: 1px solid rgba(0, 0, 0, 1);
+                position: relative;
+
+                &:after{
+                    content: ' ';
+                    display: block;
+                    position: absolute;
+                    width: 100%;
+                    height: 1px;
+                    font-size: 0;
+                    overflow: hidden;
+                    background: #e6e6e6;
+                    //background: red;
+                    left: 0;
+                    bottom: -1px;
+                }
+
+                &:first-of-type{
+                    border-left: 1px solid rgba(0, 0, 0, 1);
+                    border-right: 1px solid rgba(0, 0, 0, 1);
+                }
+
+                &:not(:last-of-type):not(:first-of-type){
+                    border-left: 1px solid rgba(0, 0, 0, 1);
+                    border-right: 1px solid rgba(0, 0, 0, 1);
+                }
+
+                &:last-of-type{
+                    border-left: 1px solid rgba(0, 0, 0, 1);
+                    border-right: 1px solid rgba(0, 0, 0, 1);
+                }
+
+                > a{
+                    background: none;
+                }
+
+            }
+
+            > a{
+                padding: 0 5px;
+                height: @order-nav-item-height;
+                line-height: @order-nav-item-height - 4px;
+                vertical-align: middle;
+                color: initial;
+                border-radius: 0;
+                border-bottom: 0;
+                position: relative;
+
+            }
+            &:first-of-type{
+                margin: 0 0 0 10px;
+            }
+        }
+    }
+
+    .tab-content{
+        padding-top: 5px;
+    }
+
+}

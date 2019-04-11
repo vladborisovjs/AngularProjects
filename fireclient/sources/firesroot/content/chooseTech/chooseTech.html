@@ -1,0 +1,19 @@
+<div class="container-fluid hw100">
+    <div class="row">
+        <nav class="navbar navbar-inverse">
+            <ul class="navbar-nav nav">
+                <li ng-class="{active: isActive('/fires/chooseTech/bydept')}"><a ui-sref="fires.chooseTech.bydept">Техника по {{fires.storage.fireUser.ACCESS.words.pch}}</a></li>
+                <li ng-class="{active: isActive('/fires/chooseTech/bytypes')}"><a ui-sref="fires.chooseTech.bytypes">Техника по типам</a></li>
+                <li ng-class="{active: isActive('/fires/chooseTech/bystates')}">
+                    <a ng-click="chooseTech.changeStateCorrect()">Состояние техники</a></li>
+                    <!--<a ui-sref="fires.chooseTech.byStatus">Состояние техники</a></li>-->
+                <li ng-class="{active: isActive('/fires/chooseTech/engineStatesHistory')}"><a ui-sref="fires.chooseTech.engineStatesHistory">История техники</a></li>
+                <li ng-show="chooseTech.storage.isRoot" ng-click="chooseTech.enableAllTechStates()" class="btn btn-success btn-xs">В расчет все</li>
+                <li ng-show="chooseTech.storage.isRoot" ng-click="chooseTech.disableAllTechStates()" class="btn btn-danger btn-xs">Выкл все</li>
+            </ul>
+        </nav>
+    </div>
+
+    <div  class="row" ui-view="deptsmain" style="height: calc(100% - 40px)"></div>
+
+</div>

@@ -1,0 +1,154 @@
+<div class="login-wrapper"
+     ng-class="!!loginPageCtrl.storage.clientSettings.blackAndWhiteClient === true ? 'blackAndWhite' : ''">
+    <div class="build-creation-date" ng-click="loginPageCtrl.showBuildDate()">
+        <div class="build-date" ng-show="loginPageCtrl.storage.lastBuildDate.visible">
+            <div>Servers for connect: {{loginPageCtrl.storage.socketStatus.serversForConnection}}</div>
+            <div>{{loginPageCtrl.storage.socketStatus.currentConnection}}</div>
+            <div>{{loginPageCtrl.storage.lastBuildDate.date}}</div>
+            <div class="clearfix">
+                <span class="pull-left">
+                    clientBuild:
+                </span>
+                <span class="pull-right">
+                    {{loginPageCtrl.storage.lastBuildDate.clientBuild}}
+                </span>
+
+            </div>
+            <div class="clearfix">
+                <span class="pull-left">
+                    serverBuild:
+                </span>
+                <span class="pull-right">
+                    {{loginPageCtrl.storage.lastBuildDate.serverBuild}}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="logotype" ng-show="loginPageCtrl.storage.clientSettings.isCUKS === true"></div>
+
+
+    <div class="login-window">
+        <h1 class="text-center login-title"  ng-show="loginPageCtrl.storage.clientSettings.isCUKS === true">МЧС СПБ</h1>
+        <div class="account-wall">
+            <form class="form-signin" novalidate name="loginForm">
+
+                <div class="login-field">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input id="login" ng-model="loginPageCtrl.loginUser.user" type="text" class="form-control"
+                           name="loginInputName" placeholder="Имя" required autofocus
+                           ng-keydown="loginPageCtrl.allowGoToNextField($event);"
+                           ng-keyup="loginPageCtrl.goToNextField($event);">
+                    <span class="label label-danger"
+                          ng-show="loginForm.loginInputName.$error.required && loginForm.loginInputName.$dirty">Логин не может быть пустым!</span>
+                </div>
+
+
+                <div class="login-field">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input id="password" ng-model="loginPageCtrl.loginUser.password" type="password"
+                           class="form-control"
+                           name="passwordInputName" placeholder="Пароль" required
+                           ng-keydown="loginPageCtrl.allowGoToNextField($event);"
+                           ng-keyup="loginPageCtrl.goToNextField($event);">
+                    <span class="label label-danger"
+                          ng-show="loginForm.passwordInputName.$error.required && loginForm.passwordInputName.$dirty">Пароль не может быть пустым!</span>
+                </div>
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+
+                <!--TODO: Выборязыков на странице входа.-->
+                <div class="login-field" ng-show="loginPageCtrl.storage.dictionary.hasOwnProperty('dictClient')">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <div class="col-xs-12 dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <button class="btn btn-default btn-xs full-width" uib-dropdown-toggle>
+
+
+                                                <span>{{loginPageCtrl.showLocale()}}
+                                                    <i class="pull-right caret" style="margin-top: 0.4em;"></i>
+                                                </span>
+                        </button>
+                        <ul id="alert-source" class="dropdown-menu small full-width">
+                            <li class="small"
+                                ng-repeat="(key, value) in loginPageCtrl.storage.dictionary.langs">
+                                <a href=""
+                                   ng-click="loginPageCtrl.selectLocale(key, value)">{{value}}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <button id="submitButton" class="full-width btn btn-lg btn-primary"
+                                ng-click="loginPageCtrl.auth()"
+                                type="submit"
+                                ng-keydown="loginPageCtrl.allowGoToNextField($event);"
+                                ng-keyup="loginPageCtrl.goToNextField($event);">Войти
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="full-width btn btn-lg btn-primary glyphicon glyphicon-adjust" style="top: 0px"
+                                ng-click="loginPageCtrl.storage.clientSettings.blackAndWhiteClient = !loginPageCtrl.storage.clientSettings.blackAndWhiteClient"></button>
+                    </div>
+                </div>
+
+
+                <!--
+                                <button id="submitButton" ng-disabled="loginForm.$invalid" ng-show="!loginForm.$invalid"
+                                        class="btn btn-lg btn-primary btn-block" ng-click="loginPageCtrl.auth()" type="submit"
+                                        ng-keydown="loginPageCtrl.allowGoToNextField($event);"
+                                        ng-keyup="loginPageCtrl.goToNextField($event);">Войти
+                                </button>
+                -->
+                <!--
+                                <button ng-disabled="loginForm.$invalid" ng-show="loginForm.$invalid"
+                                        class="btn btn-lg btn-danger btn-block">Введите Имя и Пароль!
+                                </button>
+                -->
+            </form>
+        </div>
+
+        <!--            <div class="full.width" style="text-align: center">
+                        <span>Версия: {{loginPageCtrl.clientVersion}}</span>
+                    </div>-->
+    </div>
+
+
+    <div class="login-description"  ng-show="loginPageCtrl.storage.clientSettings.isCUKS === true">
+        Главное управление МЧС России по Санкт-Петербургу
+    </div>
+
+
+</div>

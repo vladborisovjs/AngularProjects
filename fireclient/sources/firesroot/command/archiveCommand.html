@@ -1,0 +1,196 @@
+<div class="panel-group nopm" style="height: 100%">
+    <div>
+        <div class="panel panel-default text-center">
+            <div class="panel-heading" style="padding: 2px 0"><b>Фильтры</b></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input date-range-picker class="form-control date-picker full-width" type="text"
+                               ng-model="command.datePicker" placeholder="Выберите даты"
+                               min="'1970-01-01'" max="command.today" options="command.datePickerOptions"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span style="padding-top: 5px">Приказ №</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="number" min="0" class="form-control" placeholder="Приказ №"
+                               ng-model="command.filters.orderNum">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span style="padding-top: 5px">{{command.storage.fireUser.ACCESS.words.pch}} №</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" placeholder="{{command.storage.fireUser.ACCESS.words.pch}} №" ng-model="command.filters.deptName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">Вид
+                        выезда:<br>
+                    </div>
+                    <div class="col-xs-6 dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <button class="btn btn-default full-width" uib-dropdown-toggle>
+                                                <span>{{command.filters.incidentType.name}}
+                                                   <i class="pull-right caret" style="margin-top: 0.4em;"></i>
+                                                </span>
+                        </button>
+                        <ul class="dropdown-menu full-width">
+                            <li ng-repeat="incidentType in command.storage.incidentTypes">
+                                <span class="btn btn-link"
+                                      ng-click="command.selectIncidentType(incidentType)">{{incidentType.name}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Улица</label>
+                        <input data-ng-change="command.primaryStreetFieldChanged()"
+                               data-typeahead-wait-ms="150"
+                               min-length="3"
+                               type="text"
+                               placeholder="Начните вводить улицу"
+                               ng-model="command.filters.address.street"
+                               uib-typeahead="address as (address.street +' '+ address.settName) for address in command.storage.dataOfStates.archiveCommand.streetsArray"
+                               class="form-control"
+                               typeahead-on-select='command.selectPrimaryStreet($item)'
+                               typeahead-select-on-blur="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Дом</label>
+                        <ui-select theme="bootstrap"
+                                   style="width: 100%;"
+                                   ng-model="command.houseUISelect"
+                                   on-select="command.onSelectBuilding($item)">
+                            <ui-select-match placeholder="Дом"
+                                             allow-clear>
+                                {{command.filters.address.house}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="address in command.storage.dataOfStates.archiveCommand.housesArray | newOrderHousesFilter:  $select.search: command.filters.address | orderBy: command.houseSorting">
+                                <span ng-bind-html="address.house | highlight:$select.search "></span>
+                                <span ng-bind-html="address.district"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Район</label>
+                        <input data-typeahead-wait-ms="150"
+                               type="text"
+                               placeholder="Район"
+                               ng-disabled="command.address.region.code===1141"
+                               ng-model="command.filters.address.district"
+                               uib-typeahead="district as (district) for district in command.storage.districts | filter: command.filters.address.district"
+                               class="form-control"
+                               typeahead-select-on-blur="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Регион</label>
+                        <input type="text"
+                               placeholder="Регион"
+                               ng-model="command.filters.region.text"
+                               uib-typeahead="region as (region.text+' '+region.code) for region in command.storage.regions | filter: command.filters.region.text"
+                               class="form-control"
+                               typeahead-on-select='command.selectRegion($item)'
+                               typeahead-select-on-blur="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Объект</label>
+                        <input data-ng-change="command.objectNameFieldChanged()"
+                               data-typeahead-wait-ms="150"
+                               min-length="3"
+                               type="text"
+                               placeholder="Наименование объекта"
+                               ng-model="command.filters.fireObject.nameobject"
+                               uib-typeahead="object as (object.nameobject) for object in command.storage.dataOfStates.archiveCommand.objectsArray | orderBy: nameobject"
+                               class="form-control"
+                               typeahead-on-select='command.selectObject($item)'
+                               typeahead-select-on-blur="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Исполнитель</label>
+                        <input type="text" class="form-control" placeholder="Исполнитель"
+                               ng-model="command.filters.operator">
+                    </div>
+                </div>
+                <div class="row">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="col-xs-12 dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <label for="alert-source">Источник оповещения</label><br>
+                        <button class="btn btn-default btn-xs full-width" uib-dropdown-toggle>
+                                                <span>{{command.filters.incidentSource.text}}
+                                                    <i class="pull-right caret" style="margin-top: 0.4em;"></i>
+                                                </span>
+                        </button>
+                        <ul id="alert-source" class="dropdown-menu small full-width">
+                            <li class="small"
+                                ng-repeat="source in command.storage.incidentSources">
+                                <a href=""
+                                   ng-click="command.selectIncidentSource(source)">{{source.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <button class="btn btn-success full-width" ng-disabled="!command.datePicker"
+                                ng-click="command.applyFilters();">
+                            Применить
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-default full-width" ng-click="command.cancelFilters();">Очистить
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

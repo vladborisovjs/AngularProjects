@@ -1,0 +1,55 @@
+<div class="modal-window modal-info">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Печать отчета: {{ASRReportsCtrl.report.name}}</h3>
+    </div>
+    <div class="modal-body reports-modal gray-background" id="modal-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm-4 clearfix">
+                        <span class="pull-right">За дату</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input date-range-picker
+                               class="form-control protocol-date-picker full-width"
+                               type="text"
+                               ng-model="ASRReportsCtrl.dateStart"
+                               min="'1970-01-01'"
+                               options="ASRReportsCtrl.singleDatePickerOptions"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="checkbox-list">
+                    <ul>
+
+                        <li ng-repeat="asr in ASRReportsCtrl.data track by $index">
+
+                            <input type="checkbox" ng-click="ASRReportsCtrl.selectASR(asr, ASRReportsCtrl.selectedASR)">&nbsp;
+                            <b>{{asr.code}}&nbsp;{{asr.text}}</b>
+
+                            <ul ng-if="asr.subType.length > 0">
+
+                                <li ng-repeat="subType in asr.subType track by $index">
+
+                                    <input type="checkbox" ng-disabled="ASRReportsCtrl.isParentChecked(subType.parent);" ng-click="ASRReportsCtrl.selectASR(subType, ASRReportsCtrl.selectedSubASR)" ng-checked="ASRReportsCtrl.selectedSubASR.includes(subType.code)">&nbsp;
+                                                           {{subType.code}}&nbsp;{{subType.text}}
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="button" ng-click="ASRReportsCtrl.ok()">Показать</button>
+            <button class="btn btn-warning" type="button" ng-click="ASRReportsCtrl.cancel()">Отмена</button>
+        </div>
+    </div>
+</div>

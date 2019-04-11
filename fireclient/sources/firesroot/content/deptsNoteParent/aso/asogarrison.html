@@ -1,0 +1,9 @@
+<div class="col-xs-12 full-height" style="overflow: auto">
+    <table ng-table class="table table-striped table-bordered">
+        <tr ng-repeat="(asoName,asoArray) in asoGar.groupedAsoList">
+            <td width="10%" data-title="'Вид'">{{asoName}}</td>
+            <td width="90%" data-title="asoGar.storage.fireUser.ACCESS.words.fireEquipment"><span ng-repeat="elem in asoArray | orderBy: 'aso.isRepair'">{{elem.dept}}<span
+                    ng-show="elem.aso.isRepair">(рем)</span><span ng-show="!$last">,</span> </span></td>
+        </tr>
+    </table>
+</div>

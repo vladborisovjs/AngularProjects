@@ -1,0 +1,1752 @@
+<div class="form6-content-wrapper">
+    <div class="form6-buttons-panel">
+        <button type="button" ng-click="forma.scroll('p1')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p1'}">01
+        </button>
+        <button type="button" ng-click="forma.scroll('p2')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p2'}">02
+        </button>
+        <button type="button" ng-click="forma.scroll('p3')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p3'}">03
+        </button>
+        <button type="button" ng-click="forma.scroll('p4')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p4'}">04
+        </button>
+        <button type="button" ng-click="forma.scroll('p5')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p5'}">05
+        </button>
+        <button type="button" ng-click="forma.scroll('p6')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p6'}">06
+        </button>
+        <button type="button" ng-click="forma.scroll('p7')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p7'}">07
+        </button>
+        <button type="button" ng-click="forma.scroll('p8')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p8'}">08
+        </button>
+        <button type="button" ng-click="forma.scroll('p9')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p9'}">09
+        </button>
+        <button type="button" ng-click="forma.scroll('p1011')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p1011'}">10-11
+        </button>
+        <button type="button" ng-click="forma.scroll('p12')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p12'}">12
+        </button>
+        <button type="button" ng-click="forma.scroll('p13')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p13'}">13
+        </button>
+        <button type="button" ng-click="forma.scroll('p14')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p14'}">14
+        </button>
+        <button type="button" ng-click="forma.scroll('p15')" class="btn btn-primary"
+                ng-class="{'highlightButton': forma.currentTabArea == 'p15'}">15
+        </button>
+        <button type="button" uib-tooltip="Сохранить" tooltip-placement="right" class="btn btn-success"
+                ng-hide="forma.storage.dataOfStates.formaViewOnly"
+                ng-click="forma.saveF6()">
+            <span class="glyphicon glyphicon-ok"></span>
+        </button>
+        <button type="button" uib-tooltip="В архив" tooltip-placement="right" class="btn btn-success"
+                ng-hide="forma.storage.dataOfStates.formaViewOnly"
+                ng-click="forma.closeFire()" ng-show="forma.moveToArchiveButtonHide()">
+            <span class="glyphicon glyphicon-pushpin"></span>
+        </button>
+<!--
+        <button type="button" uib-tooltip="Назад" tooltip-placement="right" class="btn btn-success"
+                ng-click="forma.goBack()">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </button>
+-->
+    </div>
+    <div class="container" id="form6-container"
+         style="height: 100%;width: 100%; overflow-y: auto;overflow-x: hidden; position: relative;"
+         data-ng-init="lastEdit = forma.storage.dataOfStates.f6EditsList[forma.storage.dataOfStates.f6EditsList.length-1]">
+        <div class="last-edit">
+            <span>Последнее изменение:</span>
+            {{forma.getLastEdit().user.lastName}} {{forma.getLastEdit().user.firstName}}, {{forma.getLastEdit().date |
+            date: 'dd.MM.yyyy'}}
+        </div>
+        <form select-numbers-on-click highlight-tab-by-item="forma.currentTabArea" class="full-width form6"
+              ng-disabled="forma.storage.dataOfStates.formaViewOnly">
+            <fieldset id="p1">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p1'}">01</legend>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="1rg-from">1. Субъект</label>
+                            <input class="form-control text-center"
+                                   type="text"
+                                   id="1rg-from" ng-model='forma.storage.forma6.subjectRF1.text' style="width: 100%"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'subjectRF1',1)">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="21rg-from">77. Номер приказа</label>
+                            <input class="form-control text-center" type="button"
+                                   ng-class="forma.validate('76',forma.storage.forma6.orderNumber76)"
+                                   value="{{forma.storage.forma6.orderNumber76}}"
+                                   id="21rg-from" ng-model='forma.storage.forma6.orderNumber76' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>5. Дата возн. пожара</label>
+                            <forma-date-time-picker
+                                    date="forma.storage.forma6.fireBeginingDate5"
+                                    validate="forma.validate('5',forma.storage.forma6.fireBeginingDate5)">
+                            </forma-date-time-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label for="22rg-from">Адрес</label>
+                            <input class="form-control text-center f6-highlight-field" type="text"
+                                   value="{{forma.storage.forma6.address}}"
+                                   id="22rg-from" ng-model='forma.storage.forma6.address' style="width: 100%"
+                                   ng-class="forma.validate('address',forma.storage.forma6.address)">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>78. Учетная дата</label>
+                            <forma-date-time-picker
+                                    date="forma.storage.forma6.registrationDate77"
+                                    validate="forma.validate('77',forma.storage.forma6.registrationDate77)">
+                            </forma-date-time-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="23rg-from">2.1 Код инспекции</label>
+                            <input class="form-control text-center"
+                                   id="23rg-from"
+                                   type="button"
+                                   ng-class="forma.validate('2insp',forma.storage.forma6.inspectionCode2)"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'inspectionCode2',40)"
+                                   value="{{forma.storage.forma6.inspectionCode2.code}}"
+                                   ng-model='forma.storage.forma6.inspectionCode2' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="23.2rg-from">2.2 Адм. район</label>
+                            <input class="form-control text-center"
+                                   id="23.2rg-from"
+                                   type="button"
+                                   ng-class="forma.validate('2admDistr',forma.storage.forma6.administrationDistrict2)"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'administrationDistrict2',65)"
+                                   value="{{forma.storage.forma6.administrationDistrict2.code}}"
+                                   ng-model='forma.storage.forma6.administrationDistrict2' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>79. Район выезда</label>
+                            <input class="form-control text-center" type="text"
+                                   ng-class="forma.validate('78',forma.storage.forma6.districtOut78)"
+                                   value="{{forma.storage.forma6.districtOut78}}"
+                                   ng-model='forma.storage.forma6.districtOut78' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group" ng-hide="!forma.storage.fireUser.ACCESS.commonSwitches.rank">
+                            <label>80. Ранг пожара</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-class="forma.validate('79',forma.storage.forma6.fireRang79)"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'fireRang79',46)"
+                                   value="{{forma.storage.forma6.fireRang79.code}}"
+                                   ng-model='forma.storage.forma6.fireRang79' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Включить в отчет</label>
+                            <forma-date-time-picker date="forma.storage.forma6.reportDate"
+                                                    validate="forma.validate('reportDate',forma.storage.forma6.reportDate)"></forma-date-time-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>81. Вид выезда</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-class="forma.validate('80',forma.storage.forma6.typeFire80)"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'typeFire80',47);forma.storage.forma6.asrType80=null;forma.storage.forma6.asrSubType80=null;"
+                                   value="{{forma.storage.forma6.typeFire80.code}}"
+                                   ng-model='forma.storage.forma6.typeFire80' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>81.1. Вид выезда</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-disabled="forma.storage.forma6.typeFire80.code!=15"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'asrType80',78);forma.storage.forma6.asrSubType80=null;"
+                                   value={{forma.storage.forma6.asrType80.code}}
+                                   ng-class="forma.validate('80asr',forma.storage.forma6.asrType80)"
+                                   ng-model="forma.storage.forma6.asrType80" style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>81.2. Вид выезда</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-disabled="forma.asrSubType80Disabled()"
+                                   ng-click="forma.findAsrSubType($event, forma.storage.forma6,'asrSubType80');"
+                                   value={{forma.storage.forma6.asrSubType80.code}}
+                                   ng-class="forma.validate('80asrSub',forma.storage.forma6.asrSubType80)"
+                                   ng-model="forma.storage.forma6.asrSubType80" style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="2rg-from">82. Кому на учет</label>
+                            <input class="form-control text-center"
+                                   ng-class="forma.validate('81', forma.storage.forma6.recordOwner81.text)"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'recordOwner81',48)"
+                                   id="2rg-from" value={{forma.storage.forma6.recordOwner81.code}}
+                                   ng-model='forma.storage.forma6.recordOwner81' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p2">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p2'}">02</legend>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>4. Тип горения</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'incidentType4',61)"
+                                   value="{{forma.storage.forma6.incidentType4.code}}"
+                                   ng-model='forma.storage.forma6.incidentType4' style="width: 100%">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="24rg-from">6.1 Вид населенного пункта</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'typeCity6',2)"
+                                           id="24rg-from" value={{forma.storage.forma6.typeCity6.code}}
+                                           ng-model='forma.storage.forma6.typeCity6' style="width: 100%"
+                                           ng-class="forma.validate('6nas',forma.storage.forma6.typeCity6)">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="25rg-from">6.2 Вид ПО</label>
+                                    <input class="form-control text-center"
+                                           ng-class="forma.validate('6po',forma.storage.forma6.typePO6)"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'typePO6',3)"
+                                           id="25rg-from" value={{forma.storage.forma6.typePO6.code}}
+                                           ng-model='forma.storage.forma6.typePO6' style="width: 100%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>8.1. Форма собственности</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'ownership8',4)"
+                                           value="{{forma.storage.forma6.ownership8.code}}"
+                                           ng-model='forma.storage.forma6.ownership8'>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>8.2. Категория риска объекта пожара</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'riskCategory',401)"
+                                           value="{{forma.storage.forma6.riskCategory.code}}"
+                                           ng-model='forma.storage.forma6.riskCategory'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="31rg-from">9. Организ.-прав. форма</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'organizationalAndLegalForm9',5)"
+                                   id="31rg-from" value={{forma.storage.forma6.organizationalAndLegalForm9.code}}
+                                   ng-model='forma.storage.forma6.organizationalAndLegalForm9' style="width: 100%">
+                        </div>
+                        <div class="form-group">
+                            <label for="32rg-from">7. Субъект малого и сред. пред-ва</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'smallBusinessSubject7',62)"
+                                   id="32rg-from" value={{forma.storage.forma6.smallBusinessSubject7.code}}
+                                   ng-model='forma.storage.forma6.smallBusinessSubject7' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="26rg-from">10. Ведомственная принадлежность</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'departmentalAffiliation10',6)"
+                                   id="26rg-from" value={{forma.storage.forma6.departmentalAffiliation10.code}}
+                                   ng-model='forma.storage.forma6.departmentalAffiliation10' style="width: 100%">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="field_11_1">11.1. Тип предпр., организ., учр.</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'organizationType11',7)"
+                                           id="field_11_1"
+                                           value={{forma.storage.forma6.organizationType11.code}}
+                                           ng-model='forma.storage.forma6.organizationType11'>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="field_11_2">11.2. Класс ФПО</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'classFpo',405)"
+                                           id="field_11_2"
+                                           value={{forma.storage.forma6.classFpo.code}}
+                                           ng-model='forma.storage.forma6.classFpo'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>12.1. Объект пожара</label>
+                                    <input class="form-control text-center"
+                                           ng-class="forma.validate('12obj',forma.storage.forma6.fireObject12)"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'fireObject12',8)"
+                                           value={{forma.storage.forma6.fireObject12.code}}
+                                           ng-model='forma.storage.forma6.fireObject12'>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>12.2. Тип охраны</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-class="forma.validate('12prot',forma.storage.forma6.protectionType12)"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'protectionType12',9)"
+                                           value={{forma.storage.forma6.protectionType12.code}}
+                                           ng-model='forma.storage.forma6.protectionType12'>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- TODO disable when 12.1 is not transport -->
+                        <div class="form-group">
+                            <label>12.3. Тип двигателя транспортного средства</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'engineType',408)"
+                                   value={{forma.storage.forma6.engineType.code}}
+                                   ng-model='forma.storage.forma6.engineType'>
+                        </div>
+                        <div class="form-group">
+                            <label>12.4. Год ввода в эксплуатацию</label>
+                            <input class="form-control"
+                                   type="number"
+                                   ng-model='forma.storage.forma6.explStartYear'>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p3">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p3'}">03</legend>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="33rg-from">13. Этажность</label>
+                                    <input class="form-control text-center"
+                                           type="text"
+                                           id="33rg-from" value={{forma.storage.forma6.floors13}}
+                                           ng-model='forma.storage.forma6.floors13' style="width: 100%"
+                                           ng-class="forma.validate('33rg-from', forma.storage.forma6.floors13)">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="34rg-from">14. Этаж</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'floor14',86)"
+                                           id="34rg-from" value={{forma.storage.forma6.floor14.code}}
+                                           ng-model='forma.storage.forma6.floor14' style="width: 100%"
+                                           ng-class="forma.validate('34rg-from', forma.storage.forma6.floor14)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>15. Степень огнестойкости</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'fireResistanceDegree15',10)"
+                                   id="15dgr-from"
+                                   value={{forma.storage.forma6.fireResistanceDegree15.code}}
+                                   ng-model='forma.storage.forma6.fireResistanceDegree15' ,
+                                   ng-class="forma.validate('15dgr-from', forma.storage.forma6.fireResistanceDegree15)">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label>16.1. Место воз-я пожара</label>
+                                    <input class="form-control text-center"
+                                           ng-class="forma.validate('16mesto',forma.storage.forma6.firePlace16)"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'firePlace16',11)"
+                                           value={{forma.storage.forma6.firePlace16.code}}
+                                           ng-model='forma.storage.forma6.firePlace16'>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <!-- TODO validate заполняется вроде как только для пожаров-->
+                                <div class="form-group">
+                                    <label>16.2. Помещение</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'fireConstr16',56)"
+                                           value={{forma.storage.forma6.fireConstr16.code}}
+                                           ng-model='forma.storage.forma6.fireConstr16'>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <!-- TODO validate заполняется вроде как только для пожаров-->
+                                <div class="form-group">
+                                    <label>16.3. Строительная конструкция</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'firePlacement16',404)"
+                                           value={{forma.storage.forma6.firePlacement16.code}}
+                                           ng-model='forma.storage.forma6.firePlacement16'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="43rg-from">17. Изделие, устройство</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'appliance17',12)"
+                                   id="43rg-from" value={{forma.storage.forma6.appliance17.code}}
+                                   ng-model='forma.storage.forma6.appliance17' style="width: 100%">
+                        </div>
+                        <div class="form-group">
+                            <label for="45rg-from">18. Материал</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'material18',63)"
+                                   id="45rg-from" value={{forma.storage.forma6.material18.code}}
+                                   ng-model='forma.storage.forma6.material18' style="width: 100%">
+                        </div>
+                        <div class="form-group">
+                            <label for="46rg-from">19. Сертиф ПБ</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'sertification19',60)"
+                                   id="46rg-from" value={{forma.storage.forma6.sertification19.code}}
+                                   ng-model='forma.storage.forma6.sertification19' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="35rg-from">20. Причина пожара</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'fireCause20',13)"
+                                   id="35rg-from" value={{forma.storage.forma6.fireCause20.code}}
+                                   ng-model='forma.storage.forma6.fireCause20' style="width: 100%">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="36rg-from">21.1 Виновное лицо</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'guilty21_1',14)"
+                                           id="36rg-from" value={{forma.storage.forma6.guilty21_1.code}}
+                                           ng-model='forma.storage.forma6.guilty21_1' style="width: 100%">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="37rg-from">21.2 Виновное лицо</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'guilty21_2',15)"
+                                           id="37rg-from" value={{forma.storage.forma6.guilty21_2.code}}
+                                           ng-model='forma.storage.forma6.guilty21_2' style="width: 100%">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="38rg-from">21.3 Опьянение</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'guilty21_3',41)"
+                                           id="38rg-from" value={{forma.storage.forma6.guilty21_3.code}}
+                                           ng-model='forma.storage.forma6.guilty21_3' style="width: 100%">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="41rg-from">21.4 Возраст виновного</label>
+                                    <input class="form-control text-center"
+                                           type="text"
+                                           id="41rg-from" value={{forma.storage.forma6.guilty21}}
+                                           ng-model='forma.storage.forma6.guilty21' style="width: 100%">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="field_22_1">22.1. Результат проверки</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'investigationResult22',42)"
+                                           id="field_22_1"
+                                           value={{forma.storage.forma6.investigationResult22.code}}
+                                           ng-model='forma.storage.forma6.investigationResult22'>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="field_22_2">22.2. УД возбуждено</label>
+                                    <input class="form-control text-center"
+                                           type="button"
+                                           ng-disabled="forma.storage.forma6.investigationResult22.code !== 1"
+                                           ng-click="forma.findSolutions($event,forma.storage.forma6,'agencyStartCriminalCase',402)"
+                                           id="field_22_2"
+                                           value={{forma.storage.forma6.agencyStartCriminalCase.code}}
+                                           ng-model='forma.storage.forma6.agencyStartCriminalCase'>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="field_22_3">22.3. По статье</label>
+                                    <input class="form-control text-center"
+                                           type="number"
+                                           ng-disabled="forma.storage.forma6.investigationResult22.code !== 1"
+                                           id="field_22_3"
+                                           ng-model='forma.storage.forma6.criminalCaseArticle'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="40rg-from">23 Дата послед. м/п</label>
+                            <input id="40rg-from" date-range-picker
+                                   class="form-control protocol-date-picker full-width"
+                                   type="text"
+                                   ng-show="forma.storage.forma6.lastControlDate23!==undefined"
+                                   ng-model="forma.storage.forma6.lastControlDate23"
+                                   min="'1970-01-01'"
+                                   options="forma.singleDatePickerOptions"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="42rg-from">24. Расстояние до {{forma.storage.fireUser.ACCESS.words.pch}}</label>
+                            <input class="form-control text-center"
+                                   type="text"
+                                   id="42rg-from" value={{forma.storage.forma6.pchDistance24}}
+                                   ng-class="forma.validate('24PchDist',forma.storage.forma6.pchDistance24)"
+                                   ng-model='forma.storage.forma6.pchDistance24' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p4">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p4'}">04</legend>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="50rg-from">25. Всего погибших</label>
+                            <input class="form-control text-center"
+                                   ng-class="forma.validate('25all',forma.storage.forma6.totaldied25, true)"
+                                   type="number" min="0"
+                                   id="50rg-from"
+                                   ng-model='forma.storage.forma6.totaldied25' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="51rg-from">в т.ч. Сотрудники ПО</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="51rg-from"
+                                   ng-model='forma.storage.forma6.empdied25' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="52rg-from">в т.ч. Дети</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="52rg-from"
+                                   ng-model='forma.storage.forma6.childdied25' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="53rg-from">26. Всего травмированных</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="53rg-from"
+                                   ng-class="forma.validate('26all',forma.storage.forma6.totalinjured26)"
+                                   ng-model='forma.storage.forma6.totalinjured26' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="54rg-from">в т.ч. Сотрудники ПО</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="54rg-from"
+                                   ng-model='forma.storage.forma6.empinjured26' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="55rg-from">в т.ч. Дети</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="55rg-from"
+                                   ng-model='forma.storage.forma6.childinjured26' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">40.1. Спасено людей</label>
+                            <div>
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-class="forma.validate('40_1-saved-people', forma.storage.forma6.peopleaved40_1)"
+                                       ng-model='forma.storage.forma6.peopleaved40_1' style="width: 100%">
+                                <!--
+                                                                <input class="form-control text-center"
+                                                                       type="number" min="0"
+                                                                       ng-class="forma.validate('40saved',forma.storage.forma6.peopleaved40_1)"
+                                                                       ng-model='forma.storage.forma6.peopleaved40_1' style="width: 100%">
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">40.2. Всего эвакуированно</label>
+                            <div>
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-class="forma.validate('40totalevacuated',forma.storage.forma6.totalevacuated40)"
+                                       ng-model='forma.storage.forma6.totalevacuated40' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">40.3. Спасено в т.ч. детей</label>
+                            <div>
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.childssaved40_2' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding: 5px;height: 300px">
+                    <div class="panel panel-default nopm small f6-transparent-panel" style="height: 100%">
+                        <div class="panel-heading" style="height: 14%" ng-class="forma.validate('74-75-injuries')">
+                            <div class="col-sm-10">
+                                74-75. Условия, способствующие получению травм
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" ng-click="forma.addInjure(forma.storage.forma6)"
+                                        class="button btn-success"><span
+                                        class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+
+                        </div>
+                        <div class="panel-body" style="height: 86%;overflow: auto;margin: 0;padding: 0">
+                            <table ng-table class="table table-bordered" style="width: 100%">
+                                <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                    ng-repeat="ic in forma.storage.forma6.injuryCauses74_75 track by $index">
+                                    <td class="text-center" data-title="'74. Условия'" style="width: 45%">
+                                        <input class="form-control text-center"
+                                               type="button" ng-click="forma.findSolutions($event,ic,'reason',30)"
+                                               value={{ic.reason.code}}
+                                               ng-model='ic.reason' style="width: 100%">
+                                    </td>
+                                    <td class="text-center" data-title="'75. Степень тяжести вреда здоровью'"
+                                        style="width: 45%">
+                                        <input class="form-control text-center"
+                                               type="button" ng-click="forma.findSolutions($event,ic,'harmGrade',331)"
+                                               value={{ic.harmGrade.code}}
+                                               ng-model='ic.harmGrade' style="width: 100%">
+                                    </td>
+                                    <td class="text-center" data-title="'-'" style="width: 10%">
+                                        <button type="button"
+                                                ng-click="forma.removeItem(forma.storage.forma6.injuryCauses74_75, $index, $event)"
+                                                class="button btn-danger"><span
+                                                class="glyphicon glyphicon-minus"></span></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="60rg-from">27. Прямой ущерб</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="60rg-from"
+                                   ng-model='forma.storage.forma6.totaldamage27' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="61rg-from">28.По осн. фондам</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="61rg-from"
+                                   ng-model='forma.storage.forma6.fixedassetsdamage28' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="62rg-from">29.По обор. ср-вам</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   id="62rg-from"
+                                   ng-model='forma.storage.forma6.currentassetsdamage29' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p5">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p5'}">05</legend>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">30.1. Уничтожено зданий, строений</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.buildingsdestoyed30_1' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">30.2. Повреждено зданий, строений</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.buildingdsdamaged30_2' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">31.1. Уничтожено жил. квартир, комнат</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.flatsdestoyed31_1' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">31.2. Повреждено жил. квартир, комнат</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.flatsdamaged31_2' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>32.1. Уничтожено поэтажной площади</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.floorareasdestoyed32_1' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>32.2. Повреждено поэтажной площади</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.floorareasdamaged32_2' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>33.1. Уничтожено автотр. и др. техники</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.transportsdestoyed33_1' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>33.2. Повреждено автотр. и др. техники</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.transporstdamaged33_2' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>34.1. Уничтожено зерновых и зернобоб.</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.cropsdestoyed34_1' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>34.2. Повреждено зерновых и зернобоб</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.cropsdamaged34_2' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>35.1. Уничтожено кормов</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.foddersdestoyed35_1'>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>35.2. Повреждено кормов</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.foddersdamaged35_2'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>36.1. Уничтожено технич. культур</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.techcropsdestoyed36_1'>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>36.2. Повреждено технич. культур</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.techcropsdamaged36_2'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>37. Уничтожено скота крупного</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.nowtsdestoyed37' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>38. Уничтожено скота мелкого</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.beastsdestoyed38' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>39. Уничтожено птицы</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.fowlsdestoyed39' style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <label>111. Площадь лесных пожаров</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.wildfirearea' style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p6">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p6'}">06</legend>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">41.1. Спасено скота крупного</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.nowtssaved41_1' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">41.2. Спасено скота мелкого</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.beastssaved41_2' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9 control-label">42. Спасено автотранспорта и др. техники</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.transportssaved42' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-9">43. Спасено материальных ценностей</label>
+                            <div class="col-sm-3">
+                                <input class="form-control text-center"
+                                       type="number" min="0"
+                                       ng-model='forma.storage.forma6.tangiblessaved43' style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p7">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p7'}">07</legend>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>44. Время обнаружения</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.detectiontime44"
+                                        validate="forma.validate('44',forma.storage.forma6.detectiontime44)">
+                                </forma-date-time-picker>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>45. Время сообщения</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.messagetime45"
+                                        validate="forma.validate('45',forma.storage.forma6.messagetime45)">
+                                </forma-date-time-picker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>46. Время прибытия 1-го подразделения</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.firstArrivedtime46"
+                                        validate="forma.validate('46',forma.storage.forma6.firstArrivedtime46)">
+                                </forma-date-time-picker>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>47. Время подачи 1-го ствола</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.firststvoltime47"
+                                        validate="forma.validate('47',forma.storage.forma6.firststvoltime47)">
+                                </forma-date-time-picker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>48. Время локализации</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.localisationtime48"
+                                        validate="forma.validate('48',forma.storage.forma6.localisationtime48)">
+                                </forma-date-time-picker>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>49. Время ликвидации открытого горения</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.openfirelicvidationtime49"
+                                        validate="forma.validate('49',forma.storage.forma6.openfirelicvidationtime49)">
+                                </forma-date-time-picker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>50. Время ликвидации последствий пожара</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.effectsfirelicvidationtime50"
+                                        validate="forma.validate('50',forma.storage.forma6.effectsfirelicvidationtime50)">
+                                </forma-date-time-picker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>51. Дата ликвидации (работы окончены)</label>
+                                <forma-date-time-picker
+                                        date="forma.storage.forma6.licvidationtime51"
+                                        validate="forma.validate('51',forma.storage.forma6.licvidationtime51)">
+                                </forma-date-time-picker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="35Arg-from">113. Первая {{forma.storage.fireUser.ACCESS.words.pch}}</label>
+                                    <input class="form-control text-center"
+                                           type="text"
+                                           id="35Arg-from" value={{forma.storage.forma6.firstpch}}
+                                           ng-model='forma.storage.forma6.firstpch' style="width: 100%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row" style="padding: 5px;height: 287px">
+                                    <div class="panel panel-default nopm small" style="height: 100%"
+                                         ng-class="forma.validate('52-conditionsPromoting')">
+                                        <div class="panel-heading" style="height: 14%">
+                                            <div class="col-sm-10">
+                                                52. Условия, способствующие развитию пожара
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button type="button"
+                                                        ng-click="forma.addFireCondition53(forma.storage.forma6)"
+                                                        class="button btn-success"><span
+                                                        class="glyphicon glyphicon-plus"></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body" style="height: 86%;overflow: auto;margin: 0;padding: 0">
+                                            <table ng-table class="table table-bordered" style="width: 100%">
+                                                <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                                    ng-repeat="ic in forma.storage.forma6.fireConditions52 track by $index">
+                                                    <td class="text-center" data-title="'52. Условия'"
+                                                        style="width: 90%">
+                                                        <input class="form-control text-center"
+                                                               type="button"
+                                                               ng-click="forma.findSolutions($event,ic,'',17)"
+                                                               value={{ic.code}}
+                                                               style="width: 100%">
+                                                    </td>
+                                                    <td class="text-center" data-title="'-'" style="width: 10%">
+                                                        <button type="button"
+                                                                ng-click="forma.removeItem(forma.storage.forma6.fireConditions52, $index)"
+                                                                class="button btn-danger"><span
+                                                                class="glyphicon glyphicon-minus"></span></button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p8" ng-class="forma.validate('08-participant')">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p8'}">08</legend>
+                <div class="row" style="height: 400px">
+                    <div class="col-sm-4" style="height: 100%">
+                        <div class="panel panel-default nopm small 53-extinguishingParticipants" style="height: 100%;" ng-class="forma.validate('53-extinguishingParticipants')">
+                            <div class="panel-heading" style="height: 10%">
+                                <div class="col-sm-10">
+                                    53. Участники тушения
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" ng-click="forma.addfireMembers53(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 80%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered" style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.fireMembers53 track by $index">
+                                        <td class="text-center" data-title="'53. Участники'" style="width: 90%">
+                                            <input class="form-control text-center"
+                                                   ng-class="forma.validate('54',ic)"
+                                                   type="button" ng-click="forma.findSolutions($event,ic,'',18)"
+                                                   value={{ic.code}}
+                                                   style="width: 100%">
+                                        </td>
+
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.fireMembers53, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" style="height: 100%">
+                        <div class="panel panel-default nopm small" style="height: 100%">
+                            <div class="panel-heading" style="height: 10%">
+                                <div class="col-sm-10">
+                                    54-55. Техника
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" ng-click="forma.addEngine(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 90%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered" style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.carsOnFire54_55">
+                                        <td class="text-center" data-title="'54. Техника'" style="width: 50%">
+                                            <input class="form-control text-center"
+                                                   type="button" ng-click="forma.findSolutions($event,ic,'techtype',19)"
+                                                   value={{ic.techtype.code?ic.techtype.code:'&nbsp;'}}
+                                                   ng-model='ic.techtype'
+                                                   style="width: 100%;white-space: normal; height: unset;">
+                                        </td>
+                                        <td class="text-center" data-title="'55. Кол-во'" style="width: 40%"><input
+                                                class="form-control text-center" type="number" min="0"
+                                                ng-model='ic.count' style="width: 100%"></td>
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.carsOnFire54_55, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" style="height: 100%">
+                        <div class="panel panel-default nopm small" style="height: 100%">
+                            <div class="panel-heading" style="height: 10%">
+                                <div class="col-sm-10">
+                                    56-57. Подано стволов
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" ng-click="forma.addStvol(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 90%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered" style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.aboutStvol56_57 track by $index">
+                                        <td class="text-center" data-title="'56. Тип ствола'" style="width: 60%">
+                                            <input class="form-control text-center"
+                                                   ng-class="forma.validate('56Stvol',ic.stvol)"
+                                                   type="button" ng-click="forma.findSolutions($event,ic,'stvol',20)"
+                                                   value={{ic.stvol.code}}
+                                                   ng-model='ic.stvol' style="width: 100%">
+                                        </td>
+                                        <td class="text-center" data-title="'57. Кол-во'" style="width: 30%">
+                                            <input class="form-control text-center" type="number" min="0"
+                                                   ng-class="forma.validate('57sCount',ic.count)"
+                                                   ng-model='ic.count' style="width: 100%">
+                                        </td>
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.aboutStvol56_57, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p9" ng-class="forma.validate('09-resources')">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p9'}">09</legend>
+                <div class="row" style="height: 200px">
+                    <div class="col-sm-6 full-height">
+                        <div class="panel panel-default nopm small full-height"
+                             ng-class="forma.validate('58-fireExtinguishingAgents')">
+                            <div class="panel-heading" style="height: 20%">
+                                <div class="col-sm-10">
+                                    58. Огнетушащие средства
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button"
+                                            ng-click="forma.addextinguishingReagents58(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 85%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered" style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.extinguishingReagents58 track by $index">
+                                        <td class="text-center" data-title="'Средства'" style="width: 90%">
+                                            <input class="form-control text-center"
+                                                   ng-class="forma.validate('58',ic)"
+                                                   type="button" ng-click="forma.findSolutions($event,ic,'',21)"
+                                                   value={{ic.code}}
+                                                   style="width: 100%">
+                                        </td>
+
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.extinguishingReagents58, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 full-height">
+                        <div class="panel panel-default nopm small full-height"
+                             ng-class="forma.validate('59-primaryMeans')">
+                            <div class="panel-heading" style="height: 15%">
+                                <div class="col-sm-10">
+                                    59. Первичные средства пожаротушения
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button"
+                                            ng-click="forma.addprimaryExtinguishing59(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 85%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered" style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.primaryExtinguishing59 track by $index">
+                                        <td class="text-center" data-title="'Средства'" style="width: 90%">
+                                            <input class="form-control text-center"
+                                                   ng-class="forma.validate('59',ic)"
+                                                   type="button" ng-click="forma.findSolutions($event,ic,'',22)"
+                                                   value={{ic.code}}
+                                                   style="width: 100%">
+                                        </td>
+
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.primaryExtinguishing59, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="field_60">60. Средства индивидуальной защиты органов дыхания</label>
+                    <input class="form-control text-center"
+                           type="button"
+                           ng-click="forma.findSolutions($event,forma.storage.forma6,'PPEUsing60',66)"
+                           id="field_60"
+                           value={{forma.storage.forma6.PPEUsing60.code}}
+                           ng-model="forma.storage.forma6.PPEUsing60">
+                </div>
+                <div class="row" style="height: 200px; margin-bottom: 10px;">
+                    <div class="col-sm-6 full-height">
+                        <div class="panel panel-default nopm small full-height">
+                            <div class="panel-heading" style="height: 20%">
+                                <div class="col-sm-10">
+                                    61. Водоснабжение на пожаре
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" ng-click="forma.addfireWaterSupply61(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 85%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered" style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.fireWaterSupply61 track by $index">
+                                        <td class="text-center" data-title="'Водоснабжение'" style="width: 90%">
+                                            <input class="form-control text-center"
+                                                   type="button" ng-click="forma.findSolutions($event,ic,'',23)"
+                                                   value={{ic.code}}
+                                                   style="width: 100%">
+                                        </td>
+
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.fireWaterSupply61, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 full-height">
+                        <div class="panel panel-default nopm small full-height">
+                            <div class="panel-heading" style="height: 15%">
+                                <div class="col-sm-10">
+                                    62-63. Установки пожарной автоматики
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" ng-click="forma.addFireAutomaticInfo(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 85%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered " style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.fireAutomaticInfo62_63 track by $index">
+
+                                        <td data-title="'62. Вид установки'" class="text-center" style="width: 45%">
+                                            <input class=" text-center"
+                                                   type="button"
+                                                   ng-click="forma.findSolutions($event,ic,'automatic',24)"
+                                                   value={{ic.automatic.code}}
+                                                   ng-model='ic.automatic' style="width: 100%">
+                                        </td>
+                                        <td data-title="'63. Результат работы'" style="width: 45%">
+                                            <input
+                                                    type="button"
+                                                    ng-click="forma.findSolutions($event,ic,'result',25)"
+                                                    value={{ic.result.code}}
+                                                    ng-model='ic.result' style="width: 100%">
+                                        </td>
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.fireAutomaticInfo62_63, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height: 200px;">
+                    <div class="col-sm-6 full-height">
+                        <div class="panel panel-default nopm small full-height"
+                             ng-class="forma.validate('64-extinguishingLeaders')">
+                            <div class="panel-heading" style="height: 20%">
+                                <div class="col-sm-10">
+                                    64. Руководители тушения
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" ng-click="forma.addheadsExtinguishing64(forma.storage.forma6)"
+                                            class="button btn-success"><span
+                                            class="glyphicon glyphicon-plus"></span></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="height: 85%;overflow: auto;margin: 0;padding: 0">
+                                <table ng-table class="table table-bordered" style="width: 100%">
+                                    <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                        ng-repeat="ic in forma.storage.forma6.headsExtinguishing64 track by $index">
+                                        <td class="text-center" data-title="'Руководитель'" style="width: 90%">
+                                            <input class="form-control text-center"
+                                                   ng-class="forma.validate('64',ic)"
+                                                   type="button" ng-click="forma.findSolutions($event,ic,'',26)"
+                                                   value={{ic.code}}
+                                                   style="width: 100%">
+                                        </td>
+
+                                        <td class="text-center" data-title="'-'" style="width: 10%">
+                                            <button type="button"
+                                                    ng-click="forma.removeItem(forma.storage.forma6.headsExtinguishing64, $index)"
+                                                    class="button btn-danger"><span
+                                                    class="glyphicon glyphicon-minus"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="66oshp-from">65. Организация штаба пожаротушения</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'staffExtinguishingInfo65',64)"
+                                   id="66oshp-from"
+                                   value={{forma.storage.forma6.staffExtinguishingInfo65.code}}
+                                   ng-model='forma.storage.forma6.staffExtinguishingInfo65' style="width: 100%"
+                                   ng-class="forma.validate('65-fireFightingHeadquarters')">
+                        </div>
+                        <div class="form-group">
+                            <label for="67vsopg-from">66. Выезд следственно-оперативной группы</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'investigativeTaskForceInfo66',43)"
+                                   id="67vsopg-from"
+                                   value={{forma.storage.forma6.investigativeTaskForceInfo66.code}}
+                                   ng-model='forma.storage.forma6.investigativeTaskForceInfo66' style="width: 100%"
+                                   ng-class="forma.validate('66-departureOfOperational-investigationsGroup')">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p1011">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p1011'}">10-11</legend>
+                <div class="row" style="padding: 5px;height: 400px">
+                    <div class="panel panel-default nopm small" ng-class="forma.validate('10-11-informationAboutDead')" style="height: 100%">
+                        <!--TODO поменять номера у модели (на один меньше)-->
+                        <div class="panel-heading" style="height: 10%">
+                            <div class="col-sm-10">Информация о погибших</div>
+                            <div class="col-sm-2">
+                                <button type="button" ng-click="forma.addDiedInfo()"
+                                        class="button btn-success"><span
+                                        class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="height: 90%;overflow: auto;margin: 0;padding: 0">
+                            <div class="container-fluid" highlight-tab-by-item="forma.currentTabArea"
+                                 ng-repeat="ic in forma.storage.forma6.diedPersonsInfo67_73 track by $index">
+                                <div class="row">
+                                    <h5 class="text-warning">Погибший №{{$index+1}}
+                                        <button type="button" ng-click="forma.deleteDiedInfo(ic)"
+                                                class="button btn-danger"><span
+                                                class="glyphicon glyphicon-minus"></span></button>
+                                    </h5>
+                                </div>
+                                <div class="row" style="padding-top: 3px">
+                             <span>
+                             <label>67. Возраст</label>
+                             <input class="text-center" type="number" min="0"
+                                    ng-model='ic.age67' style="width: 5%">
+                             <label>68. Пол</label>
+                                  <input class="text-center"
+                                         type="button"
+                                         ng-click="forma.findSolutions($event,ic,'gender68',44)"
+                                         value={{ic.gender68.code}}
+                                         ng-model='ic.gender68' style="width: 15%;height: 100%">
+
+                            <label>69. Соц. положение</label>
+                                 <input type="button"
+                                        ng-click="forma.findSolutions($event,ic,'socialStatus69',27)"
+                                        value={{ic.socialStatus69.code}}
+                                        ng-model='ic.socialStatus69' style="width: 50%;height: 100%">
+                        </span>
+                                </div>
+                                <div class="row" style="padding-top: 3px">
+                             <span>
+                            <label>70. Образование </label>
+                                 <input
+                                         type="button"
+                                         ng-click="forma.findSolutions($event,ic,'education70',28)"
+                                         value={{ic.education70.code}}
+                                         ng-model='ic.education70' style="width: 20%">
+                                 <label>72. Условия гибели</label>
+
+                                 <input
+                                         type="button"
+                                         ng-click="forma.findSolutions($event,ic,'deathConditions72',30)"
+                                         value={{ic.deathConditions72.code}}
+                                         ng-model='ic.deathConditions72' style="width: 53%">
+                        </span>
+                                </div>
+                                <div class="row" style="padding-top: 3px">
+                               <span>
+                                <label>71. Причина гибели</label>
+                              <input
+                                      type="button"
+                                      ng-click="forma.findSolutions($event,ic,'deadCause71',29)"
+                                      value={{ic.deadCause71.code}}
+                                      ng-model='ic.deadCause71' style="width: 85%">
+                        </span>
+                                </div>
+                                <div class="row" style="padding-top: 3px">
+                                    <label>73. Момент смерти</label>
+                                    <input
+                                            type="button"
+                                            ng-click="forma.findSolutions($event,ic,'deathMoment73',31)"
+                                            value={{ic.deathMoment73.code}}
+                                            ng-model='ic.deathMoment73' style="width: 85%">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p12">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p12'}">12</legend>
+                <div class="row" style="padding: 5px;height: 400px">
+                    <div class="panel panel-default nopm small" style="height: 100%"  ng-class="forma.validate('12-partOfTheMainEquipment')">
+                        <div class="panel-heading row">
+                            <div class="col-sm-10">Участие основной техники</div>
+                            <div class="col-sm-2">
+                                <button type="button" ng-click="forma.addBaseTechInfo()"
+                                        class="button btn-success"><span
+                                        class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="height: 90%;overflow: auto;margin: 0;padding: 0">
+                            <table ng-table class="table table-bordered " style="width: 100%">
+                                <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                    ng-repeat="ic in forma.storage.forma6.baseTechInfoes82_85 track by $index">
+                                    <td class="text-center" data-title="forma.getPCHTitle('84. ')" style="width: 10%">
+                                        <input class="form-control"
+                                               type="text"
+                                               ng-model='ic.pch84'>
+                                    </td>
+                                    <td class="text-center" data-title="'85.1 Тип'" style="width: 25%">
+                                        <input class="form-control"
+                                               type="text"
+                                               ng-model='ic.typeTech85_1'>
+                                    </td>
+                                    <td class="text-center" data-title="'83. Работа стволов от гидрантов'"
+                                        style="width: 30%">
+                                        <input class="form-control"
+                                               type="number" min="0"
+                                               ng-model='ic.workFromGydrant83'>
+                                    </td>
+                                    <td class="text-center" data-title="'86. Общее время(мин)'" style="width: 30%">
+                                        <input class="form-control"
+                                               type="number" min="0"
+                                               ng-model='ic.totalTime86'>
+                                    </td>
+                                    <td class="text-center" data-title="''" style="width: 5%">
+                                        <button type="button" class="btn btn-xs btn-danger"
+                                                data-ng-click="forma.deleteBaseTechInfo(ic)">
+                                            <i class="glyphicon glyphicon-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p13" ng-class="forma.validate('13-participationOfGasAndSmokeProtection')">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p13'}">13</legend>
+                <div class="row" style="padding: 5px;height: 400px">
+                    <div class="panel panel-default nopm small" style="height: 100%">
+                        <div class="panel-heading row">
+                            <div class="col-sm-10">Участие газодымозащиты</div>
+                            <div class="col-sm-2">
+                                <button type="button" ng-click="forma.addGdzTechInfo()"
+                                        class="button btn-success"><span
+                                        class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="height: 90%;overflow: auto;margin: 0;padding: 0">
+                            <table ng-table class="table table-bordered " style="width: 100%">
+                                <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                                    ng-repeat="ic in forma.storage.forma6.gdzTechInfoes86_89 track by $index">
+                                    <td class="text-center" data-title="forma.getPCHTitle('87. ')" style="width: 10%">
+                                        <input class="form-control"
+                                               type="text"
+                                               ng-model='ic.pch87'>
+                                    </td>
+                                    <td class="text-center" data-title="'88. Кол-во звеньев'" style="width: 20%">
+                                        <input class="form-control"
+                                               type="number" min="0"
+                                               ng-model='ic.qtyGroups88'>
+                                    </td>
+                                    <td class="text-center" data-title="'89. Общее время(мин)'" style="width: 20%">
+                                        <input class="form-control"
+                                               type="number" min="0"
+                                               ng-model='ic.totalTime89'>
+                                    </td>
+
+                                    <td class="text-center" data-title="'90. Тип аппарата'" style="width: 45%">
+                                        <input class="form-control"
+                                               type="button"
+                                               ng-click="forma.findSolutions($event,ic,'typeApparature90',49)"
+                                               value="{{ic.typeApparature90.code}}">
+                                    </td>
+                                    <td class="text-center" data-title="''" style="width: 5%">
+                                        <button type="button" class="btn btn-xs btn-danger"
+                                                data-ng-click="forma.deleteGdzTechInfo(ic)">
+                                            <i class="glyphicon glyphicon-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p14">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p14'}">14</legend>
+                <h3>91. Дымозвеньями применялись</h3>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2">
+                            <label>Дымонасосов</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.exhausterTools90_1' style="width: 100%">
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Мех. инструментов</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.instrumentTools90_2' style="width: 100%">
+
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Средств освещения</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.lightingTools90_3' style="width: 100%">
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Самоспасателей</label>
+                            <input class="form-control text-center"
+                                   type="number" min="0"
+                                   ng-model='forma.storage.forma6.selfsavingTools90_4' style="width: 100%">
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Гидравлика</label>
+                            <input class="form-control text-center"
+                                   type="button"
+                                   ng-click="forma.findSolutions($event,forma.storage.forma6,'hydraulicTools91',50)"
+                                   ng-value='forma.storage.forma6.hydraulicTools91.code' style="width: 100%"
+                                   ng-class="forma.validate('hydraulicTools91',forma.storage.forma6.hydraulicTools91.code)">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="p15">
+                <legend ng-class="{'highlightButton': forma.currentTabArea == 'p15'}">15</legend>
+                <h3>112. Текст</h3>
+                <textarea title="text" class=" text-left"
+                          ng-class="forma.validate('text',forma.storage.forma6.text)"
+                          type="text"
+                          value={{forma.storage.forma6.text}}
+                          ng-model='forma.storage.forma6.text' style="width: 100%;height: 400px">
+                </textarea>
+            </fieldset>
+        </form>
+        <!--<div class="container" style="position: absolute;height: 300px;width: 400px;z-index: 5000; padding: 0"-->
+        <div class="container" style="position: absolute;height: 500px; width: 100%;z-index: 5000; padding: 0;"
+             ng-style="{top:forma.position.top,left:forma.position.left}"
+             ng-show="forma.showSolution && !forma.storage.dataOfStates.formaViewOnly" id="codeInput-wrapper">
+            <div class="panel panel-info small" style="width: 100%;">
+                <div class="panel-heading" style="height: 20px;width: 100%; padding: 3px;">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm"
+                               style="height: auto; line-height: initial; padding: 5px 10px" ng-model="forma.codeInput"
+                               ng-keydown="forma.selectTypedCodeItem($event)" id="codeInput">
+                        <span class="input-group-btn">
+                            <button type="button" ng-click="forma.removeSolution()" class="btn btn-danger btn-sm"
+                                    title="Очистить поле">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                            <button type="button" ng-click="forma.closeSolutions()" class="btn btn-default btn-sm"
+                                    title="Закрыть окно">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="panel-body nopm" style="max-height: 465px;overflow: auto;width: 100%">
+                    <table ng-table class="table table-bordered">
+                        <tr ng-repeat="solution in forma.storage.forma6Solutions |orderBy: 'code' | filter: forma.codeFilter"
+                            ng-click="forma.chooseSolution(solution)"
+                            ng-class="{'typedCodeF6':solution.code==forma.codeInput}"
+                            class="forma-field">
+                            <th data-title="'Код'" width="5%">{{solution.code}}</th>
+                            <th data-title="'Наименование'" width="95%">{{solution.text}}</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

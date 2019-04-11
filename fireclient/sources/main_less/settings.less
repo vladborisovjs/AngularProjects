@@ -1,0 +1,138 @@
+@brand-primary: darken(#428bca, 6.5%); // #337ab7
+@brand-success: #5cb85c;
+@brand-info: #5bc0de;
+@brand-warning: #f0ad4e;
+@brand-danger: #d9534f;
+
+@main-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+@main-font-size: 12px !important;
+@main-letters-color: rgba(0, 0, 0, 1);
+//@main-letters-color: rgba(17, 17, 17, 1);
+//@main-background: rgba(230, 230, 230, 1);
+@main-background: rgba(214, 211, 206, 1);
+
+//@about-td-borders: 1px solid darken(@navbar-background, 15%);
+@about-td-borders: 1px solid rgba(255, 255, 255, .6);
+@about-td-borders-shadow: 1px solid rgba(0, 0, 0, .15);
+@about-background: rgba(214, 214, 214, 1);
+@about-height: 48px;
+
+@navbar-background: rgba(214, 214, 214, 1);
+@navbar-items-color: rgba(17, 17, 17, 1);
+@navbar-items-height: 21px;
+@navbar-height: 56x;
+
+@footer-messages-height: 34px;
+//@footer-messages-background: rgba(100, 100, 100, 1);
+
+//@footer-height: 121px;
+@footer-height: 53px;
+
+@select-item-bckg: rgba(51, 153, 255, 1);
+
+@tooltip-background-color: rgba(255, 254, 175, .93);
+@tooltip-arrow-color: rgba(255, 254, 175, 1);
+
+@row-nth-child-1: rgba(240, 240, 240, 1);
+@row-nth-child-2: rgba(222, 223, 228, 1);
+@row-hover-background: desaturate(darken(rgba(226, 255, 255, 1), 12%), 30%); //#e2ffff;
+
+@panels-background: rgba(214, 214, 214, 1);
+@panel-heading-background: rgb(182, 182, 182);
+@panel-heading-color: rgba(255, 255, 255, 1);
+
+@new-fire-order-panel-heading-height: 32px;
+
+@grid-cell-border: 1px solid rgba(189, 195, 207, .8);
+
+@popover-background-color: rgba(230, 230, 230, 1);
+@popover-window-border-radius: 4px;
+@popover-content-background: rgba(255, 255, 255, 1);
+
+@form-elements-height: 24px;
+@form-elements-border-radius: 2px;
+@form-elements-border-color: rgba(150, 150, 150, 1);
+//@form-elements-border-color: rgba(173, 173, 173, 1);
+@form-elements-disabled: rgba(214, 211, 206, .8);
+//@form-elements-enabled: rgba(228, 255, 217, 1);
+@form-elements-enabled: rgb(80, 175, 33);
+@form-elements-active: rgba(255, 255, 255, 1);
+@form-elements-table-background: rgba(255, 255, 255, 1);
+
+@form-label-color: #444444;
+
+.popup-node-box-shadow{
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.text-shadow-on-dark{
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, .5);
+}
+
+.text-shadow-on-light{
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, .4);
+}
+
+.table-header-shadow{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .2);
+}
+
+@active-border-blinking-delay: 1.5s;
+
+
+.form-fields-focus(){
+    box-shadow: inset 0 0 5px darken(@select-item-bckg, 20%) !important;
+    border: 1px solid darken(@select-item-bckg, 10%);
+    //box-shadow: inset 0 0 4px @select-item-bckg !important;
+    //border: 1px solid @select-item-bckg;
+}
+
+.f6-valid-shadow(){
+    box-shadow: inset 0 0 8px #00b80b !important;
+    background: none;
+    //border: 1px solid @select-item-bckg;
+}
+.f6-invalid-shadow(){
+    box-shadow: inset 0 0 8px #ff0000 !important;
+    background: none;
+    //border: 1px solid @select-item-bckg;
+}
+.f6-highlight-invalid-shadow(){
+    box-shadow: inset 0 0 6px #ff0000 !important;
+    background: rgba(255, 0, 0, .02) !important;
+}
+.f6-highlight-valid-shadow(){
+    box-shadow: inset 0 0 6px #00b80b !important;
+    background: none;
+}
+.red-highlight-shadow(){
+    box-shadow: inset 0 0 6px #ff0000 !important;
+    //background: rgba(255, 0, 0, .02) !important;
+    border: 1px solid  rgba(255, 0, 0, .5) !important;
+}
+.green-highlight-shadow(){
+    box-shadow: inset 0 0 6px #00b80b !important;
+    //background: rgba(0, 184, 11, .04) !important;
+    border: 1px solid  rgba(0, 184, 11, .5) !important;
+}
+
+.border-radius(@r) {
+    .check-no(@r) {
+        @rad: `'@{r}'.replace(/no/gi, 0).replace(/\b0px|\b0%|\b0em/gi, 0).replace(/[,\[\]]/g, '')`;
+    }
+    .check-no(@r);
+
+    .set-radius(@rad) when not (@rad = "0") and not (@rad = "0 0") and not (@rad = "0 0 0") and not (@rad = "0 0 0 0") {
+        @finalRad: e(@rad);
+        -webkit-border-radius: @finalRad;
+        -moz-border-radius: @finalRad;
+        border-radius: @finalRad;
+    }
+
+    .set-radius(@rad) {
+    }
+    .set-radius(@rad);
+}
+
+
+

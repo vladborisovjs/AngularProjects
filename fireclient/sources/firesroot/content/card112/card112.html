@@ -1,0 +1,436 @@
+<div class="container-fluid full-height full-width">
+    <div class="row full-height">
+        <div class="col-xs-5 full-height">
+            <div class="panel panel-default full-height card112-panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12 card112-header-about">
+                            Исходная карточка 112
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            Карточка Внеш.Сист. №{{card112.selectedCard112.card112.nEmergencyCardId}}<br>
+                            Состояние: {{card112.selectedCard112.card112 | textOf112nCardState}}
+                        </div>
+                        <div class="col-xs-4">
+                            {{card112.card112DtIncident(card112.selectedCard112.card112.dtIncident)}}
+                        </div>
+                    </div>
+
+                </div>
+                <!--                <div class="panel-body panel-body-full-height">
+                                    <div class="row">
+                                        <div class="col-xs-4">Оператор</div>
+                                        <div class="col-xs-8">{{card112.selectedCard112.card112.strCreator}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Адрес</div>
+                                        <div class="col-xs-8">{{card112.selectedCard112.card112 | address112Filter}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Номер помещения</div>
+                                        <div class="col-xs-8">{{card112.selectedCard112.card112.strRoom}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Фамилия (Заявитель)</div>
+                                        <div class="col-xs-8"> {{card112.selectedCard112.card112.strDeclarantLastName}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Имя (Заявитель):</div>
+                                        <div class="col-xs-8"> {{card112.selectedCard112.card112.strDeclarantName}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Отчество (Заявитель):</div>
+                                        <div class="col-xs-8"> {{card112.selectedCard112.card112.strDeclarantMiddleName}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Телефон (Заявитель)</div>
+                                        <div class="col-xs-8">{{card112.selectedCard112.card112.strCgPN}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Телефон (куда звонили)</div>
+                                        <div class="col-xs-8">{{card112.selectedCard112.card112.strCdPN}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Описание</div>
+                                        <div class="col-xs-8 wrap-all">{{card112.selectedCard112.card112.strIncidentDescription}}</div>
+                                    </div>
+                                </div>-->
+
+
+                <!--fire-base-table-->
+
+                <table ng-table class="table nopm table-bordered text-center data-from-112 white-sp-wrap">
+
+
+                    <tr class="noselect">
+
+                        <td>
+                            Оператор:
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strCreator}}
+                        </td>
+
+                    </tr>
+
+                    <tr class="noselect">
+                        <td>
+                            Адрес:
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112 | address112Filter}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Доп. Адрес:
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strAdditionalLocationInfo}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Номер помещения:
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strRoom}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Фамилия (Заявитель):
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strDeclarantLastName}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Имя (Заявитель):
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strDeclarantName}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Отчество (Заявитель):
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strDeclarantMiddleName}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Телефон (Заявитель):
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strCgPN}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Телефон (куда звонили):
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strCdPN}}
+                        </td>
+                    </tr>
+                    <tr class="noselect">
+                        <td>
+                            Описание:
+                        </td>
+                        <td>
+                            {{card112.selectedCard112.card112.strIncidentDescription}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+
+
+                        <td colspan="2" class="from-emergency-services clearfix">
+                            <div>02<i class="fa fa-check"
+                                      ng-show="!!card112.selectedCard112.card112.lHasCard02 === true"></i>
+                            </div>
+                            <div>03<i class="fa fa-check"
+                                      ng-show="!!card112.selectedCard112.card112.lHasCard03 === true"></i>
+                            </div>
+                            <div>04<i class="fa fa-check"
+                                      ng-show="!!card112.selectedCard112.card112.lHasCard04 === true"></i>
+                            </div>
+                            <div>ЦУКС<i class="fa fa-check"
+                                        ng-show="!!card112.selectedCard112.card112.lHasCardAT === true"></i>
+                            </div>
+                            <div>ЖКХ<i class="fa fa-check"
+                                       ng-show="!!card112.selectedCard112.card112.lHasCardCommServ === true"></i>
+                            </div>
+                        </td>
+
+
+                    </tr>
+
+
+                </table>
+
+
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <div class="row action-buttons-wrapper">
+                <div class="col-xs-6">
+
+                    <button type="button" class="btn btn-danger"
+                            ng-hide="card112.selectedCard112.card112.fireActId"
+                            ng-click="card112.rejectCard(card112.selectedCard112, 'foreign')">
+                        Чужая карточка
+                    </button>
+                    <button type="button" class="btn btn-danger"
+                            ng-hide="card112.selectedCard112.card112.fireActId"
+                            ng-click="card112.rejectCard(card112.selectedCard112, 'repeat')">
+                        Повторная карточка
+                    </button>
+                </div>
+
+                <div class="col-xs-6 clearfix">
+                    <button type="button" class="btn btn-success full-height"
+                            ng-show="card112.selectedCard112.card112.fireActId"
+                            ng-click="card112.confirmNewCard(card112.selectedCard112)">Принять
+                    </button>
+                    <button type="button" class="btn btn-success full-height"
+                            ng-hide="card112.selectedCard112.card112.fireActId"
+                            ng-click="card112.createFireFromCard(card112.selectedCard112)"
+                            data-ng-disabled="!!card112.selectedAddress === false">Создать
+                    </button>
+                </div>
+
+
+            </div>
+            <!--
+                        <div class="row">
+                            <div class="col-xs-12">
+            -->
+            <!--                    <div class="well">
+                                    <div class="row">
+                                        <div class="col-xs-10">
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Регион: {{card112.selectedCard112.fireActTemplate.firePlace.region.text}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Район: {{card112.selectedCard112.fireActTemplate.firePlace.address.raionName}}
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Округ: {{card112.selectedCard112.fireActTemplate.firePlace.address.settName}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    &lt;!&ndash;{{card112.selectedCard112.fireActTemplate.firePlace | firePlaceFilter}}&ndash;&gt;
+                                                    <h4>Адрес: {{card112.selectedCard112.fireActTemplate.firePlace.address.street}}&nbsp;{{card112.selectedCard112.fireActTemplate.firePlace.address.house}}&nbsp;{{(!!card112.selectedCard112.fireActTemplate.flat
+                                                        === true)? 'кв.' + card112.selectedCard112.fireActTemplate.flat : ''}}
+                                                    </h4>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    Квартира: {{card112.selectedCard112.fireActTemplate.flat}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Код домофона: {{card112.selectedCard112.fireActTemplate.doorCode}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Телефон: {{card112.selectedCard112.fireActTemplate.callerPhoneNum}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Этаж: {{card112.selectedCard112.fireActTemplate.floor}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Этажность: {{card112.selectedCard112.fireActTemplate.floors}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    № ПЧ: {{card112.selectedCard112.fireActTemplate.firePlace.pchName}}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    Описание: {{card112.selectedCard112.fireActTemplate.comment}}
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>-->
+
+
+            <table ng-table class="table nopm table-bordered text-center  data-from-112 white-sp-wrap">
+
+
+                <tr class="noselect">
+
+                    <td>
+                        Регион:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.firePlace.address.regName}}
+                    </td>
+
+                </tr>
+
+                <tr class="noselect">
+                    <td>
+                        Район:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.firePlace.address.raionName}}
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        Населенный пункт:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.firePlace.address.settName}}
+                    </td>
+                </tr>
+                <tr class="noselect cursor"
+                    data-ng-repeat="(key, value) in card112.selectedCard112.fireActTemplate.firePlace.addresses112"
+                    ng-click="card112.selectAddress(key)" ng-class="{selected: card112.selectedAddress === key}">
+                    <td>
+                        {{card112.equivalenceTable[key]}}:
+                    </td>
+                    <td>
+                        <input type="radio" ng-checked="card112.selectedAddress === key">
+                        {{value.street}}&nbsp;{{value.house}}&nbsp;{{(!!card112.selectedCard112.fireActTemplate.flat
+                        === true)? 'кв.' + card112.selectedCard112.fireActTemplate.flat : ''}}
+                        <div ng-if="(!!value.geomX === true && !!value.geomY === true)" class="drop-font">
+                            ({{value.geomX}},&nbsp;{{value.geomY}})
+                        </div>
+
+
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        Квартира:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.flat}}
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        Код домофона:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.doorCode}}
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        Телефон:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.callerPhoneNum}}
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        Этаж:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.floor}}
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        Этажность:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.floors}}
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        № ПЧ:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.firePlace.pchName}}
+                    </td>
+                </tr>
+                <tr class="noselect">
+                    <td>
+                        Описание:
+                    </td>
+                    <td>
+                        {{card112.selectedCard112.fireActTemplate.comment}}
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <!--
+
+                            </div>
+                        </div>
+            -->
+        </div>
+    </div>
+</div>

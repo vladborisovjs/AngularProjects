@@ -1,0 +1,1686 @@
+<!--<div class="fire-card-wrapper">-->
+<!--<div ui-view="content" class="content printable content-view">-->
+
+<!--<div ui-view="content" class="content printable content-view">-->
+
+<!--
+<button class="btn-danger" style="position: absolute; left: 10px; top: 20px; z-index: 99999;" ng-click="newFireCard.emulateRequest()">request</button>
+-->
+<!--<button class="btn-success" style="position: absolute; left: 80px; top: 20px; z-index: 99999;" ng-click="newFireCard.showIt()">showIt</button>-->
+
+<div ui-view="content" class="content printable content-view card-holder-wrapper">
+    <div class="card-holder">
+        <fieldset class="full-height new-fire-card border-free">
+
+
+            <!--<div class="col-xs-12">-->
+
+            <uib-tabset justified="true" class="tab-full-height" active="newFireCard.currentTab">
+
+                <uib-tab index="0">
+                    <uib-tab-heading>
+                        Общее
+
+                        <!--
+                                                                        <button class="btn btn-sm btn-default" type="button" ng-click="newFireCard.showFireAct()">
+                                                                            <i class="fa fa-taxi" aria-hidden="true"></i>
+                                                                            fireAct
+                                                                        </button>
+                        -->
+
+
+                    </uib-tab-heading>
+
+
+                    <div class="tab-inside address-info">
+
+                        <div class="col-xs-8 full-height">
+
+
+
+                            <div class="row">
+                                <div class="col-xs-12 ">
+                                    Создана:&nbsp;<span>{{newFireCard.card112DtIncident(newFireCard.fireAct.registerDate)}}</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 ">
+
+                                    <fieldset>
+                                        <legend>Адрес</legend>
+
+
+                                        <div class="row">
+                                            <div class="col-xs-6">
+
+                                                <input ng-model="newFireCard.fireAct.firePlace.address.regName"
+                                                       class="form-control" placeholder="Регион">
+
+                                            </div>
+                                            <div class="col-xs-6">
+
+                                                <input ng-model="newFireCard.fireAct.firePlace.address.raionName"
+                                                       class="form-control" placeholder="Район">
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-xs-12">
+
+                                                <!--
+                                                                                            <input ng-model="newFireCard.fireAct.firePlace.address.settName"
+                                                                                                   class="form-control" placeholder="Населенный пункт">
+                                                -->
+
+
+                                                <!--                                                <ui-select
+                                                                                                        ng-model="newFireCard.fireAct.firePlace.address.settName"
+                                                                                                        on-select="newFireCard.selectSettlement($item)"
+                                                                                                        autofocus="true" reset-search-input="false">
+                                                                                                    <ui-select-match
+                                                                                                            allow-clear="false"
+                                                                                                            placeholder="Населенный пункт">
+                                                                                                        {{newFireCard.fireAct.firePlace.address.settName}}
+                                                                                                    </ui-select-match>
+                                                                                                    <ui-select-choices
+                                                                                                            refresh="newFireCard.searchFieldChanged($select.search, 'settlement')"
+                                                                                                            minimum-input-length="3" refresh-delay="10"
+                                                                                                            repeat="settlement.street as settlement in newFireCard.storage.dataOfStates.newFireCard.settlementArray track by $index">
+                                                                                                        {{address.settName}}
+                                                                                                    </ui-select-choices>
+                                                                                                </ui-select>-->
+
+
+                                                <input ng-model="newFireCard.fireAct.firePlace.address.district"
+                                                       class="form-control" placeholder="Населенный пункт">
+
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-7">
+
+                                                <!--
+                                                                                            <input class='typeahead' type="text" sf-typeahead options="newFireCard.exampleOptions" allow-custom="false" datasets="newFireCard.numbersDataset" ng-model="newFireCard.fireAct.firePlace.address.street" ng-keyup="newFireCard.searchFieldChanged($event, 'street')">
+
+
+
+                                                                                            <input data-ng-change="newFireCard.searchFieldChanged(newFireCard.fireAct.firePlace.address.street, 'street')"
+                                                                                                   data-typeahead-wait-ms="150"
+                                                                                                   min-length="3"
+                                                                                                   type="text"
+                                                                                                   placeholder="Улица / Объект"
+                                                                                                   ng-model="newFireCard.fireAct.firePlace.address.street"
+                                                                                                   uib-typeahead="address as ((address.street ? address.street : address.streetname) +' '+ (!!address.raionName === true? address.raionName : '') +' '+ ((address.naStreet === false)? '(' : '') +
+                                                                                                    (!!address.district === true? address.district : '') +
+                                                                                                    ((address.naStreet === false)? ')' : '') +
+                                                                                                    ((address.naStreet === true)?
+                                                                                                    newFireCard.storage.manualInputValue : '')) for address in newFireCard.storage.dataOfStates.newFireCard.streetsArray"
+                                                                                                   class="form-control"
+                                                                                                   typeahead-on-select='newFireCard.selectStreet($item)'
+                                                                                                   typeahead-select-on-blur="true" ng-keyup="newFireCard.test($event)">
+                                                -->
+
+                                                <!--ng-focus="newFireCard.storage.dataOfStates.newFireCard.settings.isHousesEmitSending = false; newFireCard.test()"-->
+                                                <label>Улица / Объект / Широта,Долгота</label>
+
+                                                <!--ng-keypress="newFireCard.eeee($event)"-->
+
+                                                <ui-select data-step-control="1"
+                                                           ng-model="newFireCard.fireAct.firePlace.address.street"
+                                                           on-select="newFireCard.selectStreet($item)"
+                                                           reset-search-input="false"
+                                                           ng-keyup="newFireCard.inputControl($event)"
+                                                           id="select-street">
+                                                    <ui-select-match
+                                                            allow-clear="false">
+                                                        <!-- {{newFireCard.fireAct.firePlace.address.pch}}-->
+                                                        {{newFireCard.fireAct.firePlace.address.street}}
+                                                        {{(newFireCard.fireAct.firePlace.address.naStreet === true)?
+                                                        newFireCard.storage.manualInputValue : ''}}
+                                                        <!--{{(newFireCard.fireAct.firePlace.address.naStreet === true)? newFireCard.fireAct.firePlace.address.settName : ''}}-->
+                                                        <!--
+                                                                                                                {{!!$select.selected.street === true ? $select.selected.street : $select.selected.streetname}}
+                                                        -->
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            refresh="newFireCard.searchFieldChanged($select.search, 'street')"
+                                                            minimum-input-length="3" refresh-delay="10"
+                                                            repeat="address.street as address in newFireCard.storage.dataOfStates.newFireCard.streetsArray track by $index">
+                                                        <!--(&nbsp;{{address.pch}}&nbsp;)-->
+                                                        {{address.street ? address.street : address.streetname}}
+                                                        {{(address.regName === address.district)? '(' +
+                                                        address.raionNames + ')': (!!address.district === true)? '(' +
+                                                        address.district + ')' : ''}}
+
+                                                        {{(address.naStreet === true)?
+                                                        newFireCard.storage.manualInputValue : ''}}
+
+                                                        <!--{{(address.naStreet === true)? address.settName : ''}}-->
+                                                        <!--{{address.raionName}}-->
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                            </div>
+
+
+                                            <div class="col-xs-5">
+                                                <label>Пересечение с улицей</label>
+
+
+                                                <!--                                            ng-disabled="!!newFireCard.storage.dataOfStates.newFireCard.crossesArray.length === false"       -->
+
+                                                <ui-select
+                                                        ng-model="newFireCard.fireAct.firePlace.crossStreet"
+                                                        on-select="newFireCard.selectCrossRoad($item)"
+                                                        reset-search-input="false" tagging>
+                                                    <ui-select-match allow-clear="false">
+                                                        {{newFireCard.fireAct.firePlace.crossStreet.cross}}&nbsp;
+                                                        <span ng-if="!!newFireCard.fireAct.firePlace.address.pch === true">
+                                                            <b>({{newFireCard.fireAct.firePlace.address.pch}} ПЧ)</b>
+                                                        </span>
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            refresh="newFireCard.searchFieldChanged($select.search, 'crossRoad')"
+                                                            minimum-input-length="3" refresh-delay="10"
+                                                            repeat="cross in newFireCard.storage.dataOfStates.newFireCard.crossesArray | filter: $select.search | orderBy: 'cross'  track by $index">
+                                                        {{cross.cross}}&nbsp;
+                                                        <span ng-if="!!cross.pch === true">
+                                                            <b>({{cross.pch}} ПЧ)</b>
+                                                        </span>
+
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="col-xs-3">
+                                                <div class="houseNumber">
+                                                    <label for="house-number">Дом, Корпус</label>
+                                                    <div class="oldNumber">{{newFireCard.oldHouseNumber}}</div>
+                                                </div>
+                                                <div id="house-number">
+
+
+                                                    <!--ng-keyup="newFireCard.houseModel($event)"-->
+                                                    <ui-select data-step-control="2" theme="bootstrap"
+                                                               class="full-width"
+                                                               ng-model="newFireCard.fireAct.firePlace.address"
+                                                               on-select="newFireCard.houseModel($item)"
+                                                               reset-search-input="false"
+                                                               ng-keyup="newFireCard.houseModelManual($event)">
+                                                        <ui-select-match allow-clear="false">
+
+
+                                                            {{newFireCard.fireAct.firePlace.address.house}}
+                                                        </ui-select-match>
+
+
+                                                        <!--| orderBy: newFireCard.houseSorting-->
+
+                                                        <ui-select-choices
+                                                                repeat="address in newFireCard.storage.dataOfStates.newFireCard.housesArray">
+                                                            <!--
+                                                                                                                    repeat="address in newFireCard.storage.dataOfStates.newFireCard.housesArray | newOrderHousesFilter:  $select.search: newFireCard.fireAct.firePlace.address | orderBy: newFireCard.houseSorting"
+                                                            -->
+                                                            <!--ng-hide="!!address.naHouse === true && !!address.house.length === true"-->
+                                                            <!--ng-class="!!address.naHouse === true && !!address.house.length === false ? 'manualHouseOff' : ''"-->
+                                                            <div>
+                                                            <span ng-bind-html="address.house | highlight:$select.search"
+                                                                  ng-class="!!address.naHouse === true ? 'manualHouseHolder' : ''"></span>
+                                                                <div ng-if="!!address.naHouse === true"
+                                                                     class="manualHouse"></div>
+                                                            </div>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+
+
+                                                    <!--ng-keyup="newFireCard.manualHouseEnter($event)"-->
+
+                                                    <!--ng-change="newFireCard.houseModel()"-->
+
+
+                                                    <!--
+
+                                                                                                    &lt;!&ndash;on-select="newFireCard.selectBuilding($item)"&ndash;&gt;
+
+
+
+                                                                                                    <ui-select theme="bootstrap"
+                                                                                                               class="full-width"
+                                                                                                               ng-keyup="newFireCard.houseModel($event)"
+                                                                                                               ng-model="newFireCard.houseValue"
+                                                                                                               on-select="newFireCard.houseModel($event)"
+                                                                                                               autofocus="true"
+                                                                                                               reset-search-input="false">
+                                                                                                        <ui-select-match placeholder="Дом, Корпус"
+                                                                                                                         allow-clear="false">
+
+
+                                                                                                            {{(newFireCard.fireAct.firePlace.address.naHouse ===
+                                                                                                            true)?
+                                                                                                            newFireCard.fireAct.firePlace.address.manualHouse :
+                                                                                                            newFireCard.fireAct.firePlace.address.house}}
+                                                                                                        </ui-select-match>
+                                                                                                        <ui-select-choices
+                                                                                                                repeat="address in newFireCard.storage.dataOfStates.newFireCard.housesArray | orderBy: newFireCard.houseSorting">
+                                                                                                            <div ng-show="!!address.naHouse === false || (!!address.naHouse === true && !!address.house.length === true)">
+                                                                                                                <span ng-bind-html="address.house | highlight:$select.search"
+                                                                                                                      ng-class="!!address.naHouse === true ? 'manualHouseHolder' : ''"></span>
+                                                                                                                <div ng-if="!!address.naHouse === true"
+                                                                                                                     class="manualHouse"></div>
+                                                                                                            </div>
+                                                                                                        </ui-select-choices>
+                                                                                                    </ui-select>
+
+                                                    -->
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <label for="apartment-number">Квартира</label>
+                                                <div id="apartment-number">
+                                                    <input ng-model="newFireCard.fireAct.flat"
+                                                           class="form-control" data-step-control="3">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <label for="floor-number">Этаж</label>
+                                                <div id="floor-number">
+                                                    <input data-step-control="4" ng-model="newFireCard.fireAct.floor"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <label for="floors-number">Этажность</label>
+                                                <div id="floors-number">
+                                                    <input data-step-control="5" ng-model="newFireCard.fireAct.floors"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-3">
+                                                <label for="door-code">Код двери</label>
+                                                <div id="door-code">
+                                                    <input data-step-control="6" ng-model="newFireCard.fireAct.doorCode"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="col-xs-6">
+                                                <label for="Latitude">Широта</label>
+                                                <div id="Latitude">
+                                                    <input ng-model="newFireCard.fireAct.firePlace.address.geomX"
+                                                           class="form-control" placeholder="Широта" ng-disabled="true">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-6">
+                                                <label for="Longitude">Долгота</label>
+                                                <div id="Longitude">
+                                                    <input ng-model="newFireCard.fireAct.firePlace.address.geomY"
+                                                           class="form-control" placeholder="Долгота"
+                                                           ng-disabled="true">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </fieldset>
+
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <fieldset class="without-legend">
+                                        <div class="col-xs-4">
+                                            <label for="newFireCard-PCH">{{newFireCard.storage.fireUser.ACCESS.words.pch}}
+                                                                         Зоны отв.</label>
+
+                                            <div ng-class="!!newFireCard.fireAct.firePlace.address.pch === true? 'critical-field-filled': 'critical-field'">
+                                                <ui-select id="newFireCard-PCH"
+                                                           theme="bootstrap"
+                                                           class="full-width"
+                                                           reset-search-input="false"
+                                                           ng-model="newFireCard.fireAct.firePlace.address.pch"
+                                                           on-select="newFireCard.selectPch($item.pch)"
+                                                           data-ng-disabled="!!newFireCard.fireAct.firePlace.address.street === false">
+
+                                                    <!--placeholder="{{newFireCard.storage.fireUser.ACCESS.words.fireDept}}"                                                       -->
+
+                                                    <ui-select-match>
+                                                        {{newFireCard.fireAct.firePlace.address.pch}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="data in newFireCard.storage.dataOfStates.newFireCard.pchArray | filter: $select.search">
+                                                <span ng-bind-html="data.pch | highlight: $select.search"><span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                                <!--.pchArray | orderBy: 'pch' track by $index-->
+
+                                            </div>
+                                            <!--
+                                                                                    <ui-select id="newFinewFireCard-PCH"
+                                                                                               theme="bootstrap"
+                                                                                               class="full-width"
+                                                                                               ng-model="newFireCard.deptUISelectDeptField"
+                                                                                               on-select="newFireCard.selectPch($item)">
+                                                                                        <ui-select-match
+                                                                                                placeholder="{{newFireCard.storage.fireUser.ACCESS.words.fireDept}}">
+                                                                                            {{newFireCard.fireAct.firePlace.address.pch}}
+                                                                                        </ui-select-match>
+                                                                                        <ui-select-choices
+                                                                                                repeat="dept in newFireCard.storage.fireDepartments | filter: {fireDeptName : $select.search} | orderBy: newFireCard.getNumDept">
+                                                                                            <span ng-bind-html="dept.fireDeptName | highlight:$select.search"></span>
+                                                                                        </ui-select-choices>
+                                                                                    </ui-select>
+                                            -->
+                                        </div>
+                                        <div class="col-xs-8">
+
+
+                                            <label>Тройка</label>
+                                            <div>
+
+                                                <ui-select theme="bootstrap"
+                                                           class="full-width"
+                                                           ng-model="newFireCard.fireAct.firePlace.address.triplets"
+                                                           reset-search-input="false"
+                                                           on-select="newFireCard.selectTriplet($item)"
+                                                           data-ng-disabled="!!newFireCard.storage.dataOfStates.newFireCard.tripletsArray.length === false">
+                                                    <ui-select-match>
+                                                        {{newFireCard.fireAct.firePlace.address.triplets.dept1}}-{{newFireCard.fireAct.firePlace.address.triplets.dept2}}-{{newFireCard.fireAct.firePlace.address.triplets.dept3}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="triplet in newFireCard.storage.dataOfStates.newFireCard.tripletsArray | orderBy: 'id' track by $index">
+                                                <span>
+                                                    {{triplet.dept1}}-{{triplet.dept2}}-{{triplet.dept3}}
+                                                <span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+
+                                            <!--
+                                                                                    <select class="form-control" placeholder="Тройка"
+                                                                                            data-ng-disabled="!!newFireCard.storage.dataOfStates.newFireCard.tripletsArray.length === false" ng-change="newFireCard.selectTriplet($item)" ng-model="newFireCard.fireAct.firePlace.triplet">
+
+                                                                                        <option ng-repeat="triplet in newFireCard.storage.dataOfStates.newFireCard.tripletsArray">
+                                                                                            {{triplet.dept1}}-{{triplet.dept2}}-{{triplet.dept3}}
+                                                                                        </option>
+
+                                                                                    </select>
+                                            -->
+
+
+                                            <!--
+                                                                                    <select class="form-control" placeholder="Тройка"
+                                                                                            data-ng-disabled="!!newFireCard.storage.dataOfStates.newFireCard.tripletsArray.length === false">
+
+                                                                                        <option ng-repeat="triplet in newFireCard.storage.dataOfStates.newFireCard.tripletsArray"
+                                                                                                ng-init='trip=newFireCard.getTriplet(triplet)'>
+                                                                                            {{trip.dept1}}-{{trip.dept2}}-{{trip.dept3}}
+                                                                                        </option>
+
+                                                                                    </select>
+                                            -->
+
+
+                                            <!--
+                                                                                    <ui-select
+                                                                                            ng-model="newFireCard.fireAct.firePlace.address.settName"
+                                                                                            on-select="newFireCard.selectSettlement($item)"
+                                                                                            autofocus="true" reset-search-input="false">
+                                                                                        <ui-select-match
+                                                                                                allow-clear="false"
+                                                                                                placeholder="Населенный пункт">
+                                                                                            {{newFireCard.fireAct.firePlace.address.settName}}
+                                                                                        </ui-select-match>
+                                                                                        <ui-select-choices
+                                                                                                refresh="newFireCard.searchFieldChanged($select.search, 'settlement')"
+                                                                                                minimum-input-length="3" refresh-delay="10"
+                                                                                                repeat="settlement.street as settlement in newFireCard.storage.dataOfStates.newFireCard.settlementArray track by $index">
+                                                                                            {{address.settName}}
+                                                                                        </ui-select-choices>
+                                                                                    </ui-select>
+                                            -->
+
+
+                                            <!--
+                                                                                    <div id="triplet-number">
+
+                                                                                        <input ng-value="newFireCard.getTriplet()"
+                                                                                                   class="form-control" placeholder="Тройка" ng-if="newFireCard.getTriplet()" ng-disabled="true">
+
+                                                                                    </div>
+                                            -->
+
+
+                                            <!--
+                                                                                    <label for="newFireCard-Triplets">Тройка</label>
+                                                                                    <ui-select id="newFireCard-Triplets"
+                                                                                               theme="bootstrap"
+                                                                                               class="full-width"
+                                                                                               ng-model="newFireCard.fireAct.firePlace.triplet">
+                                                                                        <ui-select-match placeholder="Тройка">
+                                                                                            {{newFireCard.fireAct.firePlace.triplet
+                                                                                            |tripletFilter: newFireCard.fireAct.firePlace.pchName}}
+                                                                                        </ui-select-match>
+                                                                                        <ui-select-choices
+                                                                                                repeat="triplet in newFireCard.storage.dataOfStates.newFireCard.tripletsArray | filter: $select.search">
+                                                                                            <span ng-bind-html="triplet| tripletFilter: newFireCard.fireAct.firePlace.pchName | highlight:$select.search && newFireCard.storage.dataOfStates.newFireCard.tripletsArray == undefined && newFireCard.storage.dataOfStates.newFireCard.tripletsArray.length == 0"></span>
+                                                                                        </ui-select-choices>
+                                                                                    </ui-select>
+                                            -->
+
+
+                                        </div>
+
+                                        <!--
+                                                                                <div class="col-xs-5">
+                                                                                    <label for="newFireCard-Subarea">Подрайон</label>
+
+                                                                                    <input ng-model="newFireCard.fireAct.firePlace.address.settName"
+                                                                                           class="form-control" id="newFireCard-Subarea"
+                                                                                           ng-disabled="true">
+
+                                                                                </div>
+                                        -->
+
+
+                                    </fieldset>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+
+                                <div class="col-xs-12">
+
+
+                                    <fieldset>
+                                        <legend>Источник</legend>
+
+                                        <div class="row">
+
+
+                                            <div class="col-xs-4 dropdown" uib-dropdown on-toggle="toggled(open)">
+                                                <label for="alert-source">Источник оповещения</label>
+                                                <div ng-class="!!newFireCard.fireAct.incidentSource === true? 'critical-field-filled': 'critical-field'">
+                                                    <ui-select data-step-control="7" id="alert-source"
+                                                               ng-model="newFireCard.fireAct.incidentSource">
+                                                        <ui-select-match>
+                                                            {{$select.selected.text}}
+                                                        </ui-select-match>
+                                                        <ui-select-choices
+                                                                repeat="source in newFireCard.storage.incidentSources">
+                                                            {{source.text}}
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
+                                            </div>
+
+                                            <!---->
+                                            <div class="col-xs-8">
+                                                <div class="col-xs-6">
+                                                    <label>Конт. телефон</label>
+                                                    <input data-step-control="8"
+                                                           ng-model="newFireCard.fireAct.callerPhoneNum"
+                                                           class="form-control">
+
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <div class="clearfix btn-group audio-rec">
+
+                                                        <button class="btn btn-primary default-gray-button"
+                                                                ng-click="newFireCard.getAudioRecord('audio01')"
+                                                                ng-class="{audioPlayback: newFireCard.playbackAudio == 'audio01'}"
+                                                                ng-disabled="!newFireCard.storage.selectedFire.audio01"
+                                                                ng-show="newFireCard.storage.fireUser.ACCESS.states.newFireCard.buttons.recordingACall"
+                                                                disabled="disabled">
+                                                            <span class="glyphicon glyphicon-volume-down"></span>
+                                                        </button>
+
+                                                        <button class="btn btn-primary default-gray-button"
+                                                                ng-click="newFireCard.getAudioRecord('audio112')"
+                                                                ng-class="{audioPlayback: newFireCard.playbackAudio == 'audio112'}"
+                                                                ng-disabled="!newFireCard.storage.selectedFire.audio112"
+                                                                ng-show="newFireCard.storage.fireUser.ACCESS.states.newFireCard.buttons.operator112"
+                                                                disabled="disabled">
+                                                            <span class="glyphicon glyphicon-volume-down"></span>&nbsp;112
+                                                        </button>
+
+
+                                                        <button class="btn btn-primary default-gray-button"
+                                                                ng-click="newFireCard.makeCallBack(newFireCard.fireAct.callerPhoneNum)"
+                                                                ng-disabled="!!newFireCard.fireAct.callerPhoneNum.length ===false"
+                                                                ng-show="newFireCard.storage.fireUser.ACCESS.states.newFireCard.buttons.dialer"
+                                                                disabled="disabled">
+                                                            <span class="glyphicon glyphicon-earphone"></span>
+                                                        </button>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <!--                               <div class="col-xs-6">
+
+
+
+                                                                           <div class="col-xs-12 clearfix audio-action-buttons">
+                                                                               <button class="btn btn-primary default-gray-button"
+                                                                                       ng-click="newFireOrder.getAudioRecord('audio01')"
+                                                                                       ng-class="{audioPlayback: newFireOrder.playbackAudio == 'audio01'}"
+                                                                                       ng-disabled='!newFireOrder.storage.selectedFire.audio01'
+                                                                                       ng-show="newFireOrder.storage.fireUser.ACCESS.states.order.buttons.recordingACall">
+                                                                                   <span class="glyphicon glyphicon-record"></span>&nbsp;Запись
+                                                                                                                                   звонка
+                                                                               </button>
+                                                                               <button class="btn btn-primary default-gray-button"
+                                                                                       ng-click="newFireOrder.makeCallBack(newFireOrder.storage.selectedFire.card112WithBean.card112.strCallerContactPhone)"
+                                                                                       ng-disabled="!newFireOrder.storage.selectedFire.card112WithBean.card112.strCallerContactPhone.trim().length > 0"
+                                                                                       ng-show="newFireOrder.storage.fireUser.ACCESS.states.order.buttons.dialer">
+                                                                                   <span class="glyphicon glyphicon-earphone"></span>&nbsp;Дозвон
+                                                                               </button>
+
+                                                                           </div>
+
+
+
+
+                                                                       </div>-->
+
+
+                                    </fieldset>
+
+
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+
+
+                                                <label>Вид выезда</label>
+                                                <div ng-class="!!newFireCard.fireAct.incidentType === true? 'critical-field-filled': 'critical-field'">
+                                                    <ui-select data-step-control="9"
+                                                               ng-model="newFireCard.fireAct.incidentType"
+                                                               on-select="newFireCard.selectIncidentType($item)">
+                                                        <ui-select-match>
+                                                            {{$select.selected.name}}
+                                                        </ui-select-match>
+                                                        <ui-select-choices
+                                                                repeat="incidentType in newFireCard.storage.incidentTypes">
+                                                            {{incidentType.name}}
+                                                        </ui-select-choices>
+                                                    </ui-select>
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-6" ng-if="newFireCard.incidentTypeCode == 1">
+
+
+                                                <label>Ранг</label>
+                                                <div ng-class="!!newFireCard.fireAct.rank === true? 'critical-field-filled': 'critical-field'">
+
+
+                                                    <!--ng-disabled="newFireCard.disableRankByIncSource()"-->
+                                                    <ui-select data-step-control="10"
+                                                               ng-model="newFireCard.fireAct.rank"
+                                                               class="full-width">
+                                                        <ui-select-match>
+                                                            {{$select.selected.sidfirerank}}
+                                                        </ui-select-match>
+                                                        <ui-select-choices
+                                                                style="width: 100%; min-width: initial;"
+                                                                repeat="rang in newFireCard.storage.rangs | filter: $select.search | orderBy: 'sidfirerank'">
+                                                            {{rang.sidfirerank}}
+                                                        </ui-select-choices>
+                                                    </ui-select>
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-6" ng-if="newFireCard.incidentTypeCode != 1">
+
+                                                <label>Статус ЧС</label>
+                                                <div ng-class="!!newFireCard.fireAct.rank === true? 'critical-field-filled': 'critical-field'">
+                                                    <ui-select data-step-control="10"
+                                                               ng-model="newFireCard.fireAct.chsStatuse"
+                                                               class="full-width">
+                                                        <ui-select-match>
+                                                            {{$select.selected.value}}
+                                                        </ui-select-match>
+                                                        <ui-select-choices
+                                                                style="width: 100%; min-width: initial;"
+                                                                repeat="rang in newFireCard.storage.chsDict.chsStatuses | filter: $select.search | orderBy: 'value'">
+                                                            {{rang.value}}
+                                                        </ui-select-choices>
+                                                    </ui-select>
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label class="important-field">Комментарий</label>
+                                    <div class="nfo-comments-wrapper"
+                                         ng-class="!!newFireCard.fireAct.comment === true? 'critical-field-filled': 'critical-field'">
+                                        <input data-step-control="11" class="form-control"
+                                               type="text"
+                                               ng-model='newFireCard.fireAct.comment'
+                                               ng-focus="newFireCard.switchCommentsState = true"
+                                               ng-blur="newFireCard.switchCommentsState = false">
+
+                                        <div class="expand-comments"
+                                             ng-show="newFireCard.switchCommentsState && newFireCard.fireAct.comment.length"
+                                             ng-bind='newFireCard.fireAct.comment'></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+
+                                    <div class="row">
+                                        <div class="col-xs-12 small">
+                                            <div class="panel panel-default without-overflow"
+                                                 style="margin-top:10px;">
+                                                <div class="panel-heading">Объект</div>
+                                                <div class="panel-body" style="padding-top: 1px;">
+                                                    <div class="row">
+                                                        <div class="col-xs-11"><label
+                                                                for="object-name">Наименование</label>
+                                                            <div class="nfo-comments-wrapper">
+
+                                                                <input id="object-name" class="form-control"
+                                                                       ng-disabled="true"
+                                                                       ng-model="newFireCard.fireAct.firePlace.fireObject.nameobject">
+                                                                <div class="expand-comments"
+                                                                     ng-show="newFireCard.expandedFields.nameobject"
+                                                                     ng-bind='newFireCard.fireAct.firePlace.fireObject.nameobject'>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-
+1">
+                                                            <label>&nbsp;</label>
+                                                            </br>
+
+                                                            <button ng-click="newFireCard.viewFullText('nameobject')"
+                                                                    class="button btn-sm btn-primary ng-binding ng-scope"
+                                                                    ng-disabled="newFireCard.fireAct.firePlace.fireObject.nameobject.trim().length == 0 || !newFireCard.fireAct.firePlace.fireObject.hasOwnProperty('nameobject')">
+                                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                                            </button>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row"
+                                                         ng-hide="!newFireCard.storage.fireUser.ACCESS.fireList.rank">
+                                                        <div class="col-xs-6"><label
+                                                                for="object-rank">Ранг</label></br>
+                                                            <input id="object-rank" class="form-control"
+                                                                   ng-disabled="true"
+                                                                   ng-model="newFireCard.fireAct.firePlace.fireObject.rank">
+
+
+                                                        </div>
+                                                        <div class="col-xs-6"><label
+                                                                for="rangmodifiers">Модификаторы</label></br>
+                                                            <input class="form-control"
+                                                                   ng-disabled="true"
+                                                                   ng-model="newFireCard.fireAct.firePlace.fireObject.rangmodifiers"
+                                                                   id="rangmodifiers">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-show="newFireCard.storage.isRoot">
+                                                        <div class="col-xs-6"><label
+                                                                for="object-type">Тип</label></br>
+                                                            <input id="object-type" class="form-control"
+                                                                   ng-disabled="true"
+                                                                   ng-model="newFireCard.fireAct.firePlace.fireObject.typeobject">
+                                                        </div>
+                                                        <div class="col-xs-6"><label for="object-extra-technic">Доп.
+                                                                                                                Техника</label></br>
+                                                            <input id="object-extra-technic" class="form-control"
+                                                                   ng-disabled="true"
+                                                                   ng-model="newFireCard.fireAct.firePlace.fireObject.addteches">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-11">
+                                                            <label for="object-note">Примечание</label>
+                                                            <div class="nfo-comments-wrapper">
+
+                                                                <input id="object-note" class="form-control"
+                                                                       ng-disabled="true"
+                                                                       ng-model="newFireCard.fireAct.firePlace.fireObject.prim">
+                                                                <div class="expand-comments"
+                                                                     ng-show="newFireCard.expandedFields.prim"
+                                                                     ng-bind='newFireCard.fireAct.firePlace.fireObject.prim'></div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-
+1">
+                                                            <label>&nbsp;</label>
+                                                            </br>
+                                                            <button ng-click="newFireCard.viewFullText('prim')"
+                                                                    class="button btn-sm btn-primary ng-binding ng-scope"
+                                                                    ng-disabled="newFireCard.fireAct.firePlace.fireObject.prim.trim().length == 0 || !newFireCard.fireAct.firePlace.fireObject.hasOwnProperty('prim')">
+                                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row"
+                                                 ng-show="!!newFireCard.ShowSentTicket === true">
+                                                <div class="col-xs-6">
+
+                                                    firePlace.geomX:&nbsp;<input ng-disabled="true"
+                                                                                 class="form-control input-sm"
+                                                                                 ng-model="newFireCard.fireAct.firePlace.geomX">
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    firePlace.geomY:&nbsp;<input ng-disabled="true"
+                                                                                 class="form-control input-sm"
+                                                                                 ng-model="newFireCard.fireAct.firePlace.geomY">
+                                                </div>
+                                            </div>
+                                            <div class="row"
+                                                 ng-show="!!newFireCard.ShowSentTicket === true">
+                                                <div class="col-xs-6">
+
+                                                    address.geomX:&nbsp;<input ng-disabled="true"
+                                                                               class="form-control input-sm"
+                                                                               ng-model="newFireCard.fireAct.firePlace.address.geomX">
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    address.geomY:&nbsp;<input ng-disabled="true"
+                                                                               class="form-control input-sm"
+                                                                               ng-model="newFireCard.fireAct.firePlace.address.geomY">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="pull-right" style="margin-top: 5px;">
+
+                                            <button class="btn btn-sm btn-info" ng-click="newFireCard.downloadEvent()"
+                                                    ng-show="newFireCard.storage.fireUser.ACCESS.states.newFireCard.buttons.unloadingToTheStaffTable">
+                                                Выгрузка в штабной стол
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-xs-4 padding-left-free">
+
+
+                            <div class="col-xs-12 full-height padding-left-free">
+
+                                <div class="object-holder full-height">
+
+                                    <div class="row full-height">
+                                        <div class="col-xs-12 full-height padding-left-free">
+                                            <fieldset class="full-height new-fire-card">
+                                                <legend>Объекты на адресе&nbsp;<span
+                                                        ng-hide="!!newFireCard.storage.dataOfStates.newFireCard.objectsArray.length === false">({{newFireCard.storage.dataOfStates.newFireCard.objectsArray.length}})</span>
+                                                </legend>
+
+                                                <div class="overflow-scroll object-list" id="object-list-wrapper">
+
+                                                    <!--                                                <a href="" class="list-group-item order-found-object"
+                                                                                                       ng-repeat="fireObjects in newFireCard.foundedObjects"
+                                                                                                       ng-click="newFireCard.selectFireObject(fireObjects)"
+                                                                                                       ng-if="!!newFireCard.foundedObjects === true">
+
+                                                                                                        <span>
+                                                                                                            <span style="font-size: 1.3rem;font-weight: bold;"
+                                                                                                                  ng-bind="fireObjects.house"></span>
+                                                                                                            &nbsp;&nbsp;{{fireObjects.nameobject}}
+                                                                                                        </span>
+
+                                                                                                    </a>-->
+
+                                                    <!--
+                                                    ng-class="{active:fireObject.house === newFireCard.fireAct.firePlace.fireObject.house && fireObject.street === newFireCard.fireAct.firePlace.fireObject.street}"
+                                                    -->
+
+                                                    <a href="" class="list-group-item"
+                                                       ng-repeat="fireObject in newFireCard.storage.dataOfStates.newFireCard.objectsArray | orderBy: newFireCard.objectsSorting track by $index"
+                                                       ng-click="newFireCard.selectObject(fireObject)"
+                                                       ng-class="newFireCard.highlightObject(fireObject)"
+                                                       data-house="{{fireObject.house}}">
+                                                    <span>
+                                                        <span style="font-size: 1.3rem;font-weight: bold;"
+                                                              ng-bind="fireObject.house"></span>
+                                                        <!--&nbsp;{{fireObject.nameobject}}-->
+                                                        <!--ng-show="!!newFireCard.fireAct.firePlace.address.street === false"-->
+                                                        <span>
+                                                        &nbsp;({{fireObject.street}})
+                                                        <div>{{fireObject.nameobject}}</div>
+                                                        </span>
+                                                        <!--
+                                                                                                                <span ng-show="!!newFireCard.fireAct.firePlace.address.street === true">
+                                                                                                                &nbsp;{{fireObject.nameobject}}
+                                                                                                                </span>
+                                                        -->
+
+
+                                                    </span>
+                                                        <!--
+                                                                                                            <div>{{fireObject==newFireCard.fireAct.firePlace.fireObject}}</div>
+                                                                                                            <div>{{fireObject}}</div><div>{{newFireCard.fireAct.firePlace.fireObject}}</div>
+                                                        -->
+                                                    </a>
+
+
+                                                </div>
+
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </uib-tab>
+
+
+                <uib-tab ng-show="newFireCard.incidentTypeCode == 1">
+                    <uib-tab-heading>
+                        Пожар
+                    </uib-tab-heading>
+                    <div class="tab-inside">
+
+                        <div class="button-place clearfix" ng-show="!!newFireCard.fireAct.id === true">
+                            <button ng-click="newFireCard.doPrint('emergency_fire')"
+                                    class="button btn-sm btn-success pull-right">
+                                <span class="glyphicon glyphicon-print"></span>
+                                Печать отчета Пожар
+                            </button>
+                        </div>
+
+
+                        <div class="chs-wrapper" id="fire"></div>
+
+                    </div>
+                </uib-tab>
+
+
+                <uib-tab index="11" ng-show="newFireCard.incidentTypeCode != 1">
+                    <uib-tab-heading>
+                        1/ЧС
+                    </uib-tab-heading>
+                    <div class="tab-inside">
+
+                        <div class="button-place clearfix" ng-show="!!newFireCard.fireAct.id === true">
+                                <button ng-click="newFireCard.doPrint('emergency_1')"
+                                        class="button btn-sm btn-success pull-right">
+                                    <span class="glyphicon glyphicon-print"></span>
+                                    Печать отчета 1/ЧС
+                                </button>
+                        </div>
+
+                        <div class="chs-wrapper" id="chs1"></div>
+
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="12" ng-show="newFireCard.incidentTypeCode != 1">
+                    <uib-tab-heading>
+                        2/ЧС
+                    </uib-tab-heading>
+                    <div class="tab-inside">
+
+                        <div class="button-place clearfix" ng-show="!!newFireCard.fireAct.id === true">
+                            <button ng-click="newFireCard.doPrint('emergency_2')"
+                                    class="button btn-sm btn-success pull-right">
+                                <span class="glyphicon glyphicon-print"></span>
+                                Печать отчета 2/ЧС
+                            </button>
+                        </div>
+
+
+                        <div class="chs-wrapper" id="chs2"></div>
+
+                    </div>
+
+                </uib-tab>
+
+                <uib-tab index="13" ng-show="newFireCard.incidentTypeCode != 1">
+                    <uib-tab-heading>
+                        3/ЧС
+                    </uib-tab-heading>
+                    <div class="tab-inside">
+
+                        <div class="button-place clearfix" ng-show="!!newFireCard.fireAct.id === true">
+                            <button ng-click="newFireCard.doPrint('emergency_3')"
+                                    class="button btn-sm btn-success pull-right">
+                                <span class="glyphicon glyphicon-print"></span>
+                                Печать отчета 3/ЧС
+                            </button>
+                        </div>
+
+
+                        <div class="chs-wrapper" id="chs3"></div>
+
+                    </div>
+
+                </uib-tab>
+
+                <uib-tab index="14" ng-show="newFireCard.incidentTypeCode != 1">
+                    <uib-tab-heading>
+                        4/ЧС
+                    </uib-tab-heading>
+                    <div class="tab-inside">
+
+                        <div class="button-place clearfix" ng-show="!!newFireCard.fireAct.id === true">
+                            <button ng-click="newFireCard.doPrint('emergency_4')"
+                                    class="button btn-sm btn-success pull-right">
+                                <span class="glyphicon glyphicon-print"></span>
+                                Печать отчета 4/ЧС
+                            </button>
+                        </div>
+
+
+                        <div class="chs-wrapper" id="chs4"></div>
+
+                    </div>
+
+                </uib-tab>
+
+
+
+                <uib-tab index="16">
+                    <uib-tab-heading>
+                        Заявитель
+                    </uib-tab-heading>
+                    <fieldset>
+                        <legend>112</legend>
+
+
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <label for="card-number">№ карточки</label>
+                                <div id="card-number">
+                                    {{newFireCard.fireAct.card112WithBean.card112.nEmergencyCardId}}
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <label for="incident-date">Дата происшествия</label>
+                                <div id="incident-date">
+                                    {{newFireCard.card112DtIncident(newFireCard.fireAct.card112WithBean.card112.dtIncident)}}
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <label for="incident-incoming-date">Дата поступления</label>
+                                <div id="incident-incoming-date">
+                                    {{newFireCard.card112DtIncident(newFireCard.fireAct.card112WithBean.dtReg01)}}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="incident-address">Адрес происшествия</label>
+                                <div id="incident-address">
+                                    {{newFireCard.fireAct.card112WithBean.card112.strAddressString}}&nbsp;{{newFireCard.fireAct.card112WithBean.card112.strBuilding}}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </fieldset>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-10">Фамилия
+                                                                 (заявитель)</label>
+                                    <input id="contactsFlow-10"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strDeclarantLastName"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-11">Имя
+                                                                 (заявитель)</label>
+                                    <input id="contactsFlow-11"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strDeclarantName"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-12">Отчество
+                                                                 (заявитель)</label>
+                                    <input id="contactsFlow-12"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strDeclarantMiddleName"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-13">Адрес
+                                                                 (заявитель)</label>
+                                    <input id="contactsFlow-13"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strDeclarantAddressString"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-14">Дом </label>
+                                    <input id="contactsFlow-14"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strDeclarantBuildingNumber"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="5">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-15">Корпус </label>
+                                    <input id="contactsFlow-15"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strDeclarantCorps"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-16">Квартира</label>
+                                    <input id="contactsFlow-16"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strDeclarantFlat"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="7">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group form-group-sm form-group-bottom-margin">
+                                    <label for="contactsFlow-17">Контактный
+                                                                 телефон</label>
+                                    <input id="contactsFlow-17"
+                                           ng-model="newFireCard.fireAct.card112WithBean.card112.strCallerContactPhone"
+                                           class="form-control input-sm" name=""
+                                           placeholder=""
+                                           data-flowControls="8">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </fieldset>
+
+
+                </uib-tab>
+
+
+                <uib-tab index="2">
+                    <uib-tab-heading>
+                        Оповещение
+                    </uib-tab-heading>
+                    <div style="height: 100%; overflow-x: hidden;">
+                        <div class="row" style="overflow-x: hidden;overflow-y: auto; height: 95%;">
+                            <div class="col-xs-12">
+                                <div class="row" ng-repeat="personToNotify in newFireCard.fireNotificationsCopy"
+                                     ng-if="newFireCard.showNotifyForRole(personToNotify)">
+                                    <div class="col-xs-2">
+                                        <input style="height: 30px;width: 30px;" type="checkbox"
+                                               ng-model="personToNotify.checked">
+                                        <button ng-click="newFireCard.deletePersonToNotifications($index)"
+                                                ng-show="!personToNotify.id" type="submit"
+                                                class="btn btn-danger btn-xs"><span
+                                                class="glyphicon glyphicon-minus"></span></button>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div ng-show="personToNotify.id"><b>Должность:</b>
+                                                    <br/>{{personToNotify.who}}
+                                                </div>
+                                                <div ng-show="!personToNotify.id">
+                                                    <b>Должность:</b>
+                                                    <br/><input class="form-control input-sm input-extra-small"
+                                                                type="text"
+                                                                ng-model="personToNotify.who">
+                                                </div>
+                                            </div>
+                                            <!--Должность-->
+                                            <div class="col-xs-6">
+                                                <div class="col-xs-9">
+                                                    <div ng-show="personToNotify.id"><b>Телефон:</b>
+                                                        <br/>{{personToNotify.phone}}
+                                                    </div>
+                                                    <div ng-show="!personToNotify.id">
+                                                        <b>Телефон:</b>
+                                                        <br/><input class="form-control input-sm input-extra-small"
+                                                                    type="text" ng-model="personToNotify.phone">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-3">
+
+                                                    <button style="margin-top:3px;"
+                                                            class="btn btn-xs btn-primary"
+                                                            ng-click="newFireCard.makeCallBack(personToNotify.phone, personToNotify.id)">
+                                                        <span class="glyphicon glyphicon-phone-alt"></span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row full-width">
+                                            <input type="text"
+                                                   class="form-control input-sm input-extra-small"
+                                                   placeholder="Сообщение"
+                                                   ng-change="newFireCard.autoCheckbox(personToNotify)"
+                                                   ng-model="personToNotify.message"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 5%">
+                            <div role="group" class="btn-group full-width">
+                                <button class="btn btn-warning" style="width: 15%"
+                                        ng-click="newFireCard.addPersonToNotifications()">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                <button class="btn btn-success" style="width: 65%"
+                                        ng-click="newFireCard.sendFireNotifications()">
+                                    Оповестить
+                                </button>
+                                <button class="btn btn-danger" style="width:20%;"
+                                        ng-click="newFireCard.clearFireNotifications()">
+                                    Отмена
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+
+
+
+
+
+                <uib-tab index="3">
+                    <uib-tab-heading active="newFireCard.currentTab === 'protocol'">
+                        Протокол
+                    </uib-tab-heading>
+
+
+                    <div ui-grid="newFireCard.gridOptions" ui-grid-auto-resize class="protocol-grid"></div>
+
+
+                </uib-tab>
+
+
+
+            </uib-tabset>
+
+
+            <!--            <div class="card-panel">
+                            <div class="row">
+                                <div class="col-xs-8" style="background: lightgreen">
+
+
+                                    <div class="row">
+
+                                        <div class="col-xs-4">
+                                            <label for="region-xs-4">Регион</label></br>
+                                            <input id="region-xs-4" class="form-control" ng-disabled="true"
+                                                   ng-model="newFireOrder.fireAct.firePlace.region.text">
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <label for="newFireOrderFlow-2">Админ. район</label></br>
+                                            <input id="newFireOrderFlow-2"
+                                                   data-typeahead-wait-ms="150"
+                                                   type="text"
+                                                   ng-disabled="newFireOrder.districtDisabled()"
+                                                   placeholder="Админ. Район"
+                                                   ng-model="newFireOrder.fireAct.firePlace.address.district"
+                                                   uib-typeahead="district as (district) for district in newFireOrder.storage.districts | filter: newFireOrder.fireAct.firePlace.address.district"
+                                                   class="form-control"
+                                                   typeahead-focus-on-select="false"
+                                                   typeahead-on-select="goToNextField(3)"
+                                                   typeahead-select-on-blur="true"
+                                                   data-flowControls="3">
+            &lt;!&ndash;
+                                            <input id="newFireOrderFlow-2"
+                                                   data-typeahead-wait-ms="150"
+                                                   type="text"
+                                                   ng-disabled="newFireOrder.districtDisabled()"
+                                                   placeholder="Админ. Район"
+                                                   ng-model="newFireOrder.fireAct.firePlace.address.district"
+                                                   uib-typeahead="district as (district) for district in newFireOrder.storage.districts | filter: newFireOrder.fireAct.firePlace.address.district"
+                                                   class="form-control"
+                                                   typeahead-focus-on-select="false"
+                                                   typeahead-on-select="goToNextField(3)"
+                                                   typeahead-select-on-blur="true"
+                                                   data-flowControls="3">
+            &ndash;&gt;
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <label for="newFireOrderFlow-88">Район</label></br>
+                                            <input id="newFireOrderFlow-88"
+                                                   type="text"
+                                                   ng-disabled="newFireOrder.districtDisabled()"
+                                                   placeholder="Район"
+                                                   ng-model="newFireOrder.fireAct.firePlace.address.settName"
+                                                   class="form-control" data-flowControls="4">
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-xs-11">
+                                            <label>Улица</label>
+                                            <ui-select
+                                                    ng-model="newFireOrder.fireAct.firePlace.address.street"
+                                                    data-flowControls="2"
+                                                    ng-disabled="newFireOrder.storage.dataOfStates.newFireOrder.mode === 2"
+                                                    on-select="newFireOrder.selectPrimaryStreet($item, goToNextField, 2)" autofocus="true">
+                                                <ui-select-match
+                                                        placeholder="Начните вводить улицу">
+                                                    {{newFireOrder.fireAct.firePlace.address.street}}
+                                                </ui-select-match>
+                                                <ui-select-choices
+                                                        refresh="newFireOrder.primaryStreetFieldChanged($select.search)"
+                                                        minimum-input-length="3" refresh-delay="300"
+                                                        repeat="address.street as address in newFireOrder.storage.dataOfStates.newFireOrder.streetsArray">
+                                                    {{address.street ? address.street : address.streetname}}
+                                                    {{address.settName}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-xs-1" style="padding-left: 0">
+                                            <button class="btn btn-default"
+                                                    ng-click="newFireOrder.crossingsModeEmit()"
+                                                    ng-show="newFireOrder.storage.dataOfStates.newFireOrder.mode === 0"
+                                                    uib-tooltip="Выбрать перекресток"
+                                                    ng-disabled="storage.fireAct.firePlace.address.naStreet"
+                                                    tooltip-placement="top"
+                                                    tooltip-trigger="mouseenter">
+                                                <i class="fa fa-lg fa-arrows-alt"></i>
+                                            </button>
+                                            <button class="btn btn-default"
+                                                    ng-click="newFireOrder.cancelCrossingMode()"
+                                                    ng-show="newFireOrder.storage.dataOfStates.newFireOrder.mode === 1"
+                                                    uib-tooltip="Отмена"
+                                                    tooltip-placement="top"
+                                                    tooltip-trigger="mouseenter">
+                                                <i class="fa fa-lg fa-ban"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+
+
+                                            <button class="btn btn-default"
+                                                    ng-click="newFireCard.newFireCard()">
+                                                <i class="fa fa-lg fa-arrows-alt"></i>
+                                            </button>
+
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col-xs-4 full-height" style="background: lightskyblue"></div>
+                            </div>
+
+                        </div>-->
+
+        </fieldset>
+    </div>
+
+
+    <div class="engine-wrapper">
+        <div class="supportedAbout">
+
+            <div class="row full-width">
+
+
+                <div class="col-xs-12  full-height">
+                    <div class="row full-width full-height magrin-left-free">
+                        <div class="engine-holder full-height clearfix">
+                            <div class="col-xs-6  full-height">
+                                <div class="on-fire full-height">
+                                    <div class="engine-on-fire full-height">
+
+                                        <fieldset class="full-height new-fire-card">
+                                            <legend>Техника на происшествии</legend>
+
+                                            <div class="panel-heading">
+                                                <info-about-recruited-engine
+                                                        engines="newFireCard.fireAct.orders"></info-about-recruited-engine>
+
+                                                <div style="font-size: 14px;display: inline-block">
+<!--
+                                                    <button ng-show="newFireCard.storage.isRoot && newFireCard.fireAct.firePlace.geomX && newFireCard.fireAct.firePlace.geomY"
+                                                            class="btn btn-xs btn-success"
+                                                            ng-click="newFireCard.showSpider()">
+                                                        <span class="glyphicon glyphicon-map-marker"></span>
+                                                    </button>
+-->
+                                                </div>
+                                            </div>
+
+                                            <div class="panel-body panel-body-order-engines engine-of-list">
+                                                <div style="height: 70%; overflow: auto">
+                                                    <table ng-table class="table table-bordered small text-center"
+                                                           style="margin: 0">
+                                                        <tr ng-repeat="order in newFireCard.fireAct.orders | orderBy: newFireCard.engineTypeSortingAlgorythm">
+                                                            <td data-title="'Тип'" title="{{order.orderAs.engineType}}">
+                                                                {{order.fireEngine.engineType |
+                                                                engineTypeDecorator: order.fireEngine.isFirstTank:
+                                                                order.fireEngine.asGD}}
+                                                            </td>
+                                                            <td data-title="newFireCard.storage.fireUser.ACCESS.words.pch">
+                                                                {{order.departmentName}}{{newFireCard.getDislocation(order)}}
+                                                            </td>
+                                                            <td data-title="'№'">{{order.fireEngine.gosNo}}</td>
+                                                            <td data-title="'-'"
+                                                                newFireCard.storage.dataOfStates.newFireCard.mode=== 1
+                                                                class="clearfix eng-add-move-buttons">
+
+                                                                <button class=" btn-danger pull-left"
+                                                                        ng-click="newFireCard.onRemoveOrder(order)">
+                                                                    <span class="glyphicon glyphicon-minus"></span>
+                                                                </button>
+<!--
+                                                                <button class=" btn-success pull-left"
+                                                                        ng-click="newFireCard.showPathFromOrderToFire(order)">
+                                                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                                                </button>
+-->
+                                                                <button ng-show="(newFireCard.engineStatuse(order)=='СЛЕДУЕТ')"
+                                                                        class="btn btn-xs btn-primary  pull-left"
+                                                                        ng-click="newFireCard.onArriveEngineToFire(order)">
+                                                                    <i class="fa fa-taxi" aria-hidden="true"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div style="height: auto;white-space: normal; border: #ff6354 solid 1px; padding: 2px 2px 0 2px; margin: 10px 0 0 0;"
+                                                     ng-show="newFireCard.fireAct !=null && newFireCard.fireAct.notFoundOrders && newFireCard.fireAct.notFoundOrders.length > 0"
+                                                     class="col-md-12 btn-group nopm"
+                                                     uib-tooltip="Список ненабранной техники">
+                                <span ng-repeat="missedEngine in newFireCard.fireAct.notFoundOrders"
+                                      class="label label-danger"
+                                      style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;">
+                                {{missedEngine.type.engineType}}
+                                    <span class="badge">{{missedEngine.count}}</span>
+                                </span>
+                                                </div>
+
+                                            </div>
+
+
+                                        </fieldset>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6  full-height">
+                                <div class="in-the-set full-height">
+                                    <div class="automatic-equipment-set">
+
+
+                                        <div class="preloader no-print" ng-if="newFireCard.preload">
+                                            <div class="fullscreen-preloader-spinner">
+                                                <i class="fa fa-circle-o-notch fa-spin fa-5x"></i>
+                                            </div>
+                                        </div>
+
+                                        <fieldset class="full-height new-fire-card">
+                                            <legend>Подбор техники</legend>
+
+                                            <div class="overflow-scroll auto-engine-wrapper">
+                                                <table ng-table class="table table-bordered small text-center"
+                                                       style="margin: 0">
+
+                                                    <tr ng-repeat="order in newFireCard.fireAct.addOrders | orderBy: newFireCard.engineTypeSortingAlgorythm">
+                                                        <td data-title="'Тип'" title="{{order.orderAs.engineType}}">
+                                                            {{order.fireEngine.engineType |
+                                                            engineTypeDecorator:
+                                                            order.fireEngine.isFirstTank:order.fireEngine.asGD}}
+                                                        </td>
+                                                        <td data-title="newFireCard.storage.fireUser.ACCESS.words.pch">
+                                                            {{order.departmentName}}{{newFireCard.getDislocation(order)}}
+                                                        </td>
+                                                        <td data-title="'№'">{{order.fireEngine.gosNo}}</td>
+                                                        <td data-title="'-'">
+                                                            <button class=" btn-danger"
+                                                                    ng-click="newFireCard.onRemoveOrder(order)">
+                                                                <span class="glyphicon glyphicon-minus"></span>
+                                                            </button>
+<!--
+                                                            <button class=" btn-success"
+                                                                    ng-click="newFireCard.showPathFromOrderToFire(order)">
+                                                                <span class="glyphicon glyphicon-map-marker"></span>
+                                                            </button>
+-->
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </fieldset>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="manipulate-buttons">
+
+
+            <div class="row full-width">
+                <div class="col-xs-6">
+                    <div class="row full-width">
+                        <div class="col-xs-5">
+                            <button class="btn btn-primary gray-button full-width" ng-click="newFireCard.createFire()"
+                                    ng-if="!!newFireCard.fireAct.createDate === true && !!newFireCard.fireAct.startDate === true">
+                                Сохранить приказ
+                            </button>
+                        </div>
+                        <div class="col-xs-7 clearfix">
+                            <div ng-class="newFireCard.disableEngineReserv()? 'critical-field': 'critical-field-filled'"
+                                 class="pull-left">
+                                <button class="btn btn-primary gray-button full-width"
+                                        ng-click="newFireCard.agreePlace()"
+                                        ng-disabled="newFireCard.disableEngineReserv()" data-step-control="12">
+                                    Зарезервировать тех.
+                                </button>
+                            </div>
+
+
+                            <div class="collapse navbar-collapse pull-left" ng-if="!newFireCard.disableEngineReserv()">
+                                <ul class="navbar-nav nav make-nav-cute noselect">
+
+
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li ui-sref-active="active"
+                                                ng-repeat="rang in newFireCard.storage.rangs  | orderBy: 'sidfirerank'">
+                                                <a ng-click="newFireCard.likeRangEngine(rang)">{{rang.namefirerank}}</a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xs-6">
+
+
+                    <div class="btn-group full-width">
+
+
+                        <button class="btn btn-primary gray-button half-width" ng-click="newFireCard.createFire()"
+                                ng-show="!!newFireCard.fireAct.createDate === true && !!newFireCard.fireAct.startDate === false"
+                                data-step-control="13">
+                            Создать приказ
+                        </button>
+
+                        <button class="btn btn-primary gray-button half-width"
+                                ng-click="newFireCard.addEnginesToFire()"
+                                ng-if="!!newFireCard.fireAct.startDate === true && !!newFireCard.fireAct.addOrders.length === true">
+                            Подтвердить технику
+                        </button>
+
+
+                        <button class="btn btn-primary gray-button half-width" ng-click="newFireCard.cancelOrder()"
+                                ng-if="!!newFireCard.fireAct.addOrders.length === true">
+                            <!--ng-if="!!newFireCard.fireAct.startDate === true && !!newFireCard.fireAct.addOrders.length === true">-->
+                            Отменить резервирование
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--</div>-->
+
+<!--</div>-->
+
+

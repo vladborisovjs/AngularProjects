@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html ng-app="app" lang="ru">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="language" content="Russian">
+    <meta http-equiv="content-language" content="ru">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <!--<meta name="referrer" content="unsafe-url">-->
+
+
+
+    <title>ЦУКС</title>
+    <!-- build:css css/app.css -->
+    <link href="sources/styles.css" rel="stylesheet">
+    <link href="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.min.css">
+    <link href="bower_components/angular-growl-v2/build/angular-growl.css" rel="stylesheet">
+    <link href="bower_components/ng-table/dist/ng-table.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+    <link href="sources/css/main.css" rel="stylesheet">
+    <link href="sources/css/form6.css" rel="stylesheet">
+    <link href="sources/animate.css" rel="stylesheet">
+
+
+
+    <!--<link href="bower_components/ui-select/dist/select.css" rel="stylesheet">-->
+    <link href="bower_components/angular-ui-select/dist/select.css" rel="stylesheet">
+
+
+
+
+
+    <link href="bower_components/selectize/dist/css/selectize.default.css" rel="stylesheet">
+    <link href="bower_components/angular-hotkeys/build/hotkeys.css" rel="stylesheet">
+    <link href="bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="bower_components/angular-ui-grid/ui-grid.min.css" rel="stylesheet">
+    <link href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+    <!-- endbuild -->
+
+
+    <!-- build:js js/app.js -->
+    <script src="bower_components/pako/dist/pako.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-color/jquery.color.js"></script>
+    <script src="bower_components/jquery-color/jquery.color.svg-names.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+
+
+    <!--<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>-->
+    <!--<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
+
+
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/ng-websocket/ng-websocket.js"></script>
+    <script src="bower_components/ng-table/dist/ng-table.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-draganddrop/angular-draganddrop.js"></script>
+    <script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/moment/locale/ru.js"></script>
+    <script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+
+
+
+
+    <!--<script src="bower_components/ui-select/dist/select.js"></script>-->
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+
+
+
+
+
+    <script src="bower_components/angular-hotkeys/build/hotkeys.js"></script>
+    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+    <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
+    <!--<script src="bower_components/dotjem-angular-tree/dotjem-angular-tree.min.js"></script>-->
+    <script src="node_modules/angular-i18n/angular-locale_ru-ru.js"></script>
+    <script src="sources/uiGridPlugins/ng-grid-flexible-height.js"></script>
+
+
+    <script src="sources/myTemplates.js"></script>
+
+    <script src="sources/app.js"></script>
+    <script src="sources/app.config.js"></script>
+    <script src="sources/gzip.service.js"></script>
+    <script src="sources/filters.js"></script>
+    <script src="sources/factories.js"></script>
+    <script src="sources/directives.js"></script>
+
+
+    <script src="sources/firesroot/modals/modals.module.js"></script>
+    <script src="sources/firesroot/modals/modals.service.js"></script>
+    <script src="sources/firesroot/modals/order/modals-order.controller.js"></script>
+    <script src="sources/firesroot/modals/notes/modals-notes.controller.js"></script>
+    <script src="sources/firesroot/modals/confirm/modals-confirm.controller.js"></script>
+    <script src="sources/firesroot/modals/protocol/modals-protocol.controller.js"></script>
+    <script src="sources/firesroot/modals/matchAdress/modals-matchAdress.controller.js"></script>
+    <script src="sources/firesroot/modals/reports/modals-reports.controller.js"></script>
+    <script src="sources/firesroot/modals/ASR/modals-ASRReports.controller.js"></script>
+    <script src="sources/firesroot/modals/warning/modals-warning.controller.js"></script>
+
+
+
+
+
+    <script src="sources/firesroot/modals/period/modals-period.controller.js"></script>
+    <script src="sources/firesroot/command/requestCommand.js"></script>
+
+
+
+
+
+
+    <script src="sources/auth/LoginPageCtrl.js"></script>
+    <script src="sources/auth/ChangePassPageCtrl.js"></script>
+    <script src="sources/firesroot/content/forma/forma.js"></script>
+    <script src="sources/firesroot/fires.js"></script>
+    <script src="sources/firesroot/command/command.js"></script>
+    <script src="sources/firesroot/command/docCommand.js"></script>
+    <script src="sources/firesroot/content/firesbase/firebase.js"></script>
+    <script src="sources/firesroot/content/firesbase/firebase.filters.js"></script>
+    <script src="sources/auth/Parking.js"></script>
+
+
+
+    <script src="sources/firesroot/content/newFireCard/newFireCardCtrl.js"></script>
+
+
+
+
+    <!--<script src="sources/firesroot/content/order/order.js"></script>-->
+    <!--<script src="sources/firesroot/content/newFireOrder/newFireOrderCtrl.js"></script>-->
+    <!--<script src="sources/firesroot/content/orderEdit/orderEditCtrl.js"></script>-->
+    <script src="sources/firesroot/content/card112/card112.js"></script>
+    <script src="sources/firesroot/content/chooseTech/chooseTech.js"></script>
+    <script src="sources/firesroot/content/chooseTech/bydept/bydept.js"></script>
+    <script src="sources/firesroot/content/chooseTech/bytypes/bytypes.js"></script>
+    <script src="sources/firesroot/content/protocol/protocol.js"></script>
+    <script src="sources/firesroot/footer/footercontroller.js"></script>
+    <script src="sources/firesroot/content/docs/docs.js"></script>
+    <script src="sources/firesroot/content/formaedit/formaedit.js"></script>
+    <script src="sources/firesroot/content/archive/archive.js"></script>
+    <script src="sources/firesroot/content/chooseTech/bystates/bystatus.js"></script>
+    <script src="sources/firesroot/content/bridges/bridgesCtrl.js"></script>
+    <script src="sources/firesroot/command/protocolForF6Ctrl.js"></script>
+
+
+
+
+
+<!--
+
+    <script src="sources/firesroot/content/deptsNoteParent/garrison/garrisonCtrl.js"></script>
+    <script src="sources/firesroot/content/deptsNoteParent/bydept/bydept.js"></script>
+    <script src="sources/firesroot/content/deptsNoteParent/deptsNoteParent.js"></script>
+    <script src="sources/firesroot/content/deptsNoteParent/aso/asoGarrisonCtrl.js"></script>
+    <script src="sources/firesroot/content/deptsNoteParent/protocol/notesProtocol.js"></script>
+    <script src="sources/firesroot/content/deptsNoteParent/headCaraulCrew/headCaraulCtrl.js"></script>
+
+-->
+
+
+
+
+
+
+
+    <script src="sources/firesroot/content/deptsNoteNew/deptsNoteParent.js"></script>
+    <script src="sources/firesroot/content/deptsNoteNew/bydept/bydept.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="sources/firesroot/command/archiveCommand.js"></script>
+    <script src="sources/firesroot/command/formsFiltersCommand.js"></script>
+    <script src="sources/firesroot/content/chooseTech/engineStatesHistory/enginesStatesHistoryCtrl.js"></script>
+    <script src="sources/firesroot/content/fireCards/fireCardsCtrl.js"></script>
+    <script src="sources/firesroot/content/opo/opo.js"></script>
+    <script src="sources/firesroot/content/opo/opo-item/opo-item.js"></script>
+    <script src="sources/firesroot/content/hydrants/hydrants.js"></script>
+
+
+    <script src="bower_components/blob-polyfill/Blob.js"></script>
+    <script src="bower_components/file-saver.js/FileSaver.js"></script>
+    <script src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+
+
+
+    <script src="sources/admin/admin.js"></script>
+    <script src="sources/admin/base/admin.base.js"></script>
+    <script src="sources/admin/command/admin.command.js"></script>
+
+
+<!--
+    <script src="sources/js/localforage/localForage.min.js"></script>
+    <script src="sources/js/localforage/angular-localForage.min.js"></script>
+-->
+
+    <script src="sources/js/buildCreationDate.js"></script>
+
+
+    <!-- endbuild -->
+
+    <script src="sources/userRoles/userRoles.js"></script>
+    <script src="sources/simulateEmit/simulateEmit.js"></script>
+    <script src="config.js"></script>
+
+
+<!--TODO: сделано для Узбекистана, в новой заявке 1/ЧС и т.д.-->
+    <script src="sources/chs/1chs.js"></script>
+    <script src="sources/chs/2chs.js"></script>
+    <script src="sources/chs/3chs.js"></script>
+    <script src="sources/chs/4chs.js"></script>
+    <script src="sources/chs/fire.js"></script>
+
+
+
+<!--TODO: сделано для имитации карточек от 112-->
+    <!-- Карточки 112 -->
+    <!--<script src="sources/js/112.js"></script>-->
+
+
+
+
+
+
+</head>
+<body>
+<div growl></div>
+
+<div id="websocket-visual-box" class="websocket-state-circle"></div>
+
+<div ui-view class="main-layout"></div>
+</body>
+</html>
+
+

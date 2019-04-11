@@ -1,0 +1,87 @@
+<div class="modal-window modal-info">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title" ng-bind="protocolCtrl.title"></h4>
+    </div>
+    <div class="modal-body" id="modal-body">
+
+
+        <div class="container-fluid">
+
+
+            <form class="form protocol-edit-list" role="form">
+
+                <div class="row">
+
+                    <div class="col-xs-2">Дата</div>
+                    <div class="col-xs-10">
+                        <input id="protocolDatePicker" date-range-picker
+                               class="form-control protocol-date-picker full-width"
+                               type="text"
+                               ng-model="protocolCtrl.data.currentProtocolDate"
+                               min="'1970-01-01'"
+                               options="protocolCtrl.singleDatePickerOptions"/>
+                    </div>
+                </div>
+
+                <div ng-show="protocolCtrl.action != 'date'">
+
+                    <div class="row">
+                        <div class="col-xs-2">ПЧ</div>
+                        <div ng-bind="protocolCtrl.getDeptForAppendProtocol()"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">Сообщение</div>
+                        <div class="col-xs-10">
+                            <input class="form-control text-center"
+                                   type="text"
+                                   ng-model='protocolCtrl.data.message'>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">Фамилия</div>
+                        <div class="col-xs-5" ng-bind="protocolCtrl.storage.fireUser.lastName"></div>
+                        <!--<div class="col-xs-5" ng-bind="protocolCtrl.fire.user.lastName"></div>-->
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <br>
+                    <button class="btn btn-success btn-md" type="button" ng-click="protocolCtrl.ok()">Сохранить</button>
+                    <button class="btn btn-danger btn-md" type="button" ng-click="protocolCtrl.cancel()">Отмена</button>
+
+                </div>
+            </form>
+
+
+        </div>
+
+
+        <!--        <table class="table table-order112">
+                    <thead>
+                    <tr>
+                        <th>Время</th>
+                        <th>Пользователь</th>
+                        <th>Сообщение</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="card112log in protocolCtrl.text.card112WithBean.protocols112log">
+                        <td>{{card112log.date | date:'d.MM.y hh:mm:ss'}}</td>
+                        <td>{{card112log.user}}</td>
+                        <td>{{card112log.message}}</td>
+                    </tr>
+                    </tbody>
+                </table>-->
+    </div>
+
+
+    <!--
+
+        <div class="modal-footer">
+            <button class="btn btn-success btn-md" type="button" ng-click="protocolCtrl.ok()">Сохранить</button>
+            <button class="btn btn-danger btn-md" type="button" ng-click="protocolCtrl.cancel()">Отмена</button>
+        </div>
+    -->
+
+
+</div>
+

@@ -1,0 +1,77 @@
+.panel-commands.command{
+    padding: 0;
+    border-left: 1px solid rgba(8, 8, 8, 1);
+    background: @panels-background;
+    height: 100%;
+    position: relative;
+    //overflow-y: auto;
+    //overflow-x: hidden;
+
+    button{
+        border-bottom: 1px solid rgba(0, 0, 0, .35);
+        padding: 3px 6px;
+    }
+    button.very-xs{
+        padding: 1px 5px;
+    }
+
+    > .panel-group{
+        //height: 100%;
+
+        > div{
+
+            .panel{
+                background: @panels-background;
+                border: none;
+                //height: 100%;
+                border-radius: 0;
+                box-shadow: initial;
+                overflow: initial;
+
+                .panel-heading{
+                    background: @panel-heading-background;
+                    font-size: .9rem !important;
+                    font-weight: 400 !important;
+                    border-radius: 0;
+                    padding: 8px 10px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    color: @panel-heading-color;
+                    height: 32px;
+                    overflow: hidden;
+                    border-bottom: 1px solid darken(@panel-heading-background, 15%);
+
+                    .text-shadow-on-light;
+
+                }
+
+                .panel-body{
+                    background: initial;
+                    margin: 5px 0;
+                    padding: 0 10px;
+
+                    button.btn-success{
+                        text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+                    }
+
+
+
+                    .row,
+                    [class*='col-']{
+                        margin: initial;
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+
+                    > .row:not(:first-of-type){
+                        padding: 3px 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .tabs-full-height{
+        border: 0;
+    }
+}

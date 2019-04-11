@@ -1,0 +1,863 @@
+<div class="container-fluid full-height">
+    <div class="row full-height order-content-wrapper">
+        <div class="col-xs-7 nopm">
+            <div class="panel panel-default small">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <h4>
+                                {{order.storage.selectedFire.incidentType.name}}</h4>
+                            <button class="btn btn-sm btn-info" ng-click="order.downloadEvent()"
+                                    ng-show="order.storage.fireUser.ACCESS.states.order.buttons.unloadingToTheStaffTable">
+                                Выгрузка в штабной стол
+                            </button>
+                        </div>
+                        <div class="col-xs-4">
+                           <!-- {{order.stateCalledFrom}}:&nbsp;{{order.storage.selectedFire.id}}-->
+                        </div>
+                        <div class="col-xs-3 text-right no-wrap">
+                            <span>Исполнитель</span>
+                            <span>({{order.storage.selectedFire.user.uid}}) {{order.storage.selectedFire.user.firstName}} {{order.storage.selectedFire.user.lastName}}</span>
+                        </div>
+
+                        <div class="col-xs-3" style="padding-left: 10px;height: 100%">
+                    <span>
+<!--
+                        <button ng-hide="order.storage.selectedFire.isReadyForF6 || order.storage.selectedFire.firstCarDate!=null"
+                                class="btn btn-default pull-right" ng-click="order.switchEditMode()">
+                            Редактировать
+                        </button>
+-->
+
+                        <button class="btn btn-default pull-right" ng-click="order.switchEditMode()"
+                                ng-show="order.storage.fireUser.ACCESS.states.order.editOrderButton">
+                            Редактировать
+                        </button>
+
+
+                    </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <form class="form order-form" role="form">
+                                    <div class="row">
+                                        <div class="col-sm-2 formbox">
+                                            <label for="2rg-from">Приказ: </label>
+                                            <input ng-disabled='true' class="form-control  text-center"
+                                                   type="text"
+                                                   id="2rg-from" ng-model='order.storage.selectedFire.numFireAct'
+                                                   style="width: 100%">
+                                        </div>
+                                        <!--<div class="col-md-4  formbox">-->
+                                        <!--<label for="2rg-from2">Конт. тел: </label>-->
+                                        <!--<input type="text" ng-disabled='order.isFormDisabled'-->
+                                        <!--class="form-control" type="text" id="2rg-from2"-->
+                                        <!--ng-model='order.storage.selectedFire.callerPhoneNum' style="width: 100%">-->
+                                        <!--</div>-->
+                                        <div class="col-md-2  formbox ">
+                                            <label for="2rg-from3">{{order.storage.fireUser.ACCESS.words.pch}}:</label>
+                                            <input ng-disabled='true' class="form-control text-center"
+                                                   type="text" id="2rg-from3"
+                                                   ng-model='order.storage.selectedFire.firePlace.pchName'
+                                                   style="width: 100%">
+                                        </div>
+                                        <div class="col-md-2  formbox" ng-hide="!fireBase.storage.fireUser.ACCESS.commonSwitches.rank">
+                                            <label for="2rg-from4">Ранг: </label>
+                                            <input ng-disabled='true' class="form-control text-center"
+                                                   type="text" id="2rg-from4"
+                                                   ng-model='order.storage.selectedFire.rank.sidfirerank'
+                                                   style="width: 100%">
+                                        </div>
+                                        <div class="col-md-4  formbox " ng-hide="!fireBase.storage.fireUser.ACCESS.commonSwitches.modifiers">
+                                            <label for="2rg-from6">Модификаторы: </label>
+                                            <input ng-disabled='true' class="form-control text-center"
+                                                   type="text" id="2rg-from6" style="width: 100%"
+                                                   ng-value="order.getModificators(order.storage.selectedFire.firerankModificators)">
+
+                                        </div>
+                                        <div class="col-md-2 formbox " ng-hide="!fireBase.storage.fireUser.ACCESS.commonSwitches.rankMax">
+                                            <label for="2rg-from5">Ранг(МАХ) </label>
+                                            <input ng-disabled='true' class="form-control text-center"
+                                                   type="text" id="2rg-from5"
+                                                   ng-model='order.storage.selectedFire.maxRank'
+                                                   style="width: 100%">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 formbox">
+                                            <label for="3rg-from">Админ. район: </label>
+                                            <input ng-disabled='order.isFormDisabled' class="form-control text-center"
+                                                   type="text"
+                                                   id="3rg-from"
+                                                   ng-model='order.storage.selectedFire.firePlace.address.raionName'
+                                                   style="width: 100%">
+                                        </div>
+
+                                        <!--
+                                                                                <div class="col-sm-5 formbox">
+                                                                                    <label for="3rg-from">Регион: </label>
+                                                                                    <input ng-disabled='order.isFormDisabled' class="form-control text-center"
+                                                                                           type="text"
+                                                                                           id="3rg-from"
+                                                                                           ng-model='order.storage.selectedFire.firePlace.address.settName'
+                                                                                           style="width: 100%">
+                                                                                </div>
+                                                                                <div class="col-sm-7  formbox ">
+                                                                                    <label for="3rg-from2">Район: </label>
+                                                                                    <input type="text" ng-disabled='order.isFormDisabled'
+                                                                                           class="form-control  text-center" type="text" id="3rg-from2"
+                                                                                           ng-model='order.storage.selectedFire.firePlace.address.district'
+                                                                                           style="width: 100%">
+                                                                                </div>
+                                        -->
+                                    </div>
+
+                                    <div class="row" ng-hide="order.storage.selectedFire.firePlace.crossStreet == null">
+                                        <div class="col-sm-12 formbox">
+                                            <label for="cross-with">Пересечение с:</label>
+                                            <input ng-disabled='order.isFormDisabled' class="form-control text-center"
+                                                   type="text" id="cross-with"
+                                                   ng-model='order.storage.selectedFire.firePlace.crossStreet.street'
+                                                   style="width: 100%">
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row ">
+                                        <div class="col-sm-9 formbox">
+                                            <label for="4rg-from">Улица: </label>
+                                            <input ng-disabled='order.isFormDisabled' class="form-control text-center"
+                                                   type="text"
+                                                   id="4rg-from"
+                                                   ng-model='order.storage.selectedFire.firePlace.address.street'
+                                                   style="width: 100%">
+                                        </div>
+                                        <div class="col-sm-3  formbox ">
+                                            <label for="4rg-from2">Дом: </label>
+                                            <input ng-if="!!order.storage.selectedFire.firePlace.address.manualHouse === true"
+                                                   type="text" ng-disabled='order.isFormDisabled'
+                                                   class="form-control  text-center" type="text" id="4rg-from2"
+                                                   ng-model='order.storage.selectedFire.firePlace.address.manualHouse'
+                                                   style="width: 100%">
+                                            <input ng-if="!!order.storage.selectedFire.firePlace.address.manualHouse !== true"
+                                                   type="text" ng-disabled='order.isFormDisabled'
+                                                   class="form-control  text-center" type="text" id="4rg-from2"
+                                                   ng-model='order.storage.selectedFire.firePlace.address.house'
+                                                   style="width: 100%">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3  formbox ">
+                                            <label for="4rg-from3">Кв: </label>
+                                            <input type="text" ng-disabled='order.isFormDisabled'
+                                                   class="form-control  text-center" type="text" id="4rg-from3"
+                                                   ng-model='order.storage.selectedFire.flat' style="width: 100%">
+                                        </div>
+                                        <div class="col-sm-3 formbox">
+                                            <label for="4rg-from4">Код: </label>
+                                            <input ng-disabled='order.isFormDisabled' class="form-control text-center"
+                                                   type="text"
+                                                   id="4rg-from4" ng-model='order.storage.selectedFire.doorCode'
+                                                   style="width: 100%">
+                                        </div>
+
+                                        <div class="col-sm-3  formbox ">
+                                            <label for="4rg-from5">Этаж: </label>
+                                            <input type="text" ng-disabled='order.isFormDisabled'
+                                                   class="form-control  text-center" type="text" id="4rg-from5"
+                                                   ng-model='order.storage.selectedFire.floor' style="width: 100%">
+                                        </div>
+                                        <div class="col-sm-3  formbox ">
+                                            <label for="4rg-from3">Этажей: </label>
+                                            <input type="text" ng-disabled='order.isFormDisabled'
+                                                   class="form-control  text-center" type="text" id="4rg-from6"
+                                                   ng-model='order.storage.selectedFire.floors' style="width: 100%">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 formbox">
+                                            <label for="6rg-from">Объект: </label>
+                                            <input ng-disabled='order.isFormDisabled' class="form-control text-center"
+                                                   type="text"
+                                                   id="6rg-from"
+                                                   ng-model='order.storage.selectedFire.firePlace.fireObject.nameobject'
+                                                   style="width: 100%">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!--<div class="col-sm-2 formbox">
+                                            <label for="6rg-from4">Ранг объекта</label>
+                                            <input ng-disabled='true' class="form-control text-center"
+                                                   type="text"
+                                                   id="6rg-from4" ng-model='order.storage.selectedFire.firePlace.fireObject.rank'
+                                                   style="width: 100%">
+                                        </div>-->
+                                        <!--<div class="col-sm-2 formbox">
+                                            <label for="6rg-from2">МФР об.</label>
+                                            <input ng-disabled='true' class="form-control text-center"
+                                                   type="text"
+                                                   id="6rg-from2"
+                                                   ng-model='order.storage.selectedFire.firePlace.fireObject.rangmodifiers'
+                                                   style="width: 100%">
+                                        </div>
+                                        <div class="col-sm-3 formbox">
+                                            <label for="6rg-from3">ДТ</label>
+                                            <input ng-disabled='true' class="form-control text-center"
+                                                   type="text"
+                                                   id="6rg-from3" ng-model='order.storage.selectedFire.firePlace.fireObject.addteches'
+                                                   style="width: 100%">
+                                        </div>-->
+
+                                        <div class="col-xs-8">
+                                            <div class="row">
+                                                <div class="col-xs-5 formbox">
+                                                    <label for="6rg-from3">Источник оповещения</label>
+                                                    <input ng-disabled='true' class="form-control text-center"
+                                                           type="text"
+                                                           id="6rg-from3"
+                                                           ng-model='order.storage.selectedFire.incidentSource.text'
+                                                           style="width: 100%">
+                                                </div>
+                                                <div class="col-xs-7 formbox">
+                                                    <label>&nbsp Контактный номер</label>
+                                                    <input ng-disabled='true' class="form-control text-center"
+                                                           type="text"
+                                                           ng-model='order.storage.selectedFire.card112WithBean.card112.strCallerContactPhone'
+                                                           style="width: 100%">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 formbox">
+                                                    <label for="7rg-from">Примечание: </label>
+                                                    <textarea rows="1" ng-disabled='order.isFormDisabled'
+                                                              class="form-control text-center"
+                                                              type="text" id="7rg-from"
+                                                              ng-model='order.storage.selectedFire.firePlace.fireObject.prim'
+                                                              style="width: 100%"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="col-xs-12 clearfix audio-action-buttons">
+
+                                                <!--
+                                                <label>&nbsp</label>
+                                                <button class="btn btn-success"
+                                                        uib-popover-template="order.popoverTemplareUrl"
+                                                        popover-placement="right">
+                                                    <span class="glyphicon glyphicon-record"></span>&nbsp;Запись звонка
+                                                </button>
+
+                                                <script type="text/ng-template" id="audioTemplate.html">
+                                                    <audio src="beep.mp3" controls></audio>
+                                                </script>
+
+                                                -->
+
+                                                <button class="btn btn-primary default-gray-button"
+                                                        ng-click="order.getAudioRecord('audio01')"
+                                                        ng-class="{audioPlayback: order.playbackAudio == 'audio01'}"
+                                                        ng-disabled='!order.storage.selectedFire.audio01'
+                                                        ng-show="order.storage.fireUser.ACCESS.states.order.buttons.recordingACall">
+                                                    <span class="glyphicon glyphicon-record"></span>&nbsp;Запись звонка
+                                                </button>
+                                                <button class="btn btn-primary default-gray-button"
+                                                        ng-click="order.makeCallBack(order.storage.selectedFire.card112WithBean.card112.strCallerContactPhone)"
+                                                        ng-disabled="!order.storage.selectedFire.card112WithBean.card112.strCallerContactPhone.trim().length > 0"
+                                                        ng-show="order.storage.fireUser.ACCESS.states.order.buttons.dialer">
+                                                    <span class="glyphicon glyphicon-earphone"></span>&nbsp;Дозвон
+                                                </button>
+                                                <button class="btn btn-primary default-gray-button"
+                                                        ng-click="order.getAudioRecord('audio112')"
+                                                        ng-class="{audioPlayback: order.playbackAudio == 'audio112'}"
+                                                        ng-disabled='!order.storage.selectedFire.audio112'
+                                                        ng-disabled="!order.storage.selectedFire.card112WithBean.card112.strCallerContactPhone.trim().length > 0"
+                                                        ng-show="order.storage.fireUser.ACCESS.states.order.buttons.operator112">
+                                                    <span class="glyphicon glyphicon-user"></span>&nbsp;Оператор 112
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="row">-->
+
+                                    <!--</div>-->
+                                </form>
+                            </div>
+                            <div class="col-xs-3 column-with-left-border">
+                                <form class="form">
+                                    <label for="rg-from">Начало: </label>
+                                    <input ng-disabled='true' class="form-control text-center nopm" type="text"
+                                           id="rg-from"
+                                           name="rg-from"
+                                           ng-value="order.storage.selectedFire.startDate  | date : 'dd-MM-yyyy HH:mm'"
+                                           style="width: 100%">
+                                    <label for="rg-from2">Приб. техн.</label>
+                                    <input ng-disabled='true' class="form-control text-center nopm" type="text"
+                                           id="rg-from2"
+                                           name="rg-from"
+                                           ng-value="order.storage.selectedFire.firstCarDate  | date : 'dd-MM-yyyy HH:mm'"
+                                           style="width: 100%">
+                                    <label for="rg-from3" ng-hide="!fireBase.storage.fireUser.ACCESS.commonSwitches.firstTrunk">1-ый ствол </label>
+                                    <input ng-disabled='true' class="form-control text-center nopm" type="text"
+                                           id="rg-from3"
+                                           name="rg-from"
+                                           ng-value="order.storage.selectedFire.firstStvolDate  | date : 'dd-MM-yyyy HH:mm'"
+                                           style="width: 100%" ng-hide="!fireBase.storage.fireUser.ACCESS.commonSwitches.firstTrunk">
+                                    <label for="rg-from4">Локализация. </label>
+                                    <input ng-disabled='true' class="form-control text-center nopm" type="text"
+                                           id="rg-from4"
+                                           name="rg-from"
+                                           ng-value="order.storage.selectedFire.L1Date  | date : 'dd-MM-yyyy HH:mm'"
+                                           style="width: 100%">
+                                    <label for="rg-from5" ng-hide="!fireBase.storage.fireUser.ACCESS.commonSwitches.LOG">ЛОГ </label>
+                                    <input ng-disabled='true' class="form-control text-center nopm" type="text"
+                                           id="rg-from5"
+                                           name="rg-from"
+                                           ng-value="order.storage.selectedFire.LOGDate  | date : 'dd-MM-yyyy HH:mm'"
+                                           style="width: 100%" ng-hide="!fireBase.storage.fireUser.ACCESS.commonSwitches.LOG">
+                                    <label for="rg-from6">ЛПП </label>
+                                    <input ng-disabled='true' class="form-control text-center nopm" type="text"
+                                           id="rg-from6"
+                                           name="rg-from"
+                                           ng-value="order.storage.selectedFire.LPPDate  | date : 'dd-MM-yyyy HH:mm'"
+                                           style="width: 100%">
+                                    <label for="rg-from7">РО </label>
+                                    <input ng-disabled='true' class="form-control text-center nopm" type="text"
+                                           id="rg-from7"
+                                           name="rg-from"
+                                           ng-value="order.storage.selectedFire.RODate  | date : 'dd-MM-yyyy HH:mm'"
+                                           style="width: 100%">
+                                </form>
+
+
+                                <!--
+
+                                                                <button class="btn btn-warning button-order-log" ng-click="order.
+                                                                showCardLog(order.storage.selectedFire.card112WithBean.id,order);" ng-disabled='!order.storage.selectedFire.card112WithBean.id'>
+                                                                    <span class="glyphicon glyphicon-list"></span>&nbsp;Этапы
+                                                                </button>
+                                -->
+                                <button class="btn btn-warning button-order-log default-gray-button" ng-click="order.
+                                showCardLog();"
+                                        ng-disabled='!order.storage.selectedFire.card112WithBean.protocols112log.length'
+                                        ng-show="order.storage.fireUser.ACCESS.states.order.buttons.stages">
+                                    <span class="glyphicon glyphicon-list"></span>&nbsp;Этапы
+                                </button>
+
+
+                            </div>
+                        </div>
+                        <div class="order-form">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <label for="9rg-from">Дополнительная информация</label>
+                                    <textarea rows="1" ng-disabled='order.isFormDisabled' class="form-control"
+                                              type="text" id="9rg-from"
+                                              ng-model='order.storage.selectedFire.description'></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <label for="10rg-from">Комментарий</label>
+                                    <textarea rows="3" ng-disabled='order.isFormDisabled' class="form-control "
+                                              type="text" id="10rg-from"
+                                              ng-model='order.storage.selectedFire.comment'></textarea>
+
+                                </div>
+                            </div>
+                            <div class="row" ng-hide="!!order.storage.selectedFire.card112WithBean.dtReg01 === false">
+                                <div class="col-sm-12 formbox-scroll">
+                                    <label for="address112">Адрес 112: </label>
+                                    <div id="address112" ng-disabled='true' class="form-control text-left"
+                                         ng-bind-template='{{order.storage.selectedFire.card112WithBean.card112.strAddressString}} {{order.storage.selectedFire.card112WithBean.card112.strBuilding}}'
+                                         style="width: 100%">
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row"
+                                 ng-show="!!order.ShowSentTicket === true">
+                                <div class="col-xs-6">
+
+                                    firePlace.geomX:&nbsp;<input ng-disabled="true" class="form-control input-sm"
+                                                                 ng-model="order.storage.selectedFire.firePlace.geomX">
+                                </div>
+                                <div class="col-xs-6">
+
+                                    firePlace.geomY:&nbsp;<input ng-disabled="true" class="form-control input-sm"
+                                                                 ng-model="order.storage.selectedFire.firePlace.geomY">
+                                </div>
+                            </div>
+                            <div class="row"
+                                 ng-show="!!order.ShowSentTicket === true">
+                                <div class="col-xs-6">
+
+                                    address.geomX:&nbsp;<input ng-disabled="true" class="form-control input-sm"
+                                                               ng-model="order.storage.selectedFire.firePlace.address.geomX">
+                                </div>
+                                <div class="col-xs-6">
+
+                                    address.geomY:&nbsp;<input ng-disabled="true" class="form-control input-sm"
+                                                               ng-model="order.storage.selectedFire.firePlace.address.geomY">
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-12 nopm">
+                                    <button id="firstAgreePlaceButton"
+                                            ng-keyup="order.selectFireObjectByKeys($event)"
+                                            class="btn btn-info btn-new-order full-width full-height pull-right"
+                                            style="width: auto;"
+                                            ng-click="order.agreePlace()"
+                                            data-flowControls-end
+                                            ng-show="order.storage.selectedFire.hasOwnProperty('startDate') && order.storage.selectedFire.startDate === null">
+                                        Создать {{fires.storage.fireUser.ACCESS.words.fire.toLowerCase()}}
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="row"
+                                 ng-show="order.storage.selectedFire.card112WithBean.card112.nEmergencyCardId">
+
+
+                                <br>
+                                <div class="col-xs-4">
+                                    <label for="nEmergencyCardId">Номер карточки 112</label>
+                                    </br>
+                                    <input id="nEmergencyCardId"
+                                           class="form-control input-sm"
+                                           ng-value="order.storage.selectedFire.card112WithBean.card112.nEmergencyCardId"
+                                           ng-disabled="true">
+                                </div>
+
+
+                                <div class="col-xs-4">
+                                    <div>
+                                        <label for="singleDatePicker">Дата прихода</label>
+
+                                        <input id="singleDatePicker"
+                                               ng-value="order.storage.selectedFire.card112WithBean.dtReg01 | toTimeStringFromTimestamp"
+                                               ng-disabled="true" class="full-width"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div>
+                                        <label for="singleDatePicker2">Дата инциндента</label>
+
+                                        <input id="singleDatePicker2"
+                                               ng-value="order.storage.selectedFire.card112WithBean.card112.dtIncident | toTimeStringFromTimestamp"
+                                               ng-disabled="true" class="full-width"/>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-5 full-height nopm">
+            <uib-tabset justified="true" class="tabs-full-height"
+                        ng-hide="order.storage.dataOfStates.order.orderMode==='info'">
+                <uib-tab ng-model="techTab" active="techTab.active">
+                    <!--<div style="height: 93.5%;overflow-y: auto;overflow-x:hidden;  padding: 0;width: 100%">-->
+
+
+                    <uib-tab-heading>
+                        <info-about-recruited-engine
+                                engines="order.storage.selectedFire.orders"></info-about-recruited-engine>
+                        &nbsp;Техника
+                    </uib-tab-heading>
+
+
+                    <div class="row" style="height: 70%;overflow-y: auto; margin: 0;">
+
+
+                        <div class="col-xs-6 full-height" style="overflow-x:hidden;  padding:0 2px 0 0;">
+
+                            <div>
+                                <table ng-table class="table table-bordered small text-center nopm">
+                                    <tr class=""
+                                        ng-repeat="currorder in order.storage.selectedFire.orders | orderBy: order.engineTypeSortingAlgorythm">
+                                        <td style="width: 16%" data-title="'+'">
+                                            <!--ng-show="order.isFormDisabled && (order.engineStatuse(currorder)=='СЛЕДУЕТ')"-->
+                                            <button ng-show="order.isFormDisabled && (order.engineStatuse(currorder)=='СЛЕДУЕТ')"
+                                                    class="btn btn-xs btn-primary default-gray-button"
+                                                    ng-click="order.onArriveEngineToFire(currorder)">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                            <button ng-show='order.isFormDisabled && currorder.fireEngine.idFireEngine.length>0'
+                                                    class="btn btn-xs btn-success default-gray-button"
+                                                    ng-click="order.showPathFromPchToFire(currorder)">
+                                                <span class="glyphicon glyphicon-map-marker"></span>
+                                            </button>
+                                        </td>
+                                        <td style="width: 52%;padding: 0" data-title="order.storage.fireUser.ACCESS.words.pchEngine">
+                                            <div class="col-sm-3 nopm">
+                                                <div ng-click="order.goToDept(currorder)" class="btn-link"
+                                                     style="padding-left: 0; cursor: pointer">
+                                                    {{currorder.departmentName}}{{order.getDislocation(currorder)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 nopm">
+                                                <div style="padding-left: 0; cursor: pointer"
+                                                     ng-click="order.goToType(currorder)"
+                                                     class="btn-link" title="{{currorder.orderAs.engineType}}">
+                                                    {{currorder.fireEngine.engineType | engineTypeDecorator:
+                                                            currorder.fireEngine.isFirstTank: currorder.fireEngine.asGD}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 nopm">
+                                                <div style="padding-left: 0;padding-right: 0; cursor: pointer"
+                                                     ng-click="order.goToDept(currorder)"
+                                                     class="btn-link">{{currorder.fireEngine.gosNo}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="width:25%" data-title="'Состояние'">
+                                            {{currorder.fireEngine.fireEngineState.name}}
+                                            <!--{{order.engineStatuse(currorder)}}-->
+                                        </td>
+                                        <td style="width: 7%" data-title="'-'"
+                                            ng-show="order.storage.fireUser.ACCESS.states.order.buttons.removeEngineFromFire">
+                                            <button ng-show='order.isFormDisabled' class="btn btn-xs btn-danger"
+                                                    ng-click="order.onRemoveEngineFromFire(currorder)">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-6 full-height" style="padding: 0 0 0 2px; margin-left: 0;">
+                            <div class="panel panel-default small full-height">
+                                <div class="panel-heading"
+                                     style="padding: 5px 0 0 0;  vertical-align: middle; text-align: center">
+                                    <span>Донабор</span>
+                                </div>
+                                <div class="panel-body panel-body-order-engines">
+                                    <div style="overflow: auto">
+                                        <table ng-table class="table table-bordered small text-center"
+                                               style="margin: 0">
+                                            <tr ng-repeat="orderSrc in order.storage.selectedFire.addOrders | orderBy: order.engineTypeSortingAlgorythm">
+                                                <!--
+                                                                                    <tr ng-repeat="order in orderEdit.storage.dataOfStates.editFireOrder.fireAct.addOrders | orderBy: orderEdit.engineTypeSortingAlgorythm">
+                                                -->
+
+
+                                                <td data-title="'Тип'" title="{{orderSrc.orderAs.engineType}}">
+                                                    {{orderSrc.fireEngine.engineType |
+                                                    engineTypeDecorator: orderSrc.fireEngine.isFirstTank:
+                                                    orderSrc.fireEngine.asGD}}
+                                                    <!--
+                                                                                                        {{orderSrc.fireEngine.engineType |
+                                                                                                        engineTypeDecorator: order.fireEngine.isFirstTank:
+                                                                                                        orderSrc.fireEngine.asGD}}
+                                                    -->
+                                                </td>
+                                                <td data-title="order.storage.fireUser.ACCESS.words.pch">
+                                                    {{orderSrc.departmentName}}{{order.getDislocation(orderSrc)}}
+                                                </td>
+                                                <td data-title="'№'">{{orderSrc.fireEngine.gosNo}}</td>
+                                                <td data-title="'-'">
+                                                    <button class="btn-danger"
+                                                            ng-click="order.onRemoveOrder(orderSrc)">
+                                                        <span class="glyphicon glyphicon-minus"></span>
+                                                    </button>
+                                                    <button class="btn-success"
+                                                            ng-click="order.showPathFromPchToFire(orderSrc)">
+                                                        <span class="glyphicon glyphicon-map-marker"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row" style="margin: 10px 0 0 0;">
+
+
+                        <div class="col-xs-6 full-height" style="padding: 0 2px 0 0;"></div>
+                        <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;"
+                             ng-show="order.storage.selectedFire.notFoundOrders && order.storage.selectedFire.notFoundOrders.length > 0">
+                            <div style="height: auto;white-space: normal; border: #ff6354 solid 1px; padding: 2px 2px 0 2px;"
+                                 ng-hide="order.checkRankDifference()" uib-tooltip="Список ненабранной техники">
+                                <div ng-repeat="missedEngine in order.storage.selectedFire.notFoundOrders"
+                                     class="btn btn-danger btn-xs"
+                                     style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;"
+                                     ng-click="order.goToByTypes(missedEngine.type.engineType)"
+                                     ng-show="order.storage.fireUser.ACCESS.states.order.buttons.listNotRecruitedTechnicians">
+                                    {{missedEngine.type.engineType}}<span class="badge">{{missedEngine.count}}</span>
+                                    <!--                            <button class="btn btn-default btn-xxs"
+                                                                        ng-click="order.removeMissedEngine(missedEngine); $event.stopPropagation();"><i
+                                                                        class="fa fa-minus"></i></button>-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--
+                                                <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+
+                                                    <div style="height: auto;white-space: normal; border: #ff6354 solid 1px; padding: 2px 2px 0 2px;"
+                                                         ng-show="!!order.selectedFire === false"
+                                                         class="col-md-12 btn-group nopm"
+                                                         uib-tooltip="Список ненайденной техники при доборе">
+                                            <span ng-repeat="missedEngine in order.storage.selectedFire.missingOrders"
+                                                  class="label label-danger"
+                                                  style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;">
+                                                {{missedEngine.type.engineType}}<span class="badge">{{missedEngine.count}}</span>
+                                            </span>
+                                                    </div>
+
+                                                </div>
+                        -->
+
+
+                    </div>
+
+                    <!--
+                                        ng-show="Object.keys(order.calcEngineOnDeparture(order.storage.selectedFire.orders)).length > 0"
+                    -->
+
+
+                    <div class="row" style="margin: 0;">
+
+                        <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;"></div>
+                        <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+
+                            <button id="flow-create-fire"
+                                    ng-show="order.storage.selectedFire.addOrders.length > 0"
+                                    ng-click="order.addEnginesToFire()"
+                                    class="btn btn-success full-width full-height default-gray-button btn-create-fire"
+                                    style="width: 100%;">
+                                Подтвердить технику
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+                </uib-tab>
+                <uib-tab heading="Оповещение" ng-show="order.storage.fireUser.ACCESS.states.order.tabs.notification">
+                    <div style="height: 100%; overflow-x: hidden;">
+                        <div class="row" style="overflow-x: hidden;overflow-y: auto; height: 95%;">
+                            <div class="col-xs-12">
+                                <div class="row" ng-repeat="personToNotify in order.fireNotificationsCopy" ng-if="order.showNotifyForRole(personToNotify)">
+                                    <div class="col-xs-2">
+                                        <input style="height: 30px;width: 30px;" type="checkbox"
+                                               ng-model="personToNotify.checked">
+                                        <button ng-click="order.deletePersonToNotifications($index)"
+                                                ng-show="!personToNotify.id" type="submit"
+                                                class="btn btn-danger btn-xs"><span
+                                                class="glyphicon glyphicon-minus"></span></button>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div ng-show="personToNotify.id"><b>Должность:</b>
+                                                    <br/>{{personToNotify.who}}
+                                                </div>
+                                                <div ng-show="!personToNotify.id">
+                                                    <b>Должность:</b>
+                                                    <br/><input class="form-control input-sm input-extra-small"
+                                                                type="text"
+                                                                ng-model="personToNotify.who">
+                                                </div>
+                                            </div>
+                                            <!--Должность-->
+                                            <div class="col-xs-6">
+                                                <div class="col-xs-9">
+                                                    <div ng-show="personToNotify.id"><b>Телефон:</b>
+                                                        <br/>{{personToNotify.phone}}
+                                                    </div>
+                                                    <div ng-show="!personToNotify.id">
+                                                        <b>Телефон:</b>
+                                                        <br/><input class="form-control input-sm input-extra-small"
+                                                                    type="text" ng-model="personToNotify.phone">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-3">
+
+                                                    <button style="margin-top:3px;" ng-show="order.isFormDisabled"
+                                                            class="btn btn-xs btn-primary"
+                                                            ng-click="order.makeCallBack(personToNotify.phone, personToNotify.id)">
+                                                        <span class="glyphicon glyphicon-phone-alt"></span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row full-width">
+                                            <input type="text"
+                                                   class="form-control input-sm input-extra-small"
+                                                   placeholder="Сообщение"
+                                                   ng-change="order.autoCheckbox(personToNotify)"
+                                                   ng-model="personToNotify.message"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 5%">
+                            <div role="group" class="btn-group full-width">
+                                <button class="btn btn-warning" style="width: 15%"
+                                        ng-click="order.addPersonToNotifications()">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                <button class="btn btn-success" style="width: 65%"
+                                        ng-click="order.sendFireNotifications()">
+                                    Оповестить
+                                </button>
+                                <button class="btn btn-danger" style="width:20%;"
+                                        ng-click="order.clearFireNotifications()">
+                                    Отмена
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Инф.Внеш.Сист."
+                         ng-show="order.storage.fireUser.ACCESS.states.order.tabs.informationOfExternalSystem">
+                    <div style="height: 50%;">
+                        <div class="panel panel-default full-height">
+                            <div class="panel-heading">
+                                Карточка Внеш.Сист.
+                                №{{order.storage.selectedFire.card112WithBean.card112.nEmergencyCardId}}<br>
+                                Состояние: {{order.storage.selectedFire.card112WithBean.card112 | textOf112nCardState}}
+                            </div>
+                            <div class="panel-body panel-body-full-height" style="overflow: auto;font-size: 11px;">
+                                <div class="row">
+                                    <div class="col-xs-6">Оператор</div>
+                                    <div class="col-xs-6">{{order.storage.selectedFire.card112WithBean.card112.strCreator}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Адрес</div>
+                                    <div class="col-xs-6">{{order.storage.selectedFire.card112WithBean.card112 |
+                                            address112Filter}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Номер помещения</div>
+                                    <div class="col-xs-6">{{order.storage.selectedFire.card112WithBean.card112.strRoom}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Фамилия (Заявитель)</div>
+                                    <div class="col-xs-6">
+                                        {{order.storage.selectedFire.card112WithBean.card112.strDeclarantLastName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Имя (Заявитель):</div>
+                                    <div class="col-xs-6">
+                                        {{order.storage.selectedFire.card112WithBean.card112.strDeclarantName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Отчество (Заявитель):</div>
+                                    <div class="col-xs-6">
+                                        {{order.storage.selectedFire.card112WithBean.card112.strDeclarantMiddleName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Телефон (Заявитель)</div>
+                                    <div class="col-xs-6">{{order.storage.selectedFire.card112WithBean.card112.strCgPN}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Телефон (куда звонили)</div>
+                                    <div class="col-xs-6">{{order.storage.selectedFire.card112WithBean.card112.strCdPN}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">Описание:</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <textarea rows="4" style="width: 100%" class="form-control"
+                                                      ng-model="order.storage.selectedFire.card112WithBean.card112.strIncidentDescription">
+
+                                            </textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 50%; overflow: auto">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Время</th>
+                                <th>Пользователь</th>
+                                <th>Сообщение</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="protocolItem in order.storage.selectedFire.card112ChangedRequest.protocols112">
+                                <td>{{protocolItem.date}}</td>
+                                <td>{{protocolItem.user}}</td>
+                                <td>{{protocolItem.message}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+            <div class="full-width"
+                 ng-show="order.storage.dataOfStates.order.orderMode==='info'">
+                <div class="panel panel-default" style="height: 100%;width: 100%">
+                    <div class="panel-heading" style="height: 5%; margin: 0">Сообщение</div>
+                    <div class="panel-body "
+                         style="height: 95%;overflow-y: auto;overflow-x:hidden;  padding: 0;width: 100%">
+                        <div class="row">
+                            <textarea class="form-control" rows="15" ng-model="order.infoFromFire"
+                                      id="orderMessageBox"></textarea>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <div class="col-sm-6">
+                                <button style="width: 100%" class="btn btn-default"
+                                        ng-disabled="order.infoFromFire.length==0"
+                                        ng-click="order.sendInfoMessage()">Сохранить
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button style="width: 100%" class="btn btn-default" ng-click="order.cancelInfo()">
+                                    Закрыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,208 @@
+<div class="panel-group nopm">
+    <div ng-show="command.isCommandDefined()">
+        <div class="panel panel-default text-center">
+            <div class="panel-heading">Отчеты</div>
+            <div class="panel-body nopm">
+                <div class="row">
+                    <button ng-click="command.getHeadManagerReport()" class="btn btn-success" style="width: 100%"
+                            uib-tooltip="Отчёт старшего смены"
+                            tooltip-placement="auto"><span class="glyphicon glyphicon-list"></span>&nbsp<b>Отчёт
+                                                                                                           старшего
+                                                                                                           смены</b>
+                    </button>
+                    <div class="row" ng-show="command.checkRole()">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <b>Генерация отчетов без параметров</b>
+                            </div>
+                            <div class="row">
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+
+                                        <button ng-click="command.generateAsrSpbReport()"
+                                                class="btn btn-success full-width"
+                                                uib-tooltip="Оперативная сводка АСР"
+                                                tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                                class="glyphicon glyphicon-list"></span>&nbsp<b>АСР</b>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+
+                                        <button ng-click="command.GenerateVYKLReport()"
+                                                class="btn btn-success full-width"
+                                                uib-tooltip="Выключение техники"
+                                                tooltip-placement="auto" tooltip-trigger="mouseenter">
+                                            <span class="glyphicon glyphicon-list"></span>&nbsp<b>ВыклТех</b>
+                                        </button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button ng-click="command.generateTechConditionReport()"
+                                                class="btn btn-success full-width"
+                                                uib-tooltip="Состояние техники за гарнизон"
+                                                tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                                class="glyphicon glyphicon-list"></span>&nbsp<b>Сост.Техн</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="command.checkRole()">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Оперативные сводки</div>
+                    <div class="panel-body nopm" style="margin-top: 0;padding-top:5px;padding-bottom: 5px">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button ng-click="command.GenerateOSguardsSPBReport()"
+                                        class="btn btn-success full-width"
+                                        uib-tooltip="Оперативная сводка выезда караула"
+                                        tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                        class="glyphicon glyphicon-list"></span>&nbsp<b>Выезд караула</b>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button ng-click="command.generateGuardsPerDayReport()"
+                                        class="btn btn-success docs-withProps full-width"
+                                        uib-tooltip="Оперативная сводка выезда караулов	"
+                                        tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                        class="glyphicon glyphicon-list"></span>&nbsp<b>ОСВКВ</b>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="btn-group btn-group-justified">
+                                <div class="btn-group">
+                                    <button ng-click="command.generateOS1SpbReport()"
+                                            class="btn btn-success full-width"
+                                            uib-tooltip="Оперативная сводка 1"
+                                            tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                            class="glyphicon glyphicon-list"></span>&nbsp<b>ОС1</b>
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button ng-click="command.generateOS2SpbReport()"
+                                            class="btn btn-success full-width"
+                                            uib-tooltip="Оперативная сводка 2"
+                                            tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                            class="glyphicon glyphicon-list"></span>&nbsp<b>ОС2</b>
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button ng-click="command.generateOS4SpbReport()"
+                                            class="btn btn-success full-width"
+                                            uib-tooltip="Оперативная сводка 4"
+                                            tooltip-placement="auto" tooltip-trigger="mouseenter">
+                                        <span class="glyphicon glyphicon-list"></span>&nbsp<b>ОС4</b>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12" style="text-align: center">
+                                Дата
+                                <input id="singleDatePickerOS" date-range-picker
+                                       class="form-control protocol-date-picker full-width"
+                                       type="text"
+                                       ng-model="command.singleDatePicker"
+                                       min="'1970-01-01'"
+                                       max="command.today"
+                                       options="command.singleDatePickerOptions"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="command.checkRole()">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Генерация отчетов с параметрами</div>
+                <div class="panel-body nopm" style="margin-top: 0;padding-top:5px;padding-bottom: 5px">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button ng-click="command.GenerateVPPReport()"
+                                    class="btn btn-success docs-withProps full-width"
+                                    uib-tooltip="Отчет о выезде"
+                                    tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                    class="glyphicon glyphicon-list"></span>&nbsp<b>Отч.Выезд</b>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button ng-click="command.GenerateVPPLReport()"
+                                    class="btn btn-success docs-withProps full-width"
+                                    uib-tooltip="Отчет о выезде (местный)"
+                                    tooltip-placement="auto" tooltip-trigger="mouseenter"><span
+                                    class="glyphicon glyphicon-list"></span>&nbsp<b>Отч.В.Местн</b>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="well" ng-show="command.showWell">
+                            <!--блок с фильтами-->
+                            <label style="width: 100%;" ng-show="command.showTime">
+                                Диапазон дат
+                                <input date-range-picker class="form-control date-picker full-width"
+                                       type="text"
+                                       ng-model="command.propsDatePicker"
+                                       min="'1970-01-01'" max="command.today"
+                                       options="command.propsDatePickerOptions"/>
+                            </label>
+                            <!--Дата до-->
+                            <button class="btn btn-success" ng-click="command.generateWithProps()">
+                                Генерировать
+                            </button>
+                            <button class="btn btn-default" ng-click="command.showWell = false">
+                                Отмена
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" ng-show="command.checkRole()">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Дополнительные отчеты</div>
+                <div class="panel-body nopm" style="margin-top: 0;padding-top:5px;padding-bottom: 5px">
+                    <div class="row">
+                        <div class="col-xs-12 buttons-margin-5px">
+
+                            <button ng-repeat="incidentType in command.includeReports" ng-click="command.doPrint(incidentType)" class="button btn-sm btn-success">
+                                <span class="glyphicon glyphicon-print"></span>
+                                {{command.storage.reports[incidentType].short_name}}
+                            </button>
+
+                            <button ng-click="command.generateFireDeptDaily()" class="button btn-sm btn-success">
+                                <span class="glyphicon glyphicon-print"></span>
+                                Строевая записка
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

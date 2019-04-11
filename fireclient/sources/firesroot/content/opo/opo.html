@@ -1,0 +1,22 @@
+<div class="full-height">
+    <div class="full-height full-width">
+        <div class="opo-list">
+            <div class="hydr-search-wrapper">
+                <input class="form-control full-width" placeholder="Поиск организации" ng-model="opoCtrl.search">
+            </div>
+            <div class="list-group">
+                <a ui-sref=".item({id: opo.id})"
+                   ng-repeat="opo in opoCtrl.storage.opo | opoSort | searchHolderInOpos: opoCtrl.search" class="list-group-item"
+                   ui-sref-active="active">
+                    {{opo.opoName}}
+                </a>
+            </div>
+            <div class="add-opo">
+                <a class="btn btn-block btn-primary btn-sm" ui-sref=".item({id: 'new'})">
+                    <i class="fa fa-plus"></i> Добавить OПО
+                </a>
+            </div>
+        </div>
+        <div ui-view="item" class="opo-item"></div>
+    </div>
+</div>

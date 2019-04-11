@@ -1,0 +1,926 @@
+<div class="container-fluid full-height">
+    <div class="row full-height">
+        <div class="col-xs-6 full-height">
+            <div class="row full-height">
+                <div class="col-xs-12 full-height">
+                    <fieldset class="full-height">
+                        <!--
+                                            <fieldset class="full-height"
+                                                      ng-disabled="!orderEdit.storage.dataOfStates.editFireOrder.canLeave">
+                        -->
+                        <div class="panel panel-default full-height">
+                            <div class="panel-heading">
+
+                                <div class="btn-group btn-group-justified btn-group-xs">
+                                    <div class="btn-group">
+                                        <button type="button" ng-class="{active:orderEdit.mode==0}"
+                                                class="btn btn-default" ng-click="orderEdit.enterAddressMode()">
+                                            Изменить адрес
+                                        </button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" ng-class="{active:orderEdit.mode==2}"
+                                                class="btn btn-default" ng-click="orderEdit.enterObjectMode()">Изменить
+                                                                                                               объект
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-body-full-height" style="padding: 0 5px 10px 5px;">
+                                <div class="row full-height">
+                                    <div class="col-xs-8 full-height small-on-small-screen order-fields-wrapper" flow-fields>
+                                        <div class="row-1 row" ng-show="orderEdit.mode === 2">
+                                            <div class="col-xs-12">
+                                                Объект
+                                                <ui-select id="newFireOrderFlow-0"
+                                                           theme="bootstrap"
+                                                           class="full-width"
+                                                           ng-model="orderEdit.fireAct.firePlace.fireObject"
+                                                           on-select="orderEdit.selectTypedObject($item, goToNextField, 1)"
+                                                           data-flowControls="1"
+                                                           tagging-tokens="false">
+                                                    <ui-select-match placeholder="Объект"
+                                                                     allow-clear>
+                                                        <div ng-bind="orderEdit.fireAct.firePlace.fireObject.nameobject | limitTo: 70"></div>
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="object in orderEdit.storage.dataOfStates.editFireOrder.objectsArray | orderBy: 'address'"
+                                                            refresh="orderEdit.objectNameFieldChanged($select.search)"
+                                                            refresh-delay="0">
+                                                        <div class="clearfix">
+                                                            <div class="pull-left"
+                                                                 style="width: 60%;overflow: hidden;padding-right: 10px;">
+                                                                <div style="overflow: hidden"
+                                                                     ng-bind-html="object.nameobject | highlight:$select.search"></div>
+                                                            </div>
+                                                            <small class="pull-left" style="width: 40%;overflow: hidden"
+                                                                   ng-bind-html="object.address"></small>
+                                                        </div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+
+
+                                        <!--<div class="row">
+                                            <div class="col-xs-11">
+                                                Улица
+                                                <input id="orderEditFlow-1"
+                                                       ng-disabled="orderEdit.mode === 2"
+                                                       data-ng-change="orderEdit.primaryStreetFieldChanged()"
+                                                       data-typeahead-wait-ms="150"
+                                                       min-length="3"
+                                                       type="text"
+                                                       placeholder="Начните вводить улицу"
+                                                       ng-model="orderEdit.fireAct.firePlace.address.street"
+                                                       uib-typeahead="street as (street.street +' '+ street.settName) for street in orderEdit.storage.dataOfStates.editFireOrder.streetsArray"
+                                                       class="form-control"
+                                                       typeahead-on-select='orderEdit.selectPrimaryStreet($item, false, goToNextField, 2)'
+                                                       typeahead-select-on-blur="true"
+                                                       data-flowControls="2">
+                                            </div>
+                                            <div class="col-xs-1" style="padding-left: 0">
+                                                &nbsp&lt;!&ndash;мне стыдно, у меня даже есть класс для этого, а тут схалявил&ndash;&gt;
+                                                <button class="btn btn-default"
+                                                        ng-click="orderEdit.crossingsModeEmit()"
+                                                        ng-show="orderEdit.mode === 0"
+                                                        uib-tooltip="Выбрать перекресток"
+                                                        ng-disabled="storage.fireAct.firePlace.address.naStreet"
+                                                        tooltip-placement="top"
+                                                        tooltip-trigger="mouseenter">
+                                                    <i class="fa fa-lg fa-arrows-alt"></i>
+                                                </button>
+                                                <button class="btn btn-default"
+                                                        ng-click="orderEdit.cancelCrossingMode()"
+                                                        ng-show="orderEdit.mode === 1"
+                                                        uib-tooltip="Отмена"
+                                                        tooltip-placement="top"
+                                                        tooltip-trigger="mouseenter">
+                                                    <i class="fa fa-lg fa-ban"></i>
+                                                </button>
+                                            </div>
+                                        </div>-->
+
+                                        <div class="row-2 row">
+                                            <div class="col-xs-11">
+                                                <label>Улица</label>
+
+                                                <ui-select id="orderEditFlow-1"
+                                                           ng-model="orderEdit.fireAct.firePlace.address.street"
+                                                           data-flowControls="2"
+                                                           ng-disabled="orderEdit.mode === 2"
+                                                           on-select="orderEdit.selectPrimaryStreet($item, false, goToNextField, 2)"
+                                                           autofocus="true"
+                                                           ng-focus="orderEdit.storage.dataOfStates.editFireOrder.settings.isHousesEmitSending = false">
+                                                    <ui-select-match
+                                                            placeholder="Начните вводить улицу">
+                                                        {{orderEdit.fireAct.firePlace.address.street}}
+                                                        {{(orderEdit.fireAct.firePlace.address.naStreet === true)?
+                                                        orderEdit.storage.manualInputValue : ''}}
+<!--
+                                                        {{(orderEdit.fireAct.firePlace.address.naStreet === true)?
+                                                        orderEdit.fireAct.firePlace.address.settName : ''}}
+-->
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            refresh="orderEdit.primaryStreetFieldChanged($select.search)"
+                                                            minimum-input-length="3" refresh-delay="10"
+                                                            repeat="address.street as address in orderEdit.storage.dataOfStates.editFireOrder.streetsArray">
+                                                        {{address.street ? address.street : address.streetname}}
+                                                        {{address.raionName}}
+<!--
+                                                        {{(address.naStreet === false)? '(' : ''}}
+                                                        {{address.district}}
+                                                        {{(address.naStreet === false)? ')' : ''}}
+-->
+                                                        {{(address.naStreet === true)? orderEdit.storage.manualInputValue : ''}}
+                                                        <!--{{(address.naStreet === true)? address.settName : ''}}-->
+                                                        <!--{{address.raionName}}-->
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+
+
+                                            <div class="col-xs-1" style="padding-left: 0">
+                                                &nbsp<!--мне стыдно, у меня даже есть класс для этого, а тут схалявил-->
+                                                <button class="btn btn-default"
+                                                        ng-click="orderEdit.crossingsModeEmit()"
+                                                        ng-show="orderEdit.mode === 0"
+                                                        uib-tooltip="Выбрать перекресток"
+                                                        ng-disabled="storage.fireAct.firePlace.address.naStreet"
+                                                        tooltip-placement="top"
+                                                        tooltip-trigger="mouseenter">
+                                                    <i class="fa fa-lg fa-arrows-alt"></i>
+                                                </button>
+                                                <button class="btn btn-default"
+                                                        ng-click="orderEdit.cancelCrossingMode()"
+                                                        ng-show="orderEdit.mode === 1"
+                                                        uib-tooltip="Отмена"
+                                                        tooltip-placement="top"
+                                                        tooltip-trigger="mouseenter">
+                                                    <i class="fa fa-lg fa-ban"></i>
+                                                </button>
+                                            </div>
+
+
+
+                                        </div>
+
+
+                                        <div class="row-3 row">
+
+                                            <div class="col-xs-6">
+                                                <label for="region-xs-4">Регион</label></br>
+                                                <input id="region-xs-4" class="form-control" ng-disabled="true"
+                                                       ng-model="orderEdit.fireAct.firePlace.region.text"
+                                                       data-flowControls="11">
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+                                            <div class="col-xs-6">
+
+
+
+                                                <label for="orderEditFlow-8">Админ. район</label>
+                                                <ui-select id="orderEditFlow-8"
+                                                           theme="bootstrap"
+                                                           class="full-width"
+                                                           ng-model="orderEdit.fireAct.firePlace.address.raionName"
+                                                           on-select="goToNextField(12)"
+                                                           data-flowControls="12" ng-disabled="orderEdit.districtDisabled()">
+                                                    <ui-select-match placeholder="Админ. Район">
+                                                        {{orderEdit.fireAct.firePlace.address.raionName}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="district in orderEdit.storage.districts | orderBy: district">
+                                                        <span ng-bind-html="district| highlight:$select.search"></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                            </div>
+
+
+
+
+
+
+
+<!--
+                                            <div class="col-xs-6">
+                                                <label for="orderEditFlow-8">Админ. район</label></br>
+                                                <input id="orderEditFlow-8"
+                                                       data-typeahead-wait-ms="150"
+                                                       type="text"
+                                                       ng-disabled="orderEdit.districtDisabled()"
+                                                       placeholder="Админ. Район"
+                                                       ng-model="orderEdit.fireAct.firePlace.address.raionName"
+                                                       uib-typeahead="district as (district) for district in orderEdit.storage.districts | filter: orderEdit.fireAct.firePlace.address.district"
+                                                       class="form-control"
+                                                       typeahead-focus-on-select="false"
+                                                       typeahead-on-select="goToNextField(12)"
+                                                       typeahead-select-on-blur="true"
+                                                       data-flowControls="12">
+                                            </div>
+-->
+                                            <!--
+                                                                                        <div class="col-xs-4">
+                                                                                            <label for="orderEditFlow-88">Район</label></br>
+                                                                                            <input id="orderEditFlow-88"
+                                                                                                   type="text"
+                                                                                                   ng-disabled="orderEdit.districtDisabled()"
+                                                                                                   placeholder="Район"
+                                                                                                   ng-model="orderEdit.fireAct.firePlace.address.settName"
+                                                                                                   class="form-control" data-flowControls="12">
+                                                                                        </div>
+                                            -->
+
+                                        </div>
+                                        <div class="row-4 row"
+                                             ng-show="orderEdit.mode === 1 || orderEdit.storage.selectedFire.firePlace.crossStreet != null">
+                                            <div class="col-xs-11">
+                                                Пересечение с
+                                                <ui-select id="orderEditFlow-2"
+                                                           theme="bootstrap"
+                                                           style="width: 100%;"
+                                                           ng-disabled="orderEdit.mode !== 1"
+                                                           ng-model="orderEdit.fireAct.firePlace.crossStreet"
+                                                           on-select="orderEdit.onSelectCross($item, goToNextField, 3)"
+                                                           focus-on='orderEditFlow-2:SetFocus'
+                                                           data-flowControls="3"
+                                                           data-nextfield="10">
+                                                    <ui-select-match placeholder="Перекресток с улицей....">
+                                                        {{orderEdit.fireAct.firePlace.crossStreet.street}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="address in orderEdit.storage.dataOfStates.editFireOrder.crossesArray | filter: $select.search"
+                                                            on-highlight="orderEdit.onActiveCross(address)">
+                                                        <span ng-bind-html="address.street | highlight:$select.search "></span>
+                                                        <span ng-bind-html="address.district"></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                            </div>
+                                        </div>
+                                        <div class="row-5 row" ng-hide="orderEdit.mode === 1">
+                                            <div class="col-xs-8">
+                                                Номер дома
+                                                <ui-select id="orderEditFlow-3"
+                                                           theme="bootstrap"
+                                                           style="width: 100%;"
+                                                           ng-keyup="orderEdit.manualHouseEnter($event)"
+                                                           ng-model="orderEdit.houseUISelect"
+                                                           on-select="orderEdit.onSelectBuilding($item, false, goToNextField, 4)"
+                                                           ng-disabled="orderEdit.mode === 2 || orderEdit.fireAct.firePlace.address.street == null"
+                                                           focus-on='orderEditFlow-3:SetFocus'
+                                                           data-flowControls="4">
+                                                    <ui-select-match placeholder="Дом"
+                                                                     allow-clear>
+                                                        {{(!!orderEdit.fireAct.firePlace.address.manualHouse !== false)?
+                                                        orderEdit.fireAct.firePlace.address.manualHouse :
+                                                        orderEdit.fireAct.firePlace.address.house}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="address in orderEdit.storage.dataOfStates.editFireOrder.housesArray | newOrderHousesFilter:  $select.search: orderEdit.fireAct.firePlace.address | orderBy: orderEdit.houseSorting"
+                                                            on-highlight="orderEdit.onActiveBuilding(address)">
+                                                        <span ng-bind-html="address.house | highlight:$select.search "></span>
+                                                        <!--<span ng-bind-html="address.district">--></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-xs-4">Квартира</br>
+                                                <input id="orderEditFlow-4"
+                                                       class="form-control input-sm"
+                                                       ng-model="orderEdit.fireAct.flat"
+                                                       data-flowControls="5">
+                                            </div>
+                                        </div>
+                                        <div class="row-6 row" ng-hide="orderEdit.mode === 1">
+                                            <div class="col-xs-4">Код двери</br>
+                                                <input id="orderEditFlow-5"
+                                                       class="form-control input-sm"
+                                                       ng-model="orderEdit.fireAct.doorCode"
+                                                       data-flowControls="6"></div>
+                                            <div class="col-xs-4">Этаж</br><input id="orderEditFlow-6"
+                                                                                  class="form-control input-sm"
+                                                                                  ng-model="orderEdit.fireAct.floor"
+                                                                                  data-flowControls="7">
+                                            </div>
+                                            <div class="col-xs-4">Этажность</br><input id="orderEditFlow-7"
+                                                                                       class="form-control input-sm"
+                                                                                       ng-model="orderEdit.fireAct.floors"
+                                                                                       data-flowControls="8">
+                                            </div>
+                                        </div>
+                                        <!--<div class="row" style="margin-top: 5px;">
+                                            <div class="col-xs-4">
+                                                Регион</br>
+                                                <input class="form-control" style="width: 100%" ng-disabled="true"
+                                                       ng-model="orderEdit.fireAct.firePlace.region.text">
+                                            </div>
+                                            <div class="col-xs-5">
+                                                Район</br>
+                                                <input id="orderEditFlow-8"
+                                                       data-typeahead-wait-ms="150"
+                                                       type="text"
+                                                       ng-disabled="orderEdit.districtDisabled()"
+                                                       placeholder="Район"
+                                                       ng-model="orderEdit.fireAct.firePlace.address.district"
+                                                       uib-typeahead="district as (district) for district in orderEdit.storage.districts | filter: orderEdit.fireAct.firePlace.address.district"
+                                                       class="form-control"
+                                                       typeahead-select-on-blur="true"
+                                                       typeahead-focus-on-select="false"
+                                                       typeahead-on-select="goToNextField(9)"
+                                                       data-flowControls="9">
+                                                &lt;!&ndash;
+                                                <input class="form-control" style="width: 100%" ng-disabled="true"
+                                                       ng-model="orderEdit.fireAct.firePlace.address.district">&ndash;&gt;
+                                            </div>
+
+
+                                            <div class="col-xs-3">
+                                                Ранг<br>
+                                                <ui-select style="width: 100%"
+                                                           id="rangUISelect"
+                                                           ng-model="orderEdit.fireAct.rank" data-flowControls="13">
+                                                    <ui-select-match placeholder="Ранг">
+                                                        {{$select.selected.sidfirerank}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            style="width: 100%; min-width: initial;"
+                                                            repeat="rang in orderEdit.storage.rangs | filter: $select.search | orderBy: 'sidfirerank'">
+                                                        {{rang.sidfirerank}}
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+
+
+                                            &lt;!&ndash;
+                                                                                        <div class="col-xs-3">
+                                                                                            Ранг<br>
+                                                                                            <input class="form-control" ng-disabled="true" ng-model="orderEdit.fireAct.rank.sidfirerank" style="width: 100%">
+                                                                                        </div>
+                                            &ndash;&gt;
+
+
+                                        </div>-->
+
+
+                                        <!--                                        <div class="row">
+                                                                                    <div class="col-xs-6">
+                                                                                        ПЧ Зоны ответственности
+                                                                                        <ui-select id="extra-orderEditFlow-1"
+                                                                                                   theme="bootstrap"
+                                                                                                   style="width: 100%;"
+                                                                                                   ng-model="orderEdit.deptUISelectDeptField"
+                                                                                                   on-select="orderEdit.onSelectDept($item, goToNextField, 12)"
+                                                                                                   ng-disabled="orderEdit.disableDeptSelect()"
+                                                                                                   data-flowControls="12">
+                                                                                            <ui-select-match placeholder="Пожарная часть">
+                                                                                                {{orderEdit.fireAct.firePlace.pchName}}
+                                                                                            </ui-select-match>
+                                                                                            <ui-select-choices
+                                                                                                    repeat="dept in orderEdit.storage.fireDepartments | filter: {fireDeptName : $select.search} | orderBy: orderEdit.getNumDept">
+                                                                                                <span ng-bind-html="dept.fireDeptName | highlight:$select.search"></span>
+                                                                                            </ui-select-choices>
+                                                                                        </ui-select>
+                                                                                    </div>
+                                                                                    <div class="col-xs-6">
+                                                                                        Тройка
+                                                                                        <ui-select id="extra-orderEditFlow-2"
+                                                                                                   theme="bootstrap"
+                                                                                                   style="width: 100%;"
+                                                                                                   ng-model="orderEdit.fireAct.firePlace.triplet"
+                                                                                                   on-select="orderEdit.onSelectTriplet(goToNextField, 13)"
+                                                                                                   ng-disabled="orderEdit.disableTripletSelect()"
+                                                                                                   data-flowControls="13">
+                                                                                            <ui-select-match placeholder="Тройка">
+                                                                                                {{orderEdit.fireAct.firePlace.triplet
+                                                                                                |tripletFilter: orderEdit.fireAct.firePlace.pchName}}
+                                                                                            </ui-select-match>
+                                                                                            <ui-select-choices
+                                                                                                    repeat="triplet in orderEdit.storage.dataOfStates.editFireOrder.tripletsArray | filter: $select.search">
+                                                                                                <span ng-bind-html="triplet| tripletFilter: orderEdit.fireAct.firePlace.pchName | highlight:$select.search "></span>
+                                                                                            </ui-select-choices>
+                                                                                        </ui-select>
+                                                                                    </div>
+                                                                                </div>-->
+
+
+                                        <div class="row-7 row">
+                                            <div class="col-xs-4" ng-hide="!newFireOrder.storage.fireUser.ACCESS.fireList.rank">
+                                                <label>Ранг</label><br>
+                                                <ui-select style="width: 100%"
+                                                           id="rangUISelect"
+                                                           ng-model="orderEdit.fireAct.rank" data-flowControls="13">
+                                                    <ui-select-match placeholder="Ранг">
+                                                        {{$select.selected.sidfirerank}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            style="width: 100%; min-width: initial;"
+                                                            repeat="rang in orderEdit.storage.rangs | filter: $select.search | orderBy: 'sidfirerank'">
+                                                        {{rang.sidfirerank}}
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <label for="extra-orderEditFlow-1">{{orderEdit.storage.fireUser.ACCESS.words.pch}} Зоны отв.</label>
+                                                <ui-select id="extra-orderEditFlow-1"
+                                                           theme="bootstrap"
+                                                           style="width: 100%;"
+                                                           ng-model="orderEdit.deptUISelectDeptField"
+                                                           on-select="orderEdit.onSelectDept($item, goToNextField, 12)"
+                                                           ng-disabled="orderEdit.disableDeptSelect()"
+                                                           data-flowControls="12">
+                                                    <ui-select-match placeholder="{{orderEdit.storage.fireUser.ACCESS.words.fireDept}}">
+                                                        {{orderEdit.fireAct.firePlace.pchName}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="dept in orderEdit.storage.fireDepartments | filter: {fireDeptName : $select.search} | orderBy: orderEdit.getNumDept">
+                                                        <span ng-bind-html="dept.fireDeptName | highlight:$select.search"></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <label for="extra-orderEditFlow-2">Тройка</label>
+                                                <ui-select id="extra-orderEditFlow-2"
+                                                           theme="bootstrap"
+                                                           style="width: 100%;"
+                                                           ng-model="orderEdit.fireAct.firePlace.triplet"
+                                                           on-select="orderEdit.onSelectTriplet(goToNextField, 13)"
+                                                           ng-disabled="orderEdit.disableTripletSelect()"
+                                                           data-flowControls="13">
+                                                    <ui-select-match placeholder="Тройка">
+                                                        {{orderEdit.fireAct.firePlace.triplet
+                                                        |tripletFilter: orderEdit.fireAct.firePlace.pchName}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                            repeat="triplet in orderEdit.storage.dataOfStates.editFireOrder.tripletsArray | filter: $select.search">
+                                                        <span ng-bind-html="triplet| tripletFilter: orderEdit.fireAct.firePlace.pchName | highlight:$select.search "></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row-8 row">
+                                            <div class="col-xs-12">
+                                                Комментарий
+                                                <div class="nfo-comments-wrapper">
+                                                    <input class="form-control"
+                                                           type="text"
+                                                           id="orderEditFlow-9"
+                                                           ng-model='orderEdit.fireAct.comment'
+                                                           data-flowControls="10"
+                                                           ng-focus="orderEdit.switchCommentsState = true"
+                                                           ng-blur="orderEdit.switchCommentsState = false">
+                                                    <div class="expand-comments"
+                                                         ng-show="orderEdit.switchCommentsState"
+                                                         ng-bind='orderEdit.fireAct.comment'></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row-9 row">
+
+
+                                            <div class="col-xs-4 dropdown" uib-dropdown on-toggle="toggled(open)">
+                                                <label for="visit-type">Вид выезда:</label><br>
+                                                <button class="btn btn-default btn-xs full-width" uib-dropdown-toggle>
+                                                <span>{{orderEdit.fireAct.incidentType.name}}
+                                                   <i class="pull-right caret" style="margin-top: 0.4em;"></i>
+                                                </span>
+                                                </button>
+                                                <ul id="visit-type" class="dropdown-menu small full-width">
+                                                    <li class="small"
+                                                        ng-repeat="incidentType in orderEdit.storage.incidentTypes">
+                                                        <a href=""
+                                                           ng-click="orderEdit.selectIncidentType(incidentType)">{{incidentType.name}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-xs-4 dropdown" uib-dropdown on-toggle="toggled(open)">
+                                                <label for="alert-source">Источник оповещения</label><br>
+                                                <button class="btn btn-default btn-xs full-width" uib-dropdown-toggle>
+                                                <span>{{orderEdit.fireAct.incidentSource.text}}
+                                                    <i class="pull-right caret" style="margin-top: 0.4em;"></i>
+                                                </span>
+                                                </button>
+                                                <ul id="alert-source" class="dropdown-menu small full-width">
+                                                    <li class="small"
+                                                        ng-repeat="source in orderEdit.storage.incidentSources">
+                                                        <a href=""
+                                                           ng-click="orderEdit.selectIncidentSource(source)">{{source.text}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            <div class="col-xs-4">Телефон:<br>
+                                                <input id="orderEditFlow-a"
+                                                       ng-model="orderEdit.fireAct.card112WithBean.card112.strCallerContactPhone"
+                                                       class="form-control" name=""
+                                                       placeholder="Контактный номер"
+                                                       data-flowControls="11">
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row-10 row" ng-hide="!!orderEdit.fireAct.card112WithBean.dtReg01 === false">
+                                            <div class="col-xs-12 formbox-scroll">
+                                                <label for="address112">Адрес 112: </label>
+                                                <div id="address112" ng-disabled='true' class="form-control text-left"
+                                                     ng-bind-template='{{orderEdit.fireAct.card112WithBean.card112.strAddressString}}&nbsp;{{orderEdit.fireAct.card112WithBean.card112.strBuilding}}&nbsp;{{(!!orderEdit.fireAct.card112WithBean.card112.strCorps)? "к" + orderEdit.fireAct.card112WithBean.card112.strCorps : ""}}'
+                                                     style="width: 100%">
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row-11 row">
+                                            <div class="col-xs-12 small">
+                                                <div class="panel panel-default " style="margin-top:10px;">
+                                                    <div class="panel-heading">Объект</div>
+                                                    <div class="panel-body" style="padding-top: 1px;">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">Наименование</br>
+                                                                <input class="form-control" style="width: 100%"
+                                                                       ng-disabled="true"
+                                                                       ng-model="orderEdit.fireAct.firePlace.fireObject.nameobject">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" ng-hide="!newFireOrder.storage.fireUser.ACCESS.fireList.rank">
+                                                            <div class="col-xs-6">Ранг</br>
+                                                                <input class="form-control" style="width: 100%"
+                                                                       ng-disabled="true"
+                                                                       ng-model="orderEdit.fireAct.firePlace.fireObject.rank">
+                                                            </div>
+                                                            <div class="col-xs-6">Модификаторы</br>
+                                                                <input class="form-control" style="width: 100%"
+                                                                       ng-disabled="true"
+                                                                       ng-model="orderEdit.fireAct.firePlace.fireObject.rangmodifiers">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" ng-show="orderEdit.storage.isRoot">
+                                                            <div class="col-xs-6">Тип</br>
+                                                                <input class="form-control" style="width: 100%"
+                                                                       ng-disabled="true"
+                                                                       ng-model="orderEdit.fireAct.firePlace.fireObject.typeobject">
+                                                            </div>
+                                                            <div class="col-xs-6">Доп. Техника</br>
+                                                                <input class="form-control" style="width: 100%"
+                                                                       ng-disabled="true"
+                                                                       ng-model="orderEdit.fireAct.firePlace.fireObject.addteches">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                Примечание</br>
+                                                                <input class="form-control" style="width: 100%"
+                                                                       ng-disabled="true"
+                                                                       ng-model="orderEdit.fireAct.firePlace.fireObject.prim">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row-12 row"
+                                             ng-show="orderEdit.fireAct.card112WithBean.card112.nEmergencyCardId">
+
+
+                                            <br>
+                                            <div class="col-xs-4">
+                                                <label for="nEmergencyCardId">Номер карточки 112</label>
+                                                </br>
+                                                <input id="nEmergencyCardId"
+                                                       class="form-control input-sm"
+                                                       ng-value="orderEdit.fireAct.card112WithBean.card112.nEmergencyCardId"
+                                                       ng-disabled="true">
+                                            </div>
+
+
+                                            <div class="col-xs-4">
+                                                <div>
+                                                    <label for="singleDatePicker">Дата прихода</label>
+
+                                                    <input id="singleDatePicker"
+                                                           ng-value="orderEdit.fireAct.card112WithBean.dtReg01 | toTimeStringFromTimestamp"
+                                                           ng-disabled="true" class="full-width"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div>
+                                                    <label for="singleDatePicker2">Дата инциндента</label>
+
+                                                    <input id="singleDatePicker2"
+                                                           ng-value="orderEdit.fireAct.card112WithBean.card112.dtIncident | toTimeStringFromTimestamp"
+                                                           ng-disabled="true" class="full-width"/>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row-13 row"
+                                             ng-show="!!orderEdit.ShowSentTicket === true">
+                                            <div class="col-xs-6">
+
+                                                firePlace.geomX:&nbsp;<input ng-disabled="true"
+                                                                             class="form-control input-sm"
+                                                                             ng-model="orderEdit.fireAct.firePlace.geomX">
+                                            </div>
+                                            <div class="col-xs-6">
+
+                                                firePlace.geomY:&nbsp;<input ng-disabled="true"
+                                                                             class="form-control input-sm"
+                                                                             ng-model="orderEdit.fireAct.firePlace.geomY">
+                                            </div>
+                                        </div>
+                                        <div class="row-14 row"
+                                             ng-show="!!orderEdit.ShowSentTicket === true">
+                                            <div class="col-xs-6">
+
+                                                address.geomX:&nbsp;<input ng-disabled="true"
+                                                                           class="form-control input-sm"
+                                                                           ng-model="orderEdit.fireAct.firePlace.address.geomX">
+                                            </div>
+                                            <div class="col-xs-6">
+
+                                                address.geomY:&nbsp;<input ng-disabled="true"
+                                                                           class="form-control input-sm"
+                                                                           ng-model="orderEdit.fireAct.firePlace.address.geomY">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xs-4 full-height">
+                                        <div class="row " style="height: 95%;">
+                                            <div class="col-xs-12 full-height nopm">
+                                                <div class="panel panel-default full-height">
+                                                    <div class="panel-heading">
+                                                        Объекты по адресу
+                                                    </div>
+                                                    <div class="panel-body panel-body-full-height">
+                                                        <a href="" class="list-group-item"
+                                                           ng-repeat="fireObject in orderEdit.storage.dataOfStates.editFireOrder.objectsByHouseArray"
+                                                           ng-click="orderEdit.selectFireObject(fireObject)"
+                                                           ng-class="{active:fireObject==orderEdit.fireAct.firePlace.fireObject}">
+                                                    <span><span
+                                                            style="font-size:20px; font-weight: bold;"
+                                                            ng-bind="fireObject.house">  </span>{{fireObject.nameobject}}</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row" style="height: 5%">
+                                            <div class="col-xs-12 nopm">
+                                                <button id="agreePlaceButton"
+                                                        ng-keyup="orderEdit.selectFireObjectByKeys($event)"
+                                                        class="btn btn-info btn-new-order full-width full-height default-gray-button"
+                                                        style="padding-left: 0;padding-right: 0;"
+                                                        ng-disabled="orderEdit.fireAct.firePlace.pchId==null && orderEdit.fireAct.firePlace.triplet.id == null"
+                                                        ng-click="orderEdit.agreePlace()"
+                                                        data-flowControls-end>
+                                                    <!--Применить изменения-->
+                                                    {{
+                                                    (orderEdit.storage.selectedFire.startDate == null)? 'Создать пожар'
+                                                    : 'Набрать технику'
+                                                    }}
+                                                </button>
+                                                <i class="pretty-focus fa fa-lg fa-2x fa-arrow-left"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 full-height">
+            <div class="row" style="height:95%">
+                <div class="col-xs-4 full-height"
+                     style="padding-left: 0;position: relative; z-index: 9999; overflow-x: visible !important;;">
+                    <div class="panel panel-default small full-height nopm"
+                         style="position: relative; z-index: 9999; overflow: visible !important;">
+                        <div class="panel-heading"
+                             style="padding: 5px 0 5px 0;  vertical-align: middle; text-align: center;">
+                            <info-about-recruited-engine
+                                    engines="orderEdit.fireAct.orders"></info-about-recruited-engine>
+                            &nbsp;
+                            <span>Техника на заявке</span>
+
+                            <div style="font-size: 14px;display: inline-block">
+                                <button ng-show="orderEdit.storage.isRoot && orderEdit.fireAct.firePlace.geomX && orderEdit.fireAct.firePlace.geomY"
+                                        class="btn btn-xs btn-success"
+                                        ng-click="orderEdit.showSpider()">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-body panel-body-order-engines">
+                            <!--<div style="height: 93.5%; overflow: auto">-->
+                            <div style="height: 70%; overflow: auto">
+                                <table ng-table class="table table-bordered small text-center"
+                                       style="margin: 0">
+                                    <!--
+                                                                        <tr ng-repeat="order in orderEdit.fireAct.orders | orderBy: orderEdit.engineTypeSortingAlgorythm">
+                                                                            <td data-title="'Тип'" title="{{order.orderAs.engineType}}">
+                                    -->
+                                    <tr ng-repeat="order in orderEdit.storage.dataOfStates.editFireOrder.fireAct.orders | orderBy: orderEdit.engineTypeSortingAlgorythm">
+                                        <td data-title="'Тип'" title="{{order.orderAs.engineType}}">
+                                            {{order.fireEngine.engineType |
+                                            engineTypeDecorator: order.fireEngine.isFirstTank: order.fireEngine.asGD}}
+                                        </td>
+                                        <td data-title="orderEdit.storage.fireUser.ACCESS.words.pch">
+                                            {{order.departmentName}}{{orderEdit.getDislocation(order)}}
+                                        </td>
+                                        <td data-title="'№'">{{order.fireEngine.gosNo}}</td>
+                                        <!--<td data-title="'-'">-->
+                                        <!--<button class=" btn-danger" ng-click="orderEdit.onRemoveOrder(order)">-->
+                                        <!--<span class="glyphicon glyphicon-minus"></span>-->
+                                        <!--</button>-->
+                                        <!--<button class=" btn-success"-->
+                                        <!--ng-click="orderEdit.showPathFromPchToFire(order)">-->
+                                        <!--<span class="glyphicon glyphicon-map-marker"></span>-->
+                                        <!--</button>-->
+                                        <!--</td>-->
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="height: auto;white-space: normal; border: #ff6354 solid 1px; padding: 2px 2px 0 2px; margin: 10px 0 0 0;"
+                                 ng-show="orderEdit.storage.dataOfStates.editFireOrder.fireAct !=null && orderEdit.fireAct.notFoundOrders && orderEdit.storage.dataOfStates.editFireOrder.fireAct.notFoundOrders.length > 0"
+                                 class="col-md-12 btn-group nopm"
+                                 uib-tooltip="Список ненабранной техники">
+                            <span ng-repeat="missedEngine in orderEdit.storage.dataOfStates.editFireOrder.fireAct.notFoundOrders"
+                                  class="label label-danger"
+                                  style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;">
+                                {{missedEngine.type.engineType}}
+                                <span class="badge">{{missedEngine.count}}</span>
+                    </span>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-xs-4 full-height" style="padding-left: 0">
+                    <div class="panel panel-default small full-height nopm">
+                        <div class="panel-heading"
+                             style="padding: 5px 0 0 0;  vertical-align: middle; text-align: center">
+                            <span>Автоматический добор</span>
+
+                            <div style="font-size: 14px;display: inline-block">
+                                <button ng-show="orderEdit.storage.isRoot && orderEdit.fireAct.firePlace.geomX && orderEdit.fireAct.firePlace.geomY"
+                                        class="btn btn-xs btn-success"
+                                        ng-click="orderEdit.showSpider()">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                </button><!--
+                        <span ng-show="orderEdit.emptyOrdersLabelShow()"
+                              class="label label-danger">Не хватает техники!</span>-->
+                            </div>
+                        </div>
+                        <div class="panel-body panel-body-order-engines">
+                            <div style="height: 70%; overflow: auto">
+                                <table ng-table class="table table-bordered small text-center"
+                                       style="margin: 0">
+                                    <tr ng-repeat="order in orderEdit.storage.dataOfStates.editFireOrder.fireAct.addOrders | orderBy: orderEdit.engineTypeSortingAlgorythm">
+                                        <!--
+                                                                            <tr ng-repeat="order in orderEdit.storage.dataOfStates.editFireOrder.fireAct.addOrders | orderBy: orderEdit.engineTypeSortingAlgorythm">
+                                        -->
+
+
+                                        <!--<tr ng-repeat="order in orderEdit.storage.dataOfStates.editFireOrder.totalOrders | orderBy: orderEdit.engineTypeSortingAlgorythm">-->
+                                        <td data-title="'Тип'" title="{{order.orderAs.engineType}}">
+                                            {{order.fireEngine.engineType |
+                                            engineTypeDecorator: order.fireEngine.isFirstTank: order.fireEngine.asGD}}
+                                        </td>
+                                        <td data-title="orderEdit.storage.fireUser.ACCESS.words.pch">
+                                            {{order.departmentName}}{{orderEdit.getDislocation(order)}}
+                                        </td>
+                                        <td data-title="'№'">{{order.fireEngine.gosNo}}</td>
+                                        <td data-title="'-'">
+                                            <button class="btn-danger" ng-click="orderEdit.onRemoveOrder(order)">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                            <button class="btn-success"
+                                                    ng-click="orderEdit.showPathFromPchToFire(order)">
+                                                <span class="glyphicon glyphicon-map-marker"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!--
+                                                        <div style="height: auto;white-space: normal; border: #ff6354 solid 1px; padding: 2px 2px 0 2px;"
+                                                             ng-show="orderEdit.fireAct !=null"
+                                                             class="col-md-12 btn-group nopm"
+                                                             uib-tooltip="Список ненайденной техники при доборе">
+                                                <span ng-repeat="missedEngine in orderEdit.storage.dataOfStates.editFireOrder.fireAct.missingOrders"
+                                                      class="label label-danger"
+                                                      style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;">
+                                                    {{missedEngine.type.engineType}}<span class="badge">{{missedEngine.count}}</span>
+                                                </span>
+                                                        </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4 full-height">
+                    <div class="row full-height">
+                        <div class="panel panel-default small full-height">
+                            <div class="panel-heading"
+                                 style="padding: 5px 0 0 0;  vertical-align: middle; text-align: center">
+                                <span>Ручной добор</span>
+                            </div>
+                            <div class="panel-body panel-body-order-engines" style="overflow: auto">
+                                <table ng-table class="table table-bordered small text-center" style="margin: 0">
+                                    <!--<tr ng-repeat="element in orderEdit.storage.dataOfStates.editFireOrder.listOfAdditionalTech">-->
+                                    <tr ng-repeat="element in orderEdit.storage.dataOfStates.editFireOrder.listOfAdditionalTech">
+                                        <!--ng-if="element.engine.fireEngineState.code == 19"-->
+                                        <td data-title="'Доб.'">
+                                            <button class="btn-success"
+                                                    ng-click="orderEdit.onAddPotentialEngine(element)">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </td>
+                                        <td data-title="'Тип'" title="{{element.orderAs.engineType}}">
+                                            {{element.engine.engineType |
+                                            engineTypeDecorator: element.engine.isFirstTank: element.engine.asGD}}
+                                        </td>
+                                        <td data-title="orderEdit.storage.fireUser.ACCESS.words.pch">
+                                            {{element.fireDeptName}}{{orderEdit.getDislocation(element.engine)}}
+                                        </td>
+                                        <td data-title="'№'">{{element.engine.gosNo}}</td>
+                                        <td data-title="'Сост'">{{element.engine.fireEngineState.name}}</td>
+                                        <td data-title="'Карта'">
+                                            <button class="btn-success"
+                                                    ng-click="orderEdit.showPathFromPchToFire(element)">
+                                                <span class="glyphicon glyphicon-map-marker"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height: 5%;">
+                <div class="col-md-4" ng-show="orderEdit.storage.dataOfStates.editFireOrder.fireAct.addOrders.length>0">
+                    <button id="flow-create-fire"
+                            ng-disabled="orderEdit.addEnginesFireBtnEnable()"
+                            ng-click="orderEdit.addEnginesToFire()"
+                            ng-class="{'btn-danger':orderEdit.createFireBtnEnable()}"
+                            class="btn btn-success full-width full-height default-gray-button btn-create-fire"
+                            style="width: 100%;">
+                        Подтвердить технику
+                    </button>
+                    <i class="pretty-focus-left fa fa-lg fa-2x fa-arrow-right"></i>
+                </div>
+                <div class="col-md-4"
+                     ng-show="!orderEdit.storage.dataOfStates.editFireOrder.canLeave && orderEdit.storage.dataOfStates.editFireOrder.totalOrders.length>0">
+                    <button class="btn btn-warning full-width full-height default-gray-button" ng-disabled=""
+                            ng-click="orderEdit.cancelOrder()" style="width: 100%;">
+                        Отменить резервирование техники
+                    </button>
+                </div>
+
+                <div class="col-md-4">
+                    <button class="btn btn-success full-width full-height default-gray-button" style="width: 100%;"
+                            ng-show="orderEdit.storage.dataOfStates.editFireOrder.totalOrders.length === 0"
+                            ng-click="orderEdit.leaveState()">
+                        Вернуться к заявке
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

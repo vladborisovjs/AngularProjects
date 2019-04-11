@@ -1,0 +1,52 @@
+.gray-background{
+    background: @panels-background;
+}
+.checkbox-list{
+    border: 1px solid #969696;
+    width: 100%;
+    padding: 5px;
+    max-height: 70vh;
+    min-height: 100px;
+    overflow: auto;
+    border-radius: 3px;
+    background: #ffffff;
+
+    ul{
+        list-style: none;
+    }
+
+    > ul{
+        padding: 0 0 0 10px;
+
+        > li{
+            padding: 2px 0 2px 0;
+            font-size: .95rem;
+
+            ul{
+                padding: 0;
+                margin: 0 0 0 25px;
+
+                >li{
+
+                    padding: 1px 5px;
+
+                    &:nth-child(1n){
+                        background: darken(@row-nth-child-1, 6%);
+                    }
+
+                    &:nth-child(2n){
+                        background: darken(@row-nth-child-2, 6%);
+                    }
+
+                }
+            }
+        }
+
+        input[type*="checkbox"]{
+
+
+        }
+
+    }
+
+}

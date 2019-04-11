@@ -1,0 +1,21 @@
+<div class="container-fluid nopm" style="overflow: auto;height: 100%">
+    <table ng-table class="table table-bordered">
+        <tr ng-repeat="doc in (docsCtrl.filtredDocs = (docsCtrl.storage.docs | docsPropsFilter:{typeDoc:docsCtrl.storage.dataOfStates.docs.typeDoc.selected})) track by doc.id">
+            <td data-title="'Тип'" class="text-center">{{doc.typeDoc}}</td>
+            <td class="text-center" data-title="'Дата'">{{doc.creationDate | date:'dd-MM-yy HH:mm'}}</td>
+            <td class="text-center" data-title="'Описание'">{{doc.description}}</td>
+            <td class="text-center" data-title="'Пользователь'">{{doc.user}}</td>
+            <td class="text-center" data-title="'Откр.'">
+               <span ng-repeat="entry in docsCtrl.filterHTMLOnly(doc.docLibraryEntity)">
+                <a target="_blank" href={{docsCtrl.getUrlDoc(entry.url,entry.mimeType)}}
+                   type="entry.mimeType">{{entry.mimeType}}</a>
+                </span>
+            </td>
+            <td class="text-center" data-title="'Скачать'">
+            <span ng-repeat="entry in docsCtrl.filterNotHTML(doc.docLibraryEntity)">
+                <a download="{{docsCtrl.getDownloadName(doc, entry.mimeType)}}" href="{{entry.url}}" type="entry.mimeType">{{entry.mimeType}}</a>
+            </span>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,44 @@
+@row-padding: 10px;
+
+form.protocol-edit-list{
+
+    div[ng-hide]{
+
+        > div.row{
+            border-top: 1px solid rgba(0, 0, 0, .25);
+
+            &:last-of-type{
+                border-bottom: 1px solid rgba(0, 0, 0, .25);
+            }
+        }
+    }
+
+
+   .row{
+
+        padding-top: @row-padding;
+        padding-bottom: @row-padding;
+
+        [class*="col-"]{
+
+            > input{
+                text-transform: initial !important;
+                font-weight: normal !important;
+            }
+        }
+    }
+}
+
+.protocol-message-wrapper{
+
+    > .message-upper{
+        font-weight: 800;
+        //color: rgb(44, 101, 155);
+    }
+
+    > .message-lower{
+        font-size: .75rem;
+        //color: rgba(0, 0, 0, .8);
+    }
+
+}

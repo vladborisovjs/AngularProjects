@@ -1,0 +1,94 @@
+<div class="container" style="width: 100%;height: 100%">
+    <div class="row" style="height: 45%;width: 100%;overflow: auto">
+        <div class="col-xs-12 full-height" id="archive-table-wrapper">
+            <div ui-grid="archive.gridOptions" ui-grid-auto-resize ui-grid-selection class="protocol-grid"></div>
+        </div>
+    </div>
+
+    <div class="row" style="height: 45%;width: 100%" ng-show="archive.storage.dataOfStates.archiveCommand.activeFire">
+        <uib-tabset style="height: calc(100% - 42px);%" class="common-tabs-style">
+            <uib-tab heading="Протокол">
+                <table ng-table class="table table-bordered text-center">
+                    <thead>
+                    <th style="width: 5%"><b>СЧ</b></th>
+                    <th style="width: 5%"><b>Техника</b></th>
+                    <th style="width: 5%"><b>Тип</b></th>
+                    <th style="width: 55%"><b>Сообщение</b></th>
+                    <th style="width: 10%"><b>Дата</b></th>
+                    <th style="width: 20%"><b>Исполн</b></th>
+                    </thead>
+                    <tr ng-repeat="message in archive.storage.dataOfStates.archiveCommand.activeFire.fireAct.messageBuffer">
+                        <td>{{archive.getDept(message)}}</td>
+                        <td>{{message.engine.gosNo}}</td>
+                        <td>{{message.engine.engineType |engineTypeDecorator: message.engine.isFirstTank : message.engine.asGD}}</td>
+                        <td ng-bind-html="message.message"></td>
+                        <td>{{message.date | date:'dd-MM-yy HH:mm'}}</td>
+                        <td>{{message.user.firstName}} {{message.user.lastName}} {{message.user.uid}}</td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab heading="Техника">
+                <table ng-table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <td style="width: 5%"><b>СЧ</b></td>
+                        <td style="width: 10%"><b>Тип</b></td>
+                        <td style="width: 10%"><b>Гос№</b></td>
+                        <td style="width: 40%"><b>Модель</b></td>
+                        <td style="width: 15%"><b>Дата/время выезда</b></td>
+                        <td style="width: 15%"><b>Дата/время прибытия</b></td>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="tech in archive.storage.dataOfStates.archiveCommand.activeFire.fireAct.usedTech">
+                        <td>{{tech.deptName}}</td>
+                        <td>{{tech.engine.engineType.engineType}}</td>
+                        <td>{{tech.engine.gosNo}}</td>
+                        <td>{{tech.engine.engineModelName}}</td>
+                        <td>{{tech.startDate | date:'dd-MM-yy HH:mm'}}</td>
+                        <td>{{tech.endDate | date:'dd-MM-yy HH:mm'}}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </uib-tab>
+            <uib-tab heading="Документы"
+                     select="archive.selectDoc(archive.storage.dataOfStates.archiveCommand.activeFire.fireAct)">
+                <table ng-table class="table table-bordered text-center">
+                    <thead>
+                    <th style="width: 5%"><b>№</b></th>
+                    <th style="width: 10%"><b>Тип</b></th>
+                    <th style="width: 10%"><b>Исполн</b></th>
+                    <th style="width: 15%"><b>Дата</b></th>
+                    <th style="width: 5%"><b>Откр.</b></th>
+                    <th style="width: 10%"><b>Скачать.</b></th>
+                    </thead>
+                    <tr ng-repeat="doc in archive.storage.docs">
+                        <td>{{doc.numDoc}}</td>
+                        <td>{{doc.typeDoc}}</td>
+                        <td>{{doc.user}}</td>
+                        <td>{{doc.creationDate | date:'dd-MM-yy HH:mm'}}</td>
+                        <td class="text-center" data-title="'Откр.'">
+               <span ng-repeat="entry in archive.filterHTMLOnly(doc.docLibraryEntity)">
+                <a target="_blank" href={{archive.getUrlDoc(entry.url,entry.mimeType)}}
+                   type="entry.mimeType">{{entry.mimeType}}</a>
+            </span>
+                        </td>
+                        <td class="text-center" data-title="'Скачать'">
+            <span ng-repeat="entry in archive.filterNotHTML(doc.docLibraryEntity)">
+                <a download={{archive.getDownloadName(doc)}} href={{archive.getUrlDoc(entry.url,entry.mimeType)}}
+                   type="entry.mimeType">{{entry.mimeType}}</a>
+            </span>
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab heading="Аудио">
+                <div class="panel-body">
+                    <audio src="beep.mp3" controls></audio>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

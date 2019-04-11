@@ -1,0 +1,17 @@
+<div class="container-fluid hw100">
+    <div class="row">
+        <nav class="navbar navbar-inverse">
+            <ul class="navbar-nav nav">
+                <li ng-class="{active: isActive('/fires/deptsNote/bydept')}"><a ui-sref="fires.deptsNote.bydept" ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.subMenu.frontNotesOfPCH">Строевые записки {{fires.storage.fireUser.ACCESS.words.pch}}</a></li>
+                <li ng-class="{active: isActive('/fires/deptsNote/garrison')}"><a ui-sref="fires.deptsNote.garrison" ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.subMenu.frontForGarrison">Строевая за гарнизон</a></li>
+                <li ng-class="{active: isActive('/fires/deptsNote/asogarrison')}"><a ui-sref="fires.deptsNote.asoGarrison" ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.subMenu.equipment">Оборудование</a></li>
+                <li ng-class="{active: isActive('/fires/deptsNote/notesprotocol')}"><a ui-sref="fires.deptsNote.protocol" ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.subMenu.protocol">Протокол</a></li>
+                <li ng-class="{active: isActive('/fires/deptsNote/headCaraul')}"><a ui-sref="fires.deptsNote.headCaraul" ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.subMenu.officials">Должностные лица</a></li>
+                <li ng-show="deptsNote.storage.isRoot" ng-click="deptsNote.enableAllTechStatuses()" class="btn btn-success btn-xs" ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.subMenu.inCalculationAll">В расчет все</li>
+                <li ng-show="deptsNote.storage.isRoot" ng-click="deptsNote.disableAllTechStatuses()" class="btn btn-danger btn-xs" ng-show="fires.storage.fireUser.ACCESS.mainMenu.warNotes.subMenu.disableAll">Выкл все</li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="row" ui-view="deptsmain" style="height: calc(100% - 40px)"></div>
+</div>

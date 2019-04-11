@@ -1,0 +1,280 @@
+<div class="col-xs-4" style="overflow: auto;height: 100%">
+    <!--class="list-group-item small"-->
+    <div id={{engType}} class="list-group-item clearfix"
+         ng-repeat="engType in bytypes.engineTypes | orderBy: bytypes.engineTypeSortingAlgorythm"
+         ng-click="bytypes.selectType(engType)"
+         ng-class="{active:engType==bytypes.selectedType}">
+        <div class="pull-left">
+            <span class="glyphicon glyphicon-search"></span>
+            <span class="font-weight-bold">{{engType}}</span>
+        </div>
+        <div class="font-rm9 pull-left">&nbsp;&nbsp;&nbsp;{{bytypes.engineTypesDetailed[engType]}}</div>
+    </div>
+</div>
+
+<div ng-show="bytypes.isHasSelectedType()" class="col-xs-8" style="height: 100%">
+    <div class="panel panel-default" style="height: 100%">
+        <div class="panel-heading clearfix">
+
+            <div class="pull-left btn-group-xs">
+                <button class="btn btn-primary btn-xs" ng-click="bytypes.showHideEngines()">
+                    <span class="glyphicon"  ng-class="{'glyphicon-eye-open':(!!bytypes.storage.dataOfStates.bydept.hideEngines === true), 'glyphicon-eye-close':(!!bytypes.storage.dataOfStates.bydept.hideEngines === false)}"></span>
+                </button>
+                &nbsp;
+            </div>
+
+            <div class="pull-left">
+                Тип {{bytypes.selectedType}} Кол-во: {{bytypes.selectedEngines.length}}
+            </div>
+
+
+            <div class="pull-right btn-group-xs" role="group" ng-show="bytypes.selectedType == 'АЦ'">
+
+                <button class="btn" ng-click="bytypes.getAcByType(undefined)"
+                        ng-class="bytypes.additionalType == undefined ? 'btn-success' : 'btn-primary'">
+                    АЦ
+                </button>
+                <button class="btn" ng-click="bytypes.getAcByType(1)"
+                        ng-class="bytypes.additionalType === '1' ? 'btn-success' : 'btn-primary'">
+                    АЦ(1)
+                </button>
+                <button class="btn" ng-click="bytypes.getAcByType(2)"
+                        ng-class="bytypes.additionalType === '2'? 'btn-success' : 'btn-primary'">
+                    АЦ(2)
+                </button>
+
+
+            </div>
+
+
+        </div>
+        <div class="panel-body" style="overflow-y:scroll;width: 100%;height: 93%;padding: 0">
+            <table ng-table="bytypes.tableParams" class="table table-bordered " style="width: 100%;padding: 0;margin: 0"
+                   ng-show="bytypes.isHasSelectedType()">
+
+
+                <thead>
+                <th ng-show="bytypes.selectedFire!=null"><b>+</b></th>
+                <th class="cursor-pointer" sortable="'d.fireDeptName'" ng-click="bytypes.changeSortDirection()">
+                    <b class="pull-left">{{bytypes.storage.fireUser.ACCESS.words.pch}}</b>
+                    <i class="fa fa-sort-numeric-asc" aria-hidden="true" ng-show="bytypes.sortDirection == false"></i>
+                    <i class="fa fa-sort-numeric-desc" aria-hidden="true" ng-show="bytypes.sortDirection == true"></i>
+                </th>
+                <th><b>Дисл</b></th>
+                <th><b>Гос №</b></th>
+                <th></th>
+                <th><b>Тип</b></th>
+                <th><b>Состояние по С.З.</b></th>
+                <th><b>Состояние</b></th>
+                <th><b>Комментарий</b></th>
+                <th><b>АСО</b></th>
+                <th><b>Карта</b></th>
+                </thead>
+
+
+                <tr ng-repeat="de in bytypes.selectedEngines | orderBy: bytypes.pchSorting : bytypes.sortDirection track by $index"
+                    class="tech-table-row"
+                    ng-class="bytypes.accentByEngineState(de.e)">
+                    <!--
+                                        ng-class="{
+                                        dislocatedTech : de.e.locationDeptId!=null,
+                                        onDutyTech: de.e.fireEngineState.name === 'ВП' || de.e.fireEngineState.name === 'В РАСЧЕТЕ' || de.e.fireEngineState.name === 'ПТУ' || de.e.fireEngineState.name === 'ПТП'
+                                        }"
+                    -->
+                    <td class="plus-column text-center" ng-show="!!bytypes.selectedFire === true">
+                        <button class="btn btn-danger  btn-xs" ng-click="bytypes.addToFire(de)"
+                                ng-show="bytypes.showAddToFireButton(de)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </td>
+                    <!--
+                                        <td class="dept-column text-center" data-title="'Дист'">
+                                                {{de.e}}
+                                        </td>
+                    -->
+                    <td class="dept-column text-center">
+                        <button class="btn btn-link  btn-xs" ng-click="bytypes.changeToByDept(de)">
+                            {{de.d.fireDeptName}}
+                        </button>
+                    </td>
+                    <td class="disl-column text-center">{{bytypes.getDislocation(de)}}</td>
+                    <!--
+                                        <td class="gosno-column text-center" data-title="'Гос №'">
+                                            &lt;!&ndash;<button ng-click="bytypes.goToEdit(de)" class="btn btn-link  btn-xs">{{de.e.gosNo}}</button>&ndash;&gt;
+                                            {{de.e.gosNo}}
+                                        </td>
+                    -->
+
+                    <td class="gosno-column text-center">
+                        <button class="btn btn-link  btn-xs" ng-click="bytypes.showHistory(de.e)">
+                            {{de.e.gosNo}}
+                        </button>
+
+                    </td>
+
+
+                    <td>
+                        <span class="engine-markDesc">{{de.e.markDesc}}</span>
+                    </td>
+                    <td class="type-column text-center">
+                        {{de.e.engineType | engineTypeDecorator: de.e.isFirstTank: de.e.asGD}}
+                    </td>
+
+
+                    <!--
+
+
+                                        <td class="status-column text-center" data-title="'Статус'">
+                                            <div class="table-text-class"
+                                                 ng-show="(bytypes.getEngineStatus(de).name!='НА ПОЖАРЕ' && bytypes.getEngineStatus(de).name!='СЛЕДУЕТ')">
+                                                {{bytypes.getEngineStatus(de).name}}
+                                            </div>
+                                            <span ng-hide="(bytypes.getEngineStatus(de).name!='НА ПОЖАРЕ' && bytypes.getEngineStatus(de).name!='СЛЕДУЕТ')">
+                                                    {{bytypes.getEngineStatus(de).name}}
+                                                    <div class="table-text-class">&rarr;{{bytypes.findActiveFire(de).num}}</div>
+                                                </span>
+                                            <div class="table-text-class" ng-show="bytypes.getEngineStatus(de).name=='ВП'">
+                                                {{bytypes.getEngineReplacementEngineFromCaraul(de.d,de.e)}}
+                                            </div>
+                                        </td>
+
+                    -->
+
+
+                    <!--                    <td class="state-column text-center" data-title="'Состояние'">
+                                            <button class="btn btn-link btn-xs"
+                                                    ng-show="(de.e.fireEngineState.name!='НА ПОЖАРЕ' && de.e.fireEngineState.name!='СЛЕДУЕТ')"
+                                                    ng-click="bytypes.showStateChangeDialogue($event,de)">
+                                                {{de.e.fireEngineState.name}}
+                                            </button>
+                                            <span ng-hide="(de.e.fireEngineState.name!='НА ПОЖАРЕ' && de.e.fireEngineState.name!='СЛЕДУЕТ')">
+                                                    {{de.e.fireEngineState.name}}
+                                                    <button class="btn btn-link" ng-click="bytypes.replaceToOrder(de.e)">&rarr;{{bytypes.findActiveFire(de).num}}</button>
+                                                </span>
+
+
+                                            <button class="btn btn-link btn-xs" ng-show="de.e.fireEngineState.name=='ВП'"
+                                                    ng-click="bytypes.showReplacementDialogue($event,de.e)">
+                                                {{bytypes.getRelocationEngineById(de.d,de.e)}}
+                                            </button>
+
+                                        </td>-->
+
+
+                    <td class="state-column text-center">
+                            {{de.e.fireEngineStatus.name}}
+                    </td>
+                    <td class="state-column text-center">
+                        <button class="btn btn-link btn-xs" ng-click="bytypes.showStateChangeDialogue($event,de)">
+                            {{de.e.fireEngineState.name}}
+                        </button>
+                        <span ng-hide="(de.e.fireEngineState.name!='НА ПОЖАРЕ' && de.e.fireEngineState.name!='СЛЕДУЕТ')">
+                                <!--{{de.e.fireEngineState.name}}-->
+                                <button class="btn btn-link" ng-click="bytypes.replaceToOrder(de.e)">&rarr;{{bytypes.findActiveFire(de).num}}</button>
+                            </span>
+
+
+                        <button class="btn btn-link btn-xs" ng-show="de.e.fireEngineState.name=='ВП'"
+                                ng-click="bytypes.showReplacementDialogue($event,de.e)">
+                            {{bytypes.getRelocationEngineById(de.d,de.e)}}
+                        </button>
+
+                    </td>
+
+
+                    <td class="comment-column" style="width: 21%"
+                        ng-click="bytypes.showCommentInput(de.d,de.e, $event, $index)">
+                        <div style="width: 100%; height:100%">
+                                    <span class="full-height full-width"
+                                          ng-hide="bytypes.commentObject.engineId === de.e.idFireEngine">
+                                        {{ de.e.comment}}
+                                        <button class="btn btn-xs btn-default pull-right"
+                                                ng-click="bytypes.showCommentInput(de.d,de.e,$event,$index);">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    </span>
+                            <div class="input-group testClass full-width full-height"
+                                 ng-show="bytypes.commentObject.engineId === de.e.idFireEngine">
+                                <input type="text" class="full-height form-control"
+                                       style="padding: 0"
+                                       id="engine-comment-{{$index}}"
+                                       ng-keypress="bytypes.onEnterEmitComment($event)"
+                                       placeholder="Комментарий"
+                                       ng-model="bytypes.commentObject.comment">
+                                <span class="input-group-btn full-height">
+                                            <button class="btn btn-xs btn-success full-height" type="button"
+                                                    ng-click="bytypes.emitComment($event)">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button class="btn btn-xs btn-default full-height" type="button"
+                                                    ng-click="bytypes.closeCommentInput($event)">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                          </span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="equip-column text-center">
+                            <span ng-repeat="equip in de.e.equipmentsOnBoard" class="glyphicon"
+                                  ng-class="equip.eqType.icon" data-toggle="tooltip" title={{equip.name}}
+                                  aria-hidden="true"
+                                  style="padding-right: 5px; color:{{equip.eqType.iconColor}};"> </span>
+                    </td>
+                    <td class="map-column text-center">
+<!--
+                        <button ng-show='bytypes.selectedFire' class="btn btn-success  btn-xs"
+                                ng-click="bytypes.showPathFromPchToFire(de)">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                        </button>
+-->
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="position: absolute;height: 300px;width: 300px; z-index: 3;"
+     ng-style="{top:bytypes.position.top,left:bytypes.position.left}" ng-show="bytypes.showStatesList">
+    <div class=" panel panel-info small">
+        <div class="panel-heading" style="height: 46px;width: 100%">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-xs-12">Доступно для {{bytypes.currDeptEngine.e.engineType.engineType}}
+                            {{bytypes.currDeptEngine.e.gosNo}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                Код: <input type="text" class="form-control full-height input-extra-small"
+                                            style="width: calc(100% - 4em); display: inline"
+                                            ng-model="bytypes.codeInput"
+                                            ng-keydown="bytypes.selectTypedCodeItem($event)" id="codeInput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button ng-click="bytypes.closeStateChangeDialogue()" class="btn btn-danger  btn-xs"><span
+                        class="glyphicon glyphicon-remove"></span></button>
+            </div>
+        </div>
+        <div class="panel-body" style="max-height: 265px;overflow: auto; width: 100%">
+            <table ng-table class="table table-bordered">
+                <tr ng-repeat="state in bytypes.possibleStates | orderBy: 'code' | filter: bytypes.codeFilter"
+                    ng-click="bytypes.onChangeState(state)"
+                    ng-class="{'typedCodeF6':bytypes.codeCorrect(state)}"
+                    class="forma-field">
+                    <th data-title="'Код'" width="5%">{{state.code}}</th>
+                    <th data-title="'Наименование'" width="95%">{{state.name}}</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,136 @@
+<div class="opo-item-wrapper full-height">
+    <div class="row full-height">
+        <div class="edit-opo col-sm-6 full-height">
+            <div class="panel panel-default full-height" ng-form="MyForm">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Редактирование ОФПС
+                    </h4>
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-success animate-show btn-sm"
+                                ng-click="opoItemCtrl.save()"
+                                ng-disabled="opoItemCtrl.opoForm.$invalid || opoItemCtrl.holderForms.$invalid">
+                            <i class="fa fa-check"></i> Сохранить
+                        </button>
+                        <button class="btn btn-danger animate-show btn-sm"
+                                ng-show="opoItemCtrl.opo"
+                                ng-click="opoItemCtrl.delete()"
+                                ng-disabled="!opoItemCtrl.opo.opoId">
+                            <i class="fa fa-trash"></i> Удалить ОФПС
+                        </button>
+                        <button class="btn btn-default animate-show btn-sm"
+                                ng-click="opoItemCtrl.cancel()">
+                            <i class="fa fa-times"></i> Отмена
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-wrapper animate-show" data-ng-form="opoItemCtrl.opoForm"
+                             ng-show="opoItemCtrl.opo">
+                            <div class="form-group">
+                                <label for="NameInput">Наименование</label>
+                                <input type="text"
+                                       class="form-control"
+                                       name="NameInputName"
+                                       id="NameInput"
+                                       placeholder=""
+                                       ng-model="opoItemCtrl.opo.opoName"
+                                       ng-required="true"
+                                >
+                                <span class="label label-danger"
+                                      ng-show="opoItemCtrl.opoForm.NameInputName.$error.required">Поле не может быть пустым!</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressInput">Адрес</label>
+                                <input type="text"
+                                       class="form-control"
+                                       name="addressInputName"
+                                       id="addressInput"
+                                       placeholder="Домашний адрес"
+                                       ng-model="opoItemCtrl.opo.address"
+                                       ng-required="false">
+                                <span class="label label-danger"
+                                      ng-show="opoItemCtrl.opoForm.addressInputName.$error.required">Поле не может быть пустым!</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneInput">Телефоны</label>
+                                <input type="text" class="form-control" name="phoneInputName"
+                                       id="phoneInput"
+                                       ng-model="opoItemCtrl.opo.tlflist"
+                                       ng-required="false">
+                                <span class="label label-danger"
+                                      ng-show="opoItemCtrl.opoForm.phoneInputName.$error.required">Поле не может быть пустым!</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputDesc">Описание ОПО:</label>
+                                <textarea rows="2" type="text" class="form-control" id="inputDesc"
+                                          ng-model="opoItemCtrl.opo.opoDescr"
+                                          name="inputDesc"
+                                          ng-required="false"></textarea>
+                                <span class="label label-danger"
+                                      ng-show="opoItemCtrl.opoForm.inputDesc.$error.required">Поле не может быть пустым!</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="pchInput">Пожарные части</label>
+                                <input type="text"
+                                       class="form-control"
+                                       name="pchInputName"
+                                       id="pchInput"
+                                       placeholder="Пожарные части"
+                                       ng-model="opoItemCtrl.opo.opoDepts">
+                            </div>
+                            <div class="form-group">
+                                <label for="opoDistrict">Район</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="opoDistrict"
+                                       placeholder="Район"
+                                       ng-model="opoItemCtrl.opo.opoDistrict">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="edit-orgs col-sm-6 full-height">
+            <div class="panel panel-default full-height">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <button class="btn btn-default btn-sm" data-ng-click="opoItemCtrl.addOrg()">
+                            <i class="fa fa-plus"></i> Добавить огранизацию
+                        </button>
+                        Редактирование организаций
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <table data-ng-table class="table table-bordered" style="width: 100%"
+                           data-ng-form="opoItemCtrl.holderForms">
+                        <tr highlight-tab-by-item="forma.currentTabArea" data-as-sortable-item
+                            data-ng-repeat="holder in opoItemCtrl.opo.hydrantHolders track by $index"
+                            data-ng-form="opoItemCtrl.holderForm[$index]">
+                            <td class="text-center" data-title="'Наименование'" style="width: 80%">
+                                <input type="text" class="form-control" name="HolderNameName"
+                                       placeholder=""
+                                       data-ng-model="holder.ownerName"
+                                       required>
+                                <span class="label label-danger"
+                                      data-ng-show="opoItemCtrl.holderForm[$index].HolderNameName.$error.required">Поле не может быть пустым!</span>
+                            </td>
+                            <td class="text-center" data-title="'В городе'" style="width: 10%">
+                                <input type="checkbox" class="form-control" id="isCity"
+                                       data-ng-model="holder.isCity">
+                            </td>
+                            <td class="text-center" data-title="'-'" style="width: 10%">
+                                <button data-ng-click="opoItemCtrl.deleteOrg($index)"
+                                        class="btn btn-danger btn-sm"><span
+                                        class="glyphicon glyphicon-minus"></span></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

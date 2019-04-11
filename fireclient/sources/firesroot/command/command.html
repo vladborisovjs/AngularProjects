@@ -1,0 +1,576 @@
+<!--
+<div class="panel-group nopm full-height" style="height: 100%"
+     ng-hide="command.storage.stateKeeper.oldState == 'fires.archive'">
+-->
+<div class="panel-group nopm full-height command-wrapper"
+     ng-show="command.storage.fireUser.ACCESS.states.newFireCard.fireCommands"
+     xmlns="http://www.w3.org/1999/html">
+
+
+    <div ng-show="command.isCommandDefined()" class="full-height">
+        <div class="panel panel-default full-height">
+            <div class="panel-heading text-center">{{command.getWord('КОМАНДЫ')}}</div>
+            <div class="panel-body">
+                <!--<div class="row">-->
+                <!--<button ng-click="command.infoMode()" class="btn btn-success" style="width: 100%"-->
+                <!--uib-tooltip="Сообщение"-->
+                <!--tooltip-placement="auto"><span class="glyphicon glyphicon-log-out"></span><b> ТЕКСТОВОЕ-->
+                <!--СООБЩЕНИЕ</b>-->
+                <!--</button>-->
+                <!--</div>-->
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null">
+                    <!--<button ng-disabled="command.disableTechButton()"-->
+                    <!--id="enginesArrivingButton"-->
+                    <!--uib-popover-template="command.templateUrl"-->
+                    <!--popover-trigger="outsideClick"-->
+                    <!--popover-placement="left-top"-->
+                    <!--class="btn btn-success " style="width: 100%"-->
+                    <!--uib-tooltip="Прибытие техники" tooltip-placement="auto" tooltip-popup-close-delay='999999'><span-->
+                    <!--class="glyphicon glyphicon-new-window"></span><b> ПРИБЫТИЕ ТЕХНИКИ</b>-->
+                    <!--</button>-->
+                    <button ng-disabled="command.disableTechButton()"
+                            id="enginesArrivingButton"
+                            uib-popover-template="command.templateUrl"
+                            popover-trigger="outsideClick"
+                            popover-placement="left-top"
+                            class="btn btn-success clearfix" style="width: 100%"
+                            uib-tooltip="{{command.getWord('Прибытие техники')}}" tooltip-placement="auto">
+                        <div class="pull-left">
+                            <span class="glyphicon glyphicon-new-window"></span><b>{{command.getWord('ПРИБЫТИЕ
+                                                                                   ТЕХНИКИ')}}</b>
+                        </div>
+                        <div class="pull-right">{{command.getIncidentTime('firstCarDate')}}</div>
+                    </button>
+
+
+
+
+
+
+
+
+
+
+
+                    <script type="text/ng-template" id="enginesOnFirePopoverTemplate.html">
+                        <div class="engines-popup-in-command nopm">
+                            <table ng-table class="table table-bordered small text-center nopm">
+                                <tr class=""
+                                    ng-repeat="currorder in command.storage.selectedFire.orders | orderBy: command.engineTypeSortingAlgorythm">
+                                    <td style="width: 7%" data-title="'' " header-title="'map'"
+                                        >
+<!--
+                                        <button ng-show='currorder.fireEngine.idFireEngine.length>0'
+                                                class="btn btn-xs btn-success"
+                                                ng-click="command.showPathFromPchToFire(currorder)">
+                                            <span class="glyphicon glyphicon-map-marker"></span>
+                                        </button>
+-->
+                                    </td>
+                                    <td style="width: 60%;padding: 0" data-title="command.getWord('ПЧ/ТИП/Гос№')">
+                                        <div class="col-sm-3 nopm">
+                                            <div ng-click="command.goToDept(currorder)" class="btn-link"
+                                                 style="padding-left: 0; cursor: pointer">
+                                                {{currorder.departmentName}}{{command.getDislocation(currorder)}}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 nopm">
+                                            <div style="padding-left: 0; cursor: pointer"
+                                                 ng-click="command.goToType(currorder)"
+                                                 class="btn-link" title="{{currorder.orderAs.engineType}}">
+                                                {{currorder.fireEngine.engineType | engineTypeDecorator:
+                                                        currorder.fireEngine.isFirstTank : currorder.fireEngine.asGD}}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 nopm">
+                                            <div style="padding-left: 0;padding-right: 0; cursor: pointer"
+                                                 ng-click="command.goToDept(currorder)"
+                                                 class="btn-link">{{currorder.fireEngine.gosNo}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width:25%" data-title="command.getWord('Состояние')">
+                                        {{command.getWordByStatuse(currorder)}}
+
+                                    </td>
+                                    <td style="width:8%" data-title="'+'">
+                                        <button ng-show="command.engineStatuse(currorder)=='СЛЕДУЕТ'"
+                                                class="btn btn-xs btn-primary"
+                                                ng-click="command.onArriveEngineToFire(currorder)">
+                                            <i class="fa fa-taxi" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <!--<div class="row" style="padding-top: 5px">
+                    <button ng-disabled="command.storage.dataOfStates.command.arriveCounter==0"
+                            ng-click="command.arriveAllEnginesToFire()" class="btn btn-success " style="width: 100%"
+                            uib-tooltip="Прибытие всей техники" tooltip-placement="auto"><span
+                            class="glyphicon glyphicon-new-window"></span><b> ПРИБЫТИЕ ВСЕЙ ТЕХНИКИ</b>
+                    </button>
+                </div>-->
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null"
+                     ng-if="command.storage.fireUser.ACCESS.states.firebase.buttons.firstStvol === true">
+                    <button ng-disabled="command.engineArrived()"
+                            ng-click="command.buttonApproveShow('ПЕРВЫЙ СТВОЛ',command.onFirstStvol)"
+                            class="btn btn-success" style="width: 100%"
+                            uib-tooltip="{{command.getWord('ПЕРВЫЙ СТВОЛ')}}" tooltip-placement="auto">
+
+                        <div class="pull-left">
+                            <span
+                                    class="glyphicon glyphicon-new-window"></span> <b>{{command.getWord('ПЕРВЫЙ СТВОЛ')}}</b>
+                        </div>
+                        <div class="pull-right">
+                            {{command.getIncidentTime('firstStvolDate')}}
+                        </div>
+                    </button>
+                    <!--
+                                        <button ng-disabled="command.storage.selectedFire.isFirstStvol || command.engineArrived"
+                                                ng-click="command.buttonApproveShow('ПОДАЧА ПЕРВОГО СТВОЛА',command.onFirstStvol)"
+                                                class="btn btn-success" style="width: 100%"
+                                                uib-tooltip="{{command.getWord('ПОДАЧА ПЕРВОГО СТВОЛА')}}" tooltip-placement="auto"><span
+                                                class="glyphicon glyphicon-new-window"></span> <b>{{command.getWord('ПОДАЧА ПЕРВОГО СТВОЛА')}}</b>
+                                        </button>
+                    -->
+                </div>
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null">
+                    <!--ng-disabled="command.storage.selectedFire.isLocalized ||command.storage.dataOfStates.command.onFireCounter==0 || command.storage.selectedFire.fireStatus.code != 3"-->
+                    <button ng-click="command.buttonApproveShow('ЛОКАЛИЗАЦИЯ',command.onL1);" class="btn btn-success"
+                            style="width: 100%"
+                            uib-tooltip="{{command.getWord('ЛОКАЛИЗАЦИЯ')}}" tooltip-placement="auto">
+
+                        <div class="pull-left">
+                            <span class="glyphicon glyphicon-new-window"></span>
+                            <b>{{command.getWord('ЛОКАЛИЗАЦИЯ')}}</b>
+                        </div>
+                        <div class="pull-right">{{command.getIncidentTime('L1Date')}}</div>
+                    </button>
+                </div>
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null"
+                     ng-if="command.storage.fireUser.ACCESS.states.firebase.buttons.firstStvol === true">
+                    <!--ng-disabled="command.storage.selectedFire.isLOG || !command.engineArrived() || command.storage.selectedFire.fireStatus.code != 4"-->
+                    <button ng-click="command.buttonApproveShow('ЛОГ',command.onLOG)" class="btn btn-success"
+                            style="width: 100%"
+                            uib-tooltip="{{command.getWord('Ликвидация открытого горения')}}"
+                            tooltip-placement="auto">
+
+                        <div class="pull-left">
+                            <span class="glyphicon glyphicon-new-window">
+
+
+
+                    </span><b>{{command.getWord('ЛОГ')}}</b>
+                        </div>
+
+                        <div class="pull-right">{{command.getIncidentTime('LOGDate')}}</div>
+
+                    </button>
+                    <!--
+                                        <button ng-disabled="command.storage.selectedFire.isLOG ||command.storage.dataOfStates.command.onFireCounter==0 || command.storage.selectedFire.fireStatus.code != 4"
+                                                ng-click="command.buttonApproveShow('ЛОГ',command.onLOG)" class="btn btn-success"
+                                                style="width: 100%"
+                                                uib-tooltip="{{command.getWord('Ликвидация открытого горения" tooltip-placement="auto"><span
+                                                class="glyphicon glyphicon-new-window"></span><b>{{command.getWord('ЛОГ')}}</b>
+                                        </button>
+                    -->
+                </div>
+
+
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null">
+                    <!--ng-disabled="command.storage.selectedFire.isLPP ||command.storage.dataOfStates.command.onFireCounter==0 || command.storage.selectedFire.fireStatus.code != 6"-->
+                    <button ng-click="command.buttonApproveShow('ЛПП',command.onLPP)" class="btn btn-success"
+                            style="width: 100%"
+                            uib-tooltip="{{command.getWord('Ликвидация последствий пожара')}}"
+                            tooltip-placement="auto">
+
+                        <div class="pull-left">
+
+                            <span class="glyphicon glyphicon-new-window"></span>
+                            <!--
+
+                                                    {{command.storage.dataOfStates.command.onFireCounter}}
+                                                    &nbsp;
+                                                    {{command.storage.selectedFire.isLPP}}
+                                                    &nbsp;
+                                                    {{command.storage.selectedFire.fireStatus.code}}
+                                                    &nbsp;
+
+                            -->
+                            <b>{{command.getWord('ЛПП')}}</b>
+
+                        </div>
+                        <div class="pull-right">{{command.getIncidentTime('LPPDate')}}</div>
+
+
+                    </button>
+                </div>
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null">
+                    <button ng-click="command.buttonApproveShow('РАБОТЫ ОКОНЧЕНЫ',command.onRO)" class="btn btn-success"
+                            style="width: 100%"
+                            uib-tooltip="{{command.getWord('РАБОТЫ ОКОНЧЕНЫ')}}" tooltip-placement="auto">
+
+
+                        <div class="pull-left">
+                            <span class="glyphicon glyphicon-new-window"></span><b>{{command.getWord('РАБОТЫ
+                                                                                   ОКОНЧЕНЫ')}}</b>
+
+
+                        </div>
+                        <div class="pull-right">{{command.getIncidentTime('RODate')}}</div>
+
+
+                    </button>
+
+                    <!--
+                    <button ng-disabled="!command.storage.selectedFire.firstCarDate"
+                            ng-click="command.buttonApproveShow('РАБОТЫ ОКОНЧЕНЫ',command.onRO)" class="btn btn-success"
+                            style="width: 100%"
+                            uib-tooltip="РАБОТЫ ОКОНЧЕНЫ" tooltip-placement="auto"><span
+                            class="glyphicon glyphicon-new-window"></span><b> РАБОТЫ ОКОНЧЕНЫ</b>
+                    </button>
+
+
+                    -->
+
+
+                </div>
+                <div class="row"
+                     ng-show="command.storage.fireUser.ACCESS.states.firebase.buttons.cancelTheOrder && !!command.storage.selectedFire != false">
+                    <button ng-click="command.buttonApproveShow('АННУЛИРОВАТЬ.',command.onCancel)"
+                            class="btn btn-success" style="width: 100%"
+                            uib-tooltip="{{command.getWord('АННУЛИРОВАТЬ')}}" tooltip-placement="auto"><span
+                            class="glyphicon glyphicon-new-window"></span><b>{{command.getWord('АННУЛИРОВАТЬ')}}</b>
+                    </button>
+                </div>
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null">
+                    <button ng-click="command.buttonApproveShow('Ложн.вызов',command.onLV)"
+                            ng-disabled="command.storage.selectedFire.isLPP ||command.storage.selectedFire.isLOG ||command.storage.selectedFire.isLocalized || command.storage.selectedFire.isFirstStvol"
+                            class="btn btn-success" style="width: 100%"
+                            uib-tooltip="{{command.getWord('Ложный вызов')}}" tooltip-placement="auto"><span
+                            class="glyphicon glyphicon-new-window"></span><b>{{command.getWord('ЛВ')}}</b>
+                    </button>
+                </div>
+                <div class="row" ng-hide="command.storage.selectedFire.startDate == null">
+                    <button ng-click="command.buttonApproveShow('Ложн.сраб.сигн.',command.onLSS)"
+                            ng-disabled="command.storage.selectedFire.isLPP ||command.storage.selectedFire.isLOG ||command.storage.selectedFire.isLocalized || command.storage.selectedFire.isFirstStvol"
+                            class="btn btn-success" style="width: 100%"
+                            uib-tooltip="{{command.getWord('Ложное срабатывание сигнализации')}}"
+                            tooltip-placement="auto"><span
+                            class="glyphicon glyphicon-new-window"></span><b>{{command.getWord('ЛСС')}}</b>
+                    </button>
+                </div>
+                <!--
+                                <div class="row" ng-show="command.storage.fireUser.ACCESS.states.firebase.buttons.specialTechnique" ng-hide="command.storage.selectedFire.startDate == null">
+                                    <div class="btn-group" style="width: 100%;" role="group">
+                                        <button style="width: 33.3%;" type="button" ng-click="command.emitSpecialTechnique('катер');"
+                                                class="btn btn-success">Катер
+                                        </button>
+                                        <button style="width: 33.3%;" type="button" ng-click="command.emitSpecialTechnique('вертолёт');"
+                                                class="btn btn-success">Вертолёт
+                                        </button>
+                                        <button style="width: 33.3%;" type="button" ng-click="command.emitSpecialTechnique('самолёт');"
+                                                class="btn btn-success">Самолёт
+                                        </button>
+                                    </div>
+                                </div>
+                -->
+
+                <div class="row" ng-show="command.storage.fireUser.ACCESS.states.firebase.buttons.approveButtonBlock"
+                     ng-hide="command.storage.selectedFire.startDate == null || (command.storage.selectedFire.firePlace.region.code != 141 && command.storage.fireUser.ACCESS.states.firebase.buttons.approveButtonBlock === false)">
+                    <div class="btn-group btn-group-justified" role="group">
+
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.show112ApproveButtonBlock('01');"
+                                    ng-disabled="command.is112ButtonDisabled('ЖКХ')"
+                                    class="btn btn-default">01<i class="fa fa-check"
+                                                                 ng-show="command.is112ButtonDisabled('ЖКХ')"></i>
+                            </button>
+                        </div>
+
+
+
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.show112ApproveButtonBlock('02');"
+                                    ng-disabled="command.is112ButtonDisabled('02')"
+                                    class="btn btn-default">02<i class="fa fa-check"
+                                                                 ng-show="command.is112ButtonDisabled('02')"></i>
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.show112ApproveButtonBlock('03');"
+                                    ng-disabled="command.is112ButtonDisabled('03')"
+                                    class="btn btn-default">03<i class="fa fa-check"
+                                                                 ng-show="command.is112ButtonDisabled('03')"></i>
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.show112ApproveButtonBlock('04');"
+                                    ng-disabled="command.is112ButtonDisabled('04')"
+                                    class="btn btn-default">04<i class="fa fa-check"
+                                                                 ng-show="command.is112ButtonDisabled('04')"></i>
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.show112ApproveButtonBlock('АТ');"
+                                    ng-disabled="command.is112ButtonDisabled('АТ')"
+                                    class="btn btn-default">{{command.getWord('ЦУКС')}}<i class="fa fa-check"
+                                                                                          ng-show="command.is112ButtonDisabled('АТ')"></i>
+                            </button>
+                        </div>
+
+<!--
+
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.show112ApproveButtonBlock('ЖКХ');"
+                                    ng-disabled="command.is112ButtonDisabled('ЖКХ')"
+                                    class="btn btn-default">{{command.getWord('ЖКХ')}}<i class="fa fa-check"
+                                                                                         ng-show="command.is112ButtonDisabled('ЖКХ')"></i>
+                            </button>
+                        </div>
+-->
+
+
+
+
+
+
+
+                    </div>
+                </div>
+                <div class="row"
+                     ng-show="command.show112ApproveButtons && command.storage.selectedFire.startDate != null">
+                    <input id="requestUserName"
+                           ng-keydown="command.allowApproveRequstButton($event);"
+                           ng-keyup="command.goToApproveRequestButton($event);"
+                           class="form-control full-width"
+                           placeholder="{{command.getWord('Кто принял')}}"
+                           ng-model="command.callRequestMan">
+                </div>
+                <div class="row"
+                     ng-hide="!command.show112ApproveButtons || command.storage.selectedFire.startDate == null">
+                    <!--<div class="row" ng-show="command.show112ApproveButtons" ng-hide="command.storage.selectedFire.startDate == null">-->
+                    <div class="btn-group btn-group-justified" role="group">
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.send112SideServiceAdd();"
+                                    class="btn btn-success" id="aproveRequestButton">{{command.getWord('Запрос')}}
+                                                                                     {{command.currentSideServiceName}}
+                                <i
+                                        class="fa fa-check"></i>
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" ng-click="command.hide112ApproveButtonBlock();"
+
+                                    class="btn btn-danger">{{command.getWord('Отмена')}} <i class="fa fa-ban"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"
+                     ng-if="command.showRankButtons() && command.storage.fireUser.ACCESS.states.firebase.buttons.rankButtons === true"
+                     ng-hide="command.storage.selectedFire.startDate == null || command.storage.selectedFire.firePlace.region.code != 141">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="btn-group btn-group-justified" role="group">
+                                <div class="btn-group" role="group">
+                                    <button type="button" ng-click="command.openChangeRang(true);"
+                                            ng-disabled="command.storage.selectedFire.rank.sidfirerank==='5'"
+                                            class="btn btn-default">{{command.getWord('Ранг')}} <i
+                                            class="fa fa-arrow-up"></i>
+                                    </button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="button" ng-click="command.openChangeRang(false);"
+                                            class="btn btn-default">{{command.getWord('Ранг')}} <i
+                                            class="fa fa-arrow-down"></i>
+                                    </button>
+
+
+                                    <!--
+                                                                        <button type="button" ng-click="command.openChangeRang(false);"
+                                                                                ng-disabled="command.storage.selectedFire.rank.sidfirerank==='1' || command.storage.selectedFire.L1Date == null "
+                                                                                class="btn btn-default">Ранг <i class="fa fa-arrow-down"></i>
+                                                                        </button>
+                                    -->
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="command.storage.dataOfStates.command.showRankInputs">
+                            <div class="col-xs-1 text-center nopm">
+                                <i class="fa fa-2x fa-arrow-up" ng-show="command.sortRanksUp"></i>
+                                <i class="fa fa-2x  fa-arrow-down" ng-hide="command.sortRanksUp"></i>
+                            </div>
+                            <div class="col-xs-4 nopm">
+                                <ui-select style="width: 100%"
+                                           id="rangUISelect"
+                                           ng-model="command.newFireRank"
+                                           on-select="command.goToInputField()"
+                                           focus-on="command_rangUISelect_focus">
+                                    <ui-select-match placeholder="{{command.getWord('Ранг')}}">
+                                        {{command.newFireRank.sidfirerank}}
+                                    </ui-select-match>
+                                    <ui-select-choices style="width: 100%; min-width: initial;"
+                                                       repeat="rang in command.storage.rangs | rankChangeFilter: command.sortRanksUp : command.storage.selectedFire.rank : $select.search  | orderBy: 'sidfirerank'">
+                                        {{rang.sidfirerank}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-xs-7 nopm">
+
+                                <input id="rangTextInput"
+                                       ng-keydown="command.allowApproveButton($event);"
+                                       ng-keyup="command.goToApproveButton($event);"
+                                       class="form-control full-width"
+                                       placeholder="{{command.getWord('Кто передал')}}"
+                                       ng-model="command.rankMan">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 nopm">
+                                    <div class="btn-group btn-group-justified" role="group">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" ng-click="command.approveChangeRang();"
+                                                    class="btn btn-success"
+                                                    ng-disabled="command.approveButtonDisabled()"
+                                                    id="aproveRankButton"><i
+                                                    class="fa fa-check"></i>
+                                            </button>
+                                        </div>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" ng-click="command.closeChangeRang();"
+                                                    class="btn btn-default"><i class="fa fa-ban"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"
+                     ng-if="command.showRankButtons() && command.storage.fireUser.ACCESS.states.firebase.buttons.modifiersButtons === true"
+                     ng-hide="command.storage.selectedFire.startDate == null || command.storage.selectedFire.firePlace.region.code != 141">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="button" ng-click="command.openAddMod();"
+                                        class="btn btn-success full-width">{{command.getWord('Модификаторы')}}</i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="command.showModInputs">
+                            <div class="col-xs-12">
+                                <div class="row padding-top-3px">
+                                    <!--<div class="col-xs-3" ng-repeat="mod in command.storage.firerankModificators">-->
+                                    <button ng-repeat="mod in command.storage.firerankModificators"
+                                            class="btn btn-xs btn-success btn-modificators"
+                                            ng-click="command.toggleModToTempList(mod)">
+                                        {{mod.nameFirerankModificator}}
+                                        <i ng-show="command.isModInTempList(mod.sidFirerankModificator)"
+                                           class="fa fa-check"></i>
+                                        <!--
+                                                                                <i ng-show="command.isModInTempList(mod.sidFirerankModificator) || command.isModActive(mod)"
+                                                                                    class="fa fa-check"></i>
+                                        -->
+                                    </button>
+                                    <!--
+                                                                        <button ng-repeat="mod in command.storage.firerankModificators"
+                                                                                class="btn btn-xs btn-success btn-modificators"
+                                                                                ng-click="command.toggleModToTempList(mod)">
+                                                                            {{mod.nameFirerankModificator}} <i
+                                                                                ng-show="command.isModInTempList(mod) || command.isModActive(mod)"
+                                                                                class="fa fa-check"></i>
+                                                                        </button>
+                                    -->
+                                    <!--
+                                                                        <button ng-repeat="mod in command.storage.firerankModificators"
+                                                                                class="btn btn-xs btn-success btn-modificators"
+                                                                                ng-disabled="command.isModActive(mod)"
+                                                                                ng-click="command.toggleModToTempList(mod)">
+                                                                            {{mod.nameFirerankModificator}} <i
+                                                                                ng-show="command.isModInTempList(mod) || command.isModActive(mod)"
+                                                                                class="fa fa-check"></i>
+                                                                        </button>
+                                    -->
+                                    <!--
+                                                                            <button class="full-width btn btn-xs btn-success"
+                                                                                    ng-disabled="command.isModActive(mod)"
+                                                                                    ng-click="command.toggleModToTempList(mod)">
+                                                                                {{mod.sidFirerankModificator}} <i
+                                                                                    ng-show="command.isModInTempList(mod) || command.isModActive(mod)"
+                                                                                    class="fa fa-check"></i>
+                                                                            </button>
+                                    -->
+                                    <!--</div>-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input id="modTextInput"
+                                               ng-keydown="command.allowApproveModButton($event);"
+                                               ng-keyup="command.goToApproveModButton($event);"
+                                               class="form-control full-width"
+                                               ng-model="command.modMan"
+                                               placeholder="{{command.getWord('Кто передал')}}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="btn-group btn-group-justified" role="group">
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" ng-click="command.addModsToFire();"
+                                                        class="btn btn-success"
+                                                        ng-disabled="command.approveModButtonDisabled()"
+                                                        id="aproveModButton"><i
+                                                        class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" ng-click="command.closeAddMod();"
+                                                        class="btn btn-default"><i class="fa fa-ban"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="full-width" style="position: absolute;bottom: 0; z-index: 10;" ng-show="command.showApproveButtons">
+            <div class="btn-group btn-group-vertical full-width" role="group">
+                <div class="btn-group" role="group">
+                    <button type="button" ng-click="command.buttonApprove();"
+                            class="btn btn-success">{{command.currentButtonText}} <i
+                            class="fa fa-check"></i>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" ng-click="command.cancelButton();"
+
+                            class="btn btn-danger">{{command.getWord('Отмена')}} <i class="fa fa-ban"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

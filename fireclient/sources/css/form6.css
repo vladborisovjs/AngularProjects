@@ -1,0 +1,134 @@
+.popup-node-box-shadow {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.text-shadow-on-dark {
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+.text-shadow-on-light {
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+.table-header-shadow {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+.form6-content-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100%;
+}
+.form6-content-wrapper .form6-buttons-panel {
+  position: relative;
+  height: 100%;
+  border-right: 1px solid #080808;
+  background: #d6d6d6;
+  width: 60px;
+  padding: 5px;
+  margin: 0 10px 0 0;
+}
+.form6-content-wrapper .form6-buttons-panel .btn {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  margin: 0 auto 2px;
+  padding: 2px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+.form6-content-wrapper .form6-buttons-panel .btn.highlightButton {
+  background: #d10000;
+}
+.form6-content-wrapper .last-edit {
+  margin-top: 15px;
+  font-size: 1.2rem;
+}
+.form6-content-wrapper .last-edit span {
+  font-weight: bold;
+}
+.form6-content-wrapper .form6 {
+  padding: 5px 5px 0 0;
+}
+.form6-content-wrapper .form6 .form-group {
+  margin-bottom: 5px;
+}
+.form6-content-wrapper .form6 fieldset {
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.16);
+  background: #d6d6d6;
+  border-right: 1px solid rgba(8, 8, 8, 0.35);
+  border-bottom: 1px solid rgba(8, 8, 8, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  border-left: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 4px;
+}
+.form6-content-wrapper .form6 fieldset legend {
+  width: auto;
+  margin-left: 10px;
+  margin-bottom: 0;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  /*
+                background: @panels-background;
+                color: #337ab7;
+                border: 1px solid #337ab7;
+                */
+  /*
+                border-top: 1px solid rgba(255, 255, 255, .45);
+                border-left: 1px solid rgba(255, 255, 255, .45);
+                border-right: 1px solid rgba(255, 255, 255, .45);
+                border-bottom: 1px solid rgba(255, 255, 255, .45);
+                */
+  color: #ffffff;
+  background: #337ab7;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+.form6-content-wrapper .form6 fieldset legend.highlightButton {
+  background: #d10000;
+}
+.form6-content-wrapper .form6 fieldset input {
+  background: #d6d6d6;
+}
+.form6-content-wrapper .form6 fieldset input:focus {
+  background: #ffffff;
+}
+.form6-content-wrapper .form6 fieldset input[disabled*="disabled"] {
+  background: #c3c3c3 !important;
+}
+.forma-date-time-picker {
+  display: flex;
+}
+.forma-date-time-picker .forma-date-picker {
+  min-width: 130px;
+  margin-right: 10px;
+}
+.forma-date-time-picker .forma-time-picker .uib-timepicker {
+  background: none;
+}
+.forma-date-time-picker .forma-time-picker .uib-time {
+  padding: 0;
+}
+.forma-date-time-picker .forma-time-picker .uib-time input {
+  width: 40px;
+}
+.forma-date-time-picker .forma-time-picker .f6-invalid .uib-time input {
+  box-shadow: inset 0 0 8px #ff0000 !important;
+  background: none;
+}
+.forma-date-time-picker .forma-time-picker .f6-valid .uib-time input {
+  box-shadow: inset 0 0 8px #00b80b !important;
+  background: none;
+  background: #ffffff;
+}
+.f6-transparent-panel,
+.f6-transparent-panel .panel-heading,
+.f6-transparent-panel .panel-body,
+.f6-transparent-panel .panel-body table,
+.f6-transparent-panel .panel-body td {
+  background: none !important;
+}

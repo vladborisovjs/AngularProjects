@@ -1,0 +1,83 @@
+.about{
+    padding: 0;
+    margin: 0;
+    background: @about-background;
+    height: @about-height;
+    //overflow: hidden;
+    position: relative;
+
+
+    > table{
+        //height: @about-height;
+        overflow: hidden;
+        border-collapse: separate;
+
+        > thead{
+
+            > tr{
+
+                > th{
+                    //border: @about-td-borders;
+                    border: 0;
+                    font-weight: 400;
+                    border-bottom: @about-td-borders-shadow;
+                }
+            }
+        }
+
+        > tbody{
+
+            > tr{
+
+                > td{
+                    border: @about-td-borders;
+                    border-left: @about-td-borders-shadow;
+                    vertical-align: middle;
+
+                    > button{
+                        border: 0;
+                        border-radius: 0;
+                        padding: 5px 30px;
+
+                        .text-shadow-on-dark;
+                    }
+
+                    > b{
+                        text-align: center;
+                        color: @brand-primary;
+
+                        .text-shadow-on-dark;
+                    }
+
+                    &#cards112Btn{
+
+                        > .popover{
+                            margin: initial;
+                            overflow-y: scroll;
+
+                            > .popover-inner{
+
+                                td:not(:last-of-type){
+                                    padding: 2px 5px 0 5px !important;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                > td:not(.warning){
+                    max-width: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                }
+            }
+        }
+    }
+}
+.lockCard112{
+    font-size: .96rem;
+    font-weight: 600;
+}

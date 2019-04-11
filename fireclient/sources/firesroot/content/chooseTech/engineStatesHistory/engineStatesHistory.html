@@ -1,0 +1,92 @@
+<div class="col-xs-3 full-height" style="overflow: auto">
+    <div class="row">
+        <div class="col-xs-12">
+            <input date-range-picker class="form-control date-picker full-width" type="text"
+                   ng-model="history.datePicker" placeholder="Выберите даты"
+                   min="'1970-01-01'" max="history.today" options="history.datePickerOptions"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-group full-width">
+            <label for="dept">&nbsp {{history.storage.fireUser.ACCESS.words.fireDepartment}} часть</label>
+            <ui-select id="dept" ng-model="history.activeDept"
+                       style="width:100%;" on-select="history.deptSelected($item)">
+                <ui-select-match placeholder="Выберите {{history.storage.fireUser.ACCESS.words.fireDeptSel}} часть" allow-clear="true">
+                    {{$select.selected.fireDeptName}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="dept in history.storage.fireDepartments | orderBy: history.getNumDept | propsFilter: {fireDeptName: $select.search, fireDeptDescr: $select.search}">
+                    <div ng-bind-html="dept.fireDeptName | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-group full-width">
+            <label for="deptEng">&nbsp Техника</label>
+            <ui-select id="deptEng" ng-model="history.engineSelected"
+                       style="width:100%;" on-select="history.emitFilters()">
+                <ui-select-match placeholder="Выберите машину" class="full-width" style="overflow: hidden">
+                    {{$select.selected.gosNo}} <span>{{$select.selected.markDesc}}</span>
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="engine in history.activeDept.fireEngines | orderBy: history.engineTypeSortingAlgorythm | propsFilter: {gosNo: $select.search, markDesc: $select.search}">
+                    <div ng-bind-html="engine.gosNo | highlight: $select.search"></div>
+                    <small ng-bind-html="engine.engineType|engineTypeDecorator :engine.isFirstTank: engine.asGD | highlight: $select.search"></small>
+                    <br>
+                    <small ng-bind-html="engine.markDesc | highlight: $select.search"></small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="btn-group btn-group-vertical full-width">
+            <button class="btn btn-success" type="button"
+                    ng-click="history.emitFilters()"
+                    ng-disabled="history.emitButtonDisabled()">
+                Применить
+                фильтры
+            </button>
+            <button class="btn btn-warning" type="button"
+                    ng-click="history.clearFilters()">Сбросить
+                фильтры
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-xs-9 full-height" style="overflow: auto">
+    <table ng-table class="table table-bordered">
+        <tr ng-repeat="model in history.storage.dataOfStates.engineStatesHistory.log">
+            <td class="text-center" style="width: 15%" data-title="'Дата'">
+                {{history.formatDate(model,$index)}}
+            </td>
+            <td class="text-center" style="width: 15%" data-title="history.storage.fireUser.ACCESS.words.fire">
+                <a class="cursor" ng-click="history.showCard(model.fireActId)">{{model.numFireAct}}<br>
+                <span class="small-protocol-address-string">{{model.fireAddress}}</span></a>
+            </td>
+            <td class="text-center" style="width: 15%" data-title="'Гос. номер'">
+                {{model.engine.gosNo}}
+            </td>
+            <td class="text-center" style="width: 7%" data-title="'Тип'">
+                {{model.engine.engineType.engineType}}
+            </td>
+            <td class="text-center" style="width: 35%" data-title="'Действие'">
+                {{model.message}}
+            </td>
+<!--
+            <td class="text-center" style="width: 10%" data-title="'Исполнитель'">
+                {{model.user.lastName}}
+            </td>
+-->
+            <td class="text-center" style="width: 10%" data-title="'Ф.И.О.'">
+
+                <div class="table-text-class">
+                    {{model.user.lastName}}
+                    &nbsp;
+                    {{model.user.firstName}}
+                </div>
+            </td>
+
+        </tr>
+    </table>
+</div>

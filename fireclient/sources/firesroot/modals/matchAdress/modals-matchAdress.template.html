@@ -1,0 +1,19 @@
+<div class="modal-window modal-info">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">{{matchAdressCtrl.title}}</h4>
+    </div>
+    <div class="modal-body" id="modal-body">
+        Существует пожар по указанному адресу.
+        <div class="alert alert-danger">
+            <strong>
+                {{matchAdressCtrl.text.adress}}
+                <br>
+                №Прик: {{matchAdressCtrl.text.orders}}
+            </strong>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success btn-sm" type="button" ng-click="matchAdressCtrl.ok()">Новая заявка</button>
+            <button class="btn btn-danger btn-sm" type="button" ng-click="matchAdressCtrl.cancel()">Отмена</button>
+        </div>
+    </div>
+</div>

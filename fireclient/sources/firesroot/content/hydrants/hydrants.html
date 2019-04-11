@@ -1,0 +1,123 @@
+<div class="hydrants full-height">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <form select-numbers-on-click novalidate class="form-inline heading-form pull-left">
+                <div class="form-group">
+                    <label for="month">Месяц</label>
+                    <input type="number"
+                           class="form-control"
+                           id="month"
+                           placeholder="Месяц"
+                           data-ng-model="hydrants.period.month"
+                           min="1"
+                           max="{{hydrants.maxPeriod.month}}"
+                           data-ng-disabled="hydrants.form.$dirty">
+                </div>
+                <div class="form-group">
+                    <label for="year">Год</label>
+                    <input type="number"
+                           class="form-control"
+                           id="year" placeholder="Год"
+                           data-ng-model="hydrants.period.year"
+                           min="0"
+                           max="{{hydrants.maxPeriod.year}}"
+                           data-ng-disabled="hydrants.form.$dirty">
+                </div>
+                <button class="btn btn-primary btn-sm" data-ng-click="hydrants.setPeriod()"
+                        data-ng-disabled="hydrants.form.$dirty">Выбрать период
+                </button>
+                <div class="form-group" data-ng-if="hydrants.hydrantsSummary && !hydrants.hydrantsSummary.modifiedBy">
+                    <div>
+                        <p class="form-control-static"><i class="glyphicon glyphicon-warning-sign text-warning"></i>
+                            Информация не сохранена</p>
+                    </div>
+                </div>
+            </form>
+            <div class="pull-right">
+                <button class="btn btn-primary btn-sm" data-ng-click="hydrants.save()"
+                        data-ng-disabled="hydrants.loading">Сохранить информацию о гидрантах
+                </button>
+                <button class="btn btn-default btn-sm" data-ng-click="hydrants.cancel()"
+                        data-ng-disabled="hydrants.loading">Отмена изменений
+                </button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form name="hydrants.form">
+                <table data-ng-table class="table table-bordered">
+                    <tbody class="opo-group" data-ng-repeat="opo in hydrants.hydrantsSummary.summary | opoSort">
+                    <tr class="ng-table-group" data-ng-if="opo.hydrantHolders.length">
+                        <td colspan="15">{{opo.opoName}}
+                        </td>
+                    </tr>
+                    <tr data-ng-repeat="holder in opo.hydrantHolders" data-ng-form="hydrants.holder">
+                        <td class="disl-column text-left" data-title="'Принадлежность'"
+                            data-ng-bind="holder.ownerName">
+                        </td>
+                        <td class="disl-column text-center" data-title="'Всего ПГ'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.sum" data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'Всего неисправных'">
+                            <input class="form-control text-center" type="number" data-ng-value="hydrants.getTotalDefective(holder)" data-ng-disabled="true">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо всего'">
+                            <input class="form-control text-center" type="number" data-ng-value="hydrants.getTotalSrc(holder)" data-ng-disabled="true">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо всего %'">
+                            <input class="form-control text-center" type="number" data-ng-value="hydrants.getRatio(holder)" data-ng-disabled="true">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо Нет таблички'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.no_table" data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо Не обнаружен'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.no_find" data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо Колонку не установить'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.no_column" data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо ПГ без воды Тех. дефект'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.no_water_defect"
+                                   data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо ПГ без воды Откл. магистраль'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.no_water_off"
+                                   data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'ИсЗаВо ПГ без воды Заморожен'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.no_water_winter"
+                                   data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'Другие дефекты'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.other_defects"
+                                   data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'Вода в стояке'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.water_in_stojak"
+                                   data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'Вода в колодце'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.water_in_kolodec"
+                                   data-ng-disabled="hydrants.loading">
+                        </td>
+                        <td class="disl-column text-center" data-title="'Под стойкой'">
+                            <input class="form-control text-center" type="number"
+                                   data-ng-model="holder.hydrantInform.water_under_stojalka"
+                                   data-ng-disabled="hydrants.loading">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

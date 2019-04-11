@@ -1,0 +1,14 @@
+{
+  "name": "dotjem-angular-tree",
+  "homepage": "https://github.com/dotJEM/angular-tree-bower",
+  "version": "0.2.3",
+  "_release": "0.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.3",
+    "commit": "87030044a2718b373fe972c39a312517eeeec2a5"
+  },
+  "_source": "https://github.com/dotJEM/angular-tree-bower.git",
+  "_target": "^0.2.3",
+  "_originalSource": "dotjem-angular-tree"
+}

@@ -1,0 +1,270 @@
+<div class="col-xs-2 full-height">
+    <div class="row">
+        <div class="btn-group btn-group-vertical full-width">
+            <button class="btn btn-success" type="button"
+                    ng-click="deptProtocol.emitFilters()">
+                Применить
+                фильтры
+            </button>
+            <button class="btn btn-warning" type="button"
+                    ng-click="deptProtocol.emitDefaults()">Сбросить
+                фильтры
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-group full-width">
+            <label for="datePicker" class="text-center" ng-if="!deptProtocol.singleDatePicker">
+                &nbsp Диапазон дат
+                <button ng-click="deptProtocol.toggleSingleDatePicker()">
+                    <i class="fa fa-arrow-right"></i> Дата
+                </button>
+            </label>
+            <label for="singleDatePicker" ng-show="deptProtocol.singleDatePicker">
+                &nbsp Дата
+                <button ng-click="deptProtocol.toggleSingleDatePicker()">
+                    <i class="fa fa-arrow-right"></i> Диапазон
+                </button>
+            </label>
+            <input id="datePicker" date-range-picker
+                   class="form-control protocol-date-picker full-width"
+                   type="text"
+                   ng-model="deptProtocol.page.datePicker"
+                   ng-hide="deptProtocol.singleDatePicker"
+                   min="'1970-01-01'" max="deptProtocol.today"
+                   options="deptProtocol.datePickerOptions"/>
+            <input id="singleDatePicker" date-range-picker
+                   class="form-control protocol-date-picker full-width"
+                   type="text"
+                   ng-model="deptProtocol.page.singleDatePicker"
+                   ng-show="deptProtocol.singleDatePicker"
+                   min="'1970-01-01'"
+                   max="deptProtocol.today"
+                   options="deptProtocol.singleDatePickerOptions"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-group full-width">
+            <label for="dept">&nbsp {{deptProtocol.storage.fireUser.ACCESS.words.fireDepartment}} часть</label>
+            <ui-select id="dept" ng-model="deptProtocol.page.activeDept"
+                       style="width:100%;" on-select="deptProtocol.emitFilters()">
+                <ui-select-match placeholder="Выберите пожарную часть" allow-clear="true">
+                    {{$select.selected.fireDeptName}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="ProtocolDept in deptProtocol.storage.fireDepartments | orderBy: deptProtocol.getNumDept | propsFilter: {fireDeptName: $select.search, fireDeptDescr: $select.search}">
+                    <div ng-bind-html="ProtocolDept.fireDeptName | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row"
+         ng-show="deptProtocol.page.dataLoaded">
+        <label style="width: 100%;">
+            <label for="users">&nbsp Пользователь</label>
+            <ui-select id="users" ng-model="deptProtocol.page.activeUser"
+                       style="width:100%;" on-select="deptProtocol.emitFilters()">
+                <ui-select-match placeholder="Выберите пользователя" allow-clear="true">
+                    {{$select.selected.lastName}} - {{$select.selected.firstName}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="user in deptProtocol.page.userList | orderBy: 'lastName' | filter: $select.search">
+                    <div> {{user.lastName}} {{user.firstName}}</div>
+                </ui-select-choices>
+            </ui-select>
+        </label>
+    </div>
+</div>
+<div class="col-xs-10 full-height">
+
+    <div class="col-md-12 full-height" style="overflow-y: auto;"
+         ng-if="deptProtocol.page.dataLoaded">
+        <table ng-table class="table table-bordered" ng-hide="deptProtocol.page.activeDeptNote">
+            <tr ng-repeat="model in deptProtocol.storage.notesProtocol"
+                ng-click="deptProtocol.selectNote(model);"
+                class="notes-protocol-table-row">
+                <td class="text-center" style="width: 10%" data-title="'Дата'">
+                    {{deptProtocol.formatDate(model,$index)}}
+                </td>
+                <td class="text-center" style="width: 10%" data-title="deptProtocol.storage.fireUser.ACCESS.words.pch">
+                    {{model.fireDepartment.fireDeptName}}
+                </td>
+                <td class="text-center" style="width: 10%" data-title="'№ Караула'">
+                    {{model.fireDepartment.totalCaraulNum}}
+                </td>
+                <td class="text-center" style="width: 10%" data-title="'Исполнитель'">
+                    {{model.user.lastName}}
+                </td>
+            </tr>
+        </table>
+        <div class="dept-note full-width full-height" ng-show="deptProtocol.page.activeDeptNote">
+            <div class="row top-note-row">
+                <div class="col-xs-3">
+                    Дата: {{deptProtocol.page.activeDeptNote.date|date:'dd-MM-yy HH:mm'}}
+                </div>
+                <div class="col-xs-3">
+                    Пожарная Часть: {{deptProtocol.page.activeDeptNote.fireDepartment.fireDeptName}}
+                </div>
+                <div class="col-xs-2">
+                    Караул № {{deptProtocol.page.activeDeptNote.fireDepartment.totalCaraulNum}}
+                </div>
+                <div class="col-xs-2">
+                    Исполнитель: {{deptProtocol.page.activeDeptNote.user.lastName}}
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-warning full-width" style="color:#000000"
+                            ng-click="deptProtocol.closeNote()">
+                        Закрыть
+                    </button>
+                </div>
+            </div>
+            <div class="row mid-note-row">
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 full-height" style="overflow-y:auto">
+                    <div class="panel panel-default full-height no-padding no-margin">
+                        <div class="panel-heading">
+                            Техника в ПЧ
+                        </div>
+                        <div class="panel-body panel-body-full-height mid-row-panel-body">
+                            <table ng-table class="table table-bordered"
+                                   style="width: 100%;height: 10px">
+                                <tr ng-repeat="fireEngine in deptProtocol.page.activeDeptNote.fireDepartment.fireEngines| orderBy: deptProtocol.engineTypeSortingAlgorythm"
+                                    ng-class="{dislocatedTech : fireEngine.locationDeptId!=null}">
+                                    <td class="text-center disl-column" data-title="'Дисл'">
+                                                        <span>
+                                                            {{deptProtocol.getDislocation(fireEngine)}}
+                                                        </span>
+                                    </td>
+                                    <td class="text-center gosno-column" data-title="'Гос.№'">
+                                        {{fireEngine.gosNo}}
+                                    </td>
+                                    <td class="text-center type-column" data-title="'Тип'">
+                                                        <span>
+                                                            {{fireEngine.engineType | engineTypeDecorator:
+                                                            deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul,
+                                                            fireEngine).isFirstTank:deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul,
+                                                            fireEngine).asGD}}
+                                                        </span>
+
+                                    </td>
+                                    <td class="text-center status-column" data-title="'Статус'">
+                                                        <span>
+                                                        {{deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul, fireEngine).fireEngineStatus.name}}
+                                                        </span>
+                                                        <span ng-show="deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul, fireEngine).fireEngineStatus.name=='ВП'">
+                                                            {{deptProtocol.getRelocationEngineById(deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul,fireEngine))}}
+                                                        </span>
+                                    </td>
+                                    <td class="text-center status-column" data-title="'Состояние'">
+                                                        <span>
+                                                        {{fireEngine.fireEngineState.name}}
+                                                        </span>
+                                                        <span ng-show="fireEngine.fireEngineState.name=='ВП'">
+                                                            {{deptProtocol.getRelocationEngineById(fireEngine)}}
+                                                        </span>
+                                    </td>
+                                    <td class="text-center br-column" data-title="'БР'">
+                                        {{deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul,
+                                        fireEngine).baseCrewCount}}
+                                    </td>
+                                    <td class="text-center gdzs-column" data-title="'ГДЗС'">
+                                        <span ng-if="deptProtocol.showGDZS(fireEngine)">{{deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul, fireEngine).smokeProtectionCrewCount}}</span>
+                                        <span ng-if="deptProtocol.showGD(fireEngine)">{{deptProtocol.findEngineInCaraul(deptProtocol.currentCaraul, fireEngine).additionalSmokeProtectionCrewCount}}</span>
+                                    </td>
+                                    <td class="text-center po-column" data-title="'ПО'">
+                                        <span ng-if="deptProtocol.showPO(fireEngine)">{{deptProtocol.getFoamOnEngine(fireEngine.idFireEngine).foamerCount}}</span>
+                                    </td>
+                                    <td class="text-center comment-column" style="width: 21%"
+                                        data-title="'Комментарий'">
+                                        {{fireEngine.comment}}
+                                    </td>
+                                    <td class="text-center equip-column" data-title="'Экип'">
+                                        <div style="width: 100%; height:100%">
+                                    <span ng-repeat="equip in fireEngine.equipmentsOnBoard">
+                                    <span class="label" data-toggle="tooltip" title={{equip.name}}>
+                                        <span class="glyphicon" ng-class="equip.eqType.icon"
+                                              ng-style="deptProtocol.setIconColor(equip.eqType.iconColor)"
+                                              aria-hidden="true"> </span>
+                                    </span>
+                                    </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 full-height" style="overflow-y:auto">
+                    <div class="panel panel-default full-height no-padding no-margin">
+                        <div class="panel-heading">
+                            Оборудование
+                        </div>
+                        <div class="panel-body panel-body-full-height mid-row-panel-body">
+                            <table ng-table class="table table-bordered" style="width: 100%">
+                                <tr data-as-sortable-item
+                                    ng-repeat="eq in deptProtocol.page.activeDeptNote.fireDepartment.fireEquipments">
+                                    <td class="text-center" data-title="'Код'">{{eq.eqType.code}}</td>
+                                    <td class="text-center" data-title="'Наименование'">{{eq.eqType.name}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row bot-note-row">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 full-height">
+                    <div class="panel panel-default full-height no-padding no-margin">
+                        <div class="panel-heading">Личный состав</div>
+                        <div class="panel-body panel-body-full-height">
+                            По штату: {{deptProtocol.currentCaraul.totalCrewCount}}<br>
+                            По списку: {{deptProtocol.calculateByFaceCrewCount()}}<br>
+                            Приком.: {{deptProtocol.currentCaraul.attachedCrewCount}}<br>
+                            Налицо: {{deptProtocol.currentCaraul.byFaceCrewCount}}<br>
+                            В БР: {{deptProtocol.getTotalBaseCrewCount()}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 full-height">
+                    <div class="panel panel-default full-height no-padding no-margin">
+                        <div class="panel-heading">Отсутствуют</div>
+                        <div class="panel-body panel-body-full-height">
+                            По болезни: {{deptProtocol.currentCaraul.illCrewCount}} <br>
+                            В отпуске: {{deptProtocol.currentCaraul.restCrewCount}} <br>
+                            Ком-ка: {{deptProtocol.currentCaraul.detachedCrewCount}}<br>
+                            В отгуле: {{deptProtocol.currentCaraul.freeCrewCount}} <br>
+                            Всего:
+                            {{deptProtocol.currentCaraul.illCrewCount+deptProtocol.currentCaraul.restCrewCount+deptProtocol.currentCaraul.detachedCrewCount+deptProtocol.currentCaraul.freeCrewCount}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 full-height">
+                    <div class="panel panel-default full-height no-padding no-margin">
+                        <div class="panel-heading">Должностные лица</div>
+                        <div class="panel-body panel-body-full-height">
+                            Нач. караула: {{bydept.currentCaraul.headCaraul}}<br>
+                            Где НК: {{bydept.currentCaraul.placeHeadCaraul}}<br>
+                            Радиотелефонист: {{bydept.currentCaraul.phoneMan}} <br>
+                            Оперативный АМ: {{bydept.currentCaraul.operativeEngine}} <br>
+                            Время работы Оп АМ: {{bydept.currentCaraul.opEngTime}}<br>
+                            Стендерный: {{bydept.currentCaraul.standerMan}} <br>
+                            Дежурный по ОФПС: {{bydept.currentCaraul.galloper}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row scnd-bot-note-row">
+                <div class="col-xs-6">
+                    ПО на складе: {{deptProtocol.page.activeDeptNote.fireDepartment.foamOnStock}}
+                </div>
+                <div class="col-xs-6">
+                    Коммент.: {{deptProtocol.currentCaraul.addInfo}}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div ng-if="!deptProtocol.page.dataLoaded" class="preloader">
+        <span>Ожидание...<i class="fa fa-refresh fa-spin"></i></span>
+    </div>
+</div>

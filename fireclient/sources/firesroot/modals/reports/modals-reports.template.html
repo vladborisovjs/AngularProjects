@@ -1,0 +1,47 @@
+<div class="modal-window modal-info">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Печать отчета: {{reportsCtrl.report.name}}</h3>
+    </div>
+    <div class="modal-body reports-modal" id="modal-body">
+        <div class="row"  ng-show="reportsCtrl.report.fields.hasOwnProperty('DATE_START')">
+            <div class="col-sm-2 text-right" ng-bind="reportsCtrl.report.fields.DATE_START"></div>
+            <div class="col-sm-10">
+                <input date-range-picker
+                       class="form-control protocol-date-picker full-width"
+                       type="text"
+                       ng-model="reportsCtrl.data.DATE_START"
+                       min="'1970-01-01'"
+                       options="reportsCtrl.singleDatePickerOptions"/>
+            </div>
+        </div>
+        <div class="row"  ng-show="reportsCtrl.report.fields.hasOwnProperty('EXECUTOR')">
+            <div class="col-sm-2 text-right" ng-bind="reportsCtrl.report.fields.EXECUTOR"></div>
+            <div class="col-sm-10">
+                <input type="text" ng-model="reportsCtrl.data.EXECUTOR" class="form-control full-width"/>
+            </div>
+        </div>
+        <div class="row"  ng-show="reportsCtrl.report.fields.hasOwnProperty('USER_NAME')">
+            <div class="col-sm-2 text-right" ng-bind="reportsCtrl.report.fields.USER_NAME"></div>
+            <div class="col-sm-10">
+                <input type="text" ng-model="reportsCtrl.data.USER_NAME" class="form-control full-width"/>
+            </div>
+        </div>
+        <div class="row"  ng-show="reportsCtrl.report.fields.hasOwnProperty('USER_PHONE')">
+            <div class="col-sm-2 text-right" ng-bind="reportsCtrl.report.fields.USER_PHONE"></div>
+            <div class="col-sm-10">
+                <input type="text" ng-model="reportsCtrl.data.USER_PHONE" class="form-control full-width"/>
+            </div>
+        </div>
+        <div class="row"  ng-show="reportsCtrl.report.fields.hasOwnProperty('POST')">
+            <div class="col-sm-2 text-right" ng-bind="reportsCtrl.report.fields.POST"></div>
+            <div class="col-sm-10">
+                <input type="text" ng-model="reportsCtrl.data.POST" class="form-control full-width"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="button" ng-click="reportsCtrl.ok()">Показать</button>
+            <button class="btn btn-warning" type="button" ng-click="reportsCtrl.cancel()">Отмена</button>
+        </div>
+    </div>
+</div>
+</div>

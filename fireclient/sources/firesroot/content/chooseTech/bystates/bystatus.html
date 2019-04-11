@@ -1,0 +1,83 @@
+<div class="col-xs-3" style="height: 100%;overflow-y: auto;">
+    <table class="table">
+        <tr ng-repeat="state in byState.firstViewCollection">
+            <td ng-click="byState.chooseState(state)" class="selectable-list-item"
+                ng-class="{active:byState.setStyleActive(state)}">
+                <span class="glyphicon glyphicon-search"></span>{{state.name}} <span class="badge pull-right">{{state.engines.length}}</span>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="col-xs-9" style="height: 100%;overflow-y: auto;">
+    <div class="row" ng-show="byState.activeState.id">
+        <div class="col-xs-12">
+            <uib-accordion>
+
+                <div uib-accordion-group
+                        ng-repeat="typeAndEngines in byState.activeState.typeGroups | orderBy: byState.engineTypeSortingAlgorythm">
+                    <uib-accordion-heading>
+                        {{typeAndEngines.engineType}}
+                        &nbsp;&nbsp;&nbsp;
+                        <span class='badge'>{{typeAndEngines.engines.length}}</span>
+                        &nbsp;&nbsp;&nbsp;
+                        <span ng-bind="byState.pchInfo(typeAndEngines)"></span>
+                    </uib-accordion-heading>
+                    <table ng-table class="table table-bordered">
+                        <tr ng-repeat="engine in typeAndEngines.engines">
+                            <td data-title="'Гос. ном'" width="15%">
+                                <button class="btn btn-link  btn-xs" ng-click="byState.showHistory.init(engine)">
+                                    {{engine.gosNo}}
+                                </button>
+
+                            </td>
+                            <td data-title="'ПЧ'" width="10%">
+                                <button class="btn btn-link btn-xs" ng-click="byState.changeToByDept(engine)">
+                                    {{engine.fireDeptName}}
+                                </button>
+                            </td>
+                            <td data-title="'Тип'" width="15%">
+                                <button ng-click="byState.changeToByTypes(engine)"
+                                        class="btn btn-link engine-type-button">
+                                    {{engine.engineType | engineTypeDecorator: engine.isFirstTank : engine.asGD}}
+                                </button>
+                            </td>
+                            <td data-title="'Модель'" width="15%">
+                                {{engine.markDesc}}
+                            </td>
+                            <td data-title="'Комментарий'" width="35%">
+                                {{engine.comment}}
+                            </td>
+                            <td style="width: 32%" class="text-center" data-title="'АСО'" width="10%">
+                            <span ng-repeat="equip in engine.equipmentsOnBoard"
+                                  ng-class="equip.eqType.icon" data-toggle="tooltip" title={{equip.name}}
+                                  aria-hidden="true"
+                                  style="padding-right: 5px; color:black"> </span>
+                            </td>
+                        </tr>
+                    </table>
+                </divuib-accordion-group>
+            <div>
+        </div>
+    </div>
+
+
+    <!--TODO: Иное отображение "Состояние техники"-->
+
+    <div class="row" ng-hide="byState.activeState.id">
+        <table ng-table class="table table-bordered">
+            <tr ng-repeat="state in byState.firstViewCollection" ng-hide="state.engines.length==0"
+                ng-click="byState.chooseState(state)" class="selectable-list-item">
+                <td data-title="'Состояние'">
+                    {{state.name}}
+                </td>
+                <!--<td>{{state.engines}}</td>-->
+                <td data-title="'Техника'">
+                    <span ng-repeat="engine in state.engines | orderBy: [byState.engineTypeSortingAlgorythm, 'fireDeptName']"
+                          ng-class="{'last':$last}">{{engine.engineType| engineTypeDecorator:engine.isFirstTank:engine.asGD}}-{{engine.fireDeptName}}<span
+                            class="space-with-comma">, </span></span>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

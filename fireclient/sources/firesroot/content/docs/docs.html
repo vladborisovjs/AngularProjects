@@ -1,0 +1,94 @@
+<div class="container-fluid nopm" style="overflow: auto;height: 100%">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <input date-range-picker class="form-control date-picker" type="text"
+                       ng-model="docsCtrl.datePicker" placeholder="Выберите даты"
+                       min="'1970-01-01'" max="docsCtrl.today" options="docsCtrl.datePickerOptions"/>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-default" ng-disabled="!docsCtrl.datePicker"
+                        ng-click="docsCtrl.applyDateFilter();">Применить
+                </button>
+                <button class="btn btn-default" ng-click="docsCtrl.cancelDateFilter();">Очистить</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" ng-show="docsCtrl.storage.fireUser.ACCESS.states.docs.select.selectType">
+                <ui-select on-select="docsCtrl.onSelectRefreshFilters()"
+                           ng-model="docsCtrl.storage.dataOfStates.docs.typeDoc.selected" theme="bootstrap"
+                           style="width:100%;">
+                    <ui-select-match placeholder="Выберите тип" allow-clear="true">{{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="type in docsCtrl.storage.dataOfStates.docs.listOfDocTypes | filter:$select.search">
+                        <div ng-bind-html="type"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="col-sm-3" ng-show="docsCtrl.storage.fireUser.ACCESS.states.docs.select.chooseNumberOfGuard">
+                <ui-select on-select="docsCtrl.onSelectRefreshFilters()"
+                           ng-model="docsCtrl.storage.dataOfStates.docs.selectedDocCaraulNum.selected" theme="bootstrap"
+                           style="width:100%;">
+                    <ui-select-match placeholder="Выберите номер караула" allow-clear="true">{{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="type in docsCtrl.storage.dataOfStates.docs.listOfDocCaraulNums | filter:$select.search">
+                        <div ng-bind-html="type"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <!--<div class="col-sm-3">-->
+                <!--<ui-select on-select="docsCtrl.onSelectRefreshFilters()"-->
+                           <!--ng-model="docsCtrl.storage.dataOfStates.docs.selectedDocNum.selected" theme="bootstrap"-->
+                           <!--style="width:100%;">-->
+                    <!--<ui-select-match placeholder="Выберите номер документа" allow-clear="true">{{$select.selected}}-->
+                    <!--</ui-select-match>-->
+                    <!--<ui-select-choices-->
+                            <!--repeat="type in docsCtrl.storage.dataOfStates.docs.listOfDocNums | filter:$select.search">-->
+                        <!--<div ng-bind-html="type"></div>-->
+                    <!--</ui-select-choices>-->
+                <!--</ui-select>-->
+            <!--</div>-->
+            <div class="col-sm-3" ng-show="docsCtrl.storage.fireUser.ACCESS.states.docs.select.selectType">
+                <ui-select on-select="docsCtrl.onSelectRefreshFilters()"
+                           ng-model="docsCtrl.storage.dataOfStates.docs.selectedUser.selected" theme="bootstrap"
+                           style="width:100%;">
+                    <ui-select-match placeholder="Выберите пользователя" allow-clear="true">{{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="type in docsCtrl.storage.dataOfStates.docs.listOfDocUsers | filter:$select.search">
+                        <div ng-bind-html="type"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+
+
+    <table ng-table class="table table-bordered">
+        <tr ng-repeat="doc in (docsCtrl.filtredDocs = (docsCtrl.storage.docs | docsPropsFilter:{typeDoc:docsCtrl.storage.dataOfStates.docs.typeDoc.selected, user:docsCtrl.storage.dataOfStates.docs.selectedUser.selected, numDoc: docsCtrl.storage.dataOfStates.docs.selectedDocNum.selected, caraulNum:docsCtrl.storage.dataOfStates.docs.selectedDocCaraulNum.selected})) track by doc.id">
+            <td data-title="'Тип'" class="text-center">{{doc.typeDoc}}</td>
+            <td class="text-center" data-title="'№ Караула'">{{doc.caraulNum}}</td>
+            <td class="text-center" data-title="'Дата'">{{doc.creationDate | date:'dd-MM-yy HH:mm'}}</td>
+            <!--<td class="text-center" data-title="'№ док-та'">{{doc.numDoc}}</td>-->
+            <td class="text-center" data-title="'Описание'">{{doc.description}}</td>
+            <td class="text-center" data-title="'Пользователь'">{{doc.user}}</td>
+            <td class="text-center" data-title="'Откр.'">
+               <span ng-repeat="entry in docsCtrl.filterHTMLOnly(doc.docLibraryEntity)">
+                <a target="_blank" href={{docsCtrl.getUrlDoc(entry.url,entry.mimeType)}}
+                   type="entry.mimeType">{{entry.mimeType}}</a>
+            </span>
+            </td>
+            <td class="text-center" data-title="'Скачать'">
+            <span ng-repeat="entry in docsCtrl.filterNotHTML(doc.docLibraryEntity)">
+                <a download="{{docsCtrl.getDownloadName(doc, entry.mimeType)}}" href="{{entry.url}}" type="entry.mimeType">{{entry.mimeType}}</a>
+<!--
+                <a download={{docsCtrl.getDownloadName(doc)}} href={{docsCtrl.getUrlDoc(entry.url,entry.mimeType)}}
+                   type="entry.mimeType">{{entry.mimeType}}</a>
+-->
+            </span>
+            </td>
+        </tr>
+    </table>
+</div>

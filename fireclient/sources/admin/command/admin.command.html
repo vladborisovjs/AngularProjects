@@ -1,0 +1,58 @@
+<div class="panel-group nopm full-height admin-command-wrapper" style="height: 100%"
+     ng-show="adminCommands.storage.fireUser.ACCESS.states.firebase.fireCommands">
+
+
+    <div class="full-height">
+        <div class="panel panel-default full-height">
+            <div class="panel-heading text-center">Панель</div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="admin-info">
+                        <div class="row">
+                            <div class="col-sm-4">IP:</div>
+                            <div class="col-sm-8" ng-bind="adminCommands.storage.socketStatus.remoteAddress"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">Socket:</div>
+                            <div class="col-sm-8" ng-bind="adminCommands.storage.socketStatus.socketId"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">Servers:</div>
+                            <div class="col-sm-8">
+                                <div ng-repeat="conn in adminCommands.storage.socketStatus.serversForConnection" ng-bind="conn"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+<!--
+                <div class="row">
+                    <button ng-click="adminCommands.disableTechButton()"
+                            id="enginesArrivingButton"
+                            uib-popover-template="command.templateUrl"
+                            popover-trigger="outsideClick"
+                            popover-placement="left-top"
+                            class="btn btn-success " style="width: 100%"><span
+                            class="glyphicon glyphicon-new-window"></span><b> Имитация ошибки</b>
+                    </button>
+                </div>
+-->
+
+<!--| orderBy: 'value.type'-->
+                <div class="row" ng-repeat="data in adminCommands.EMIT track by $index" data-ng-if="data.value.type !== 'disable'">
+                    <button title="{{data.key}}"
+                            ng-click="adminCommands.simulateEmit(data)",
+                            ng-class="(!!data.value.type === true)? 'btn-' + data.value.type.toLowerCase() : 'default-gray-button'"
+                            class="btn btn-success full-width">
+                            <span class="glyphicon glyphicon-transfer"></span>
+                            <b>{{data.value.description}}</b>
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

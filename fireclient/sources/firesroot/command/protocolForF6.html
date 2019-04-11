@@ -1,0 +1,71 @@
+<div class="nopm full-height protocolF6-content-wrapper" ng-if="command.showDecidion()">
+    <uib-tabset justified="true" class="tabs-full-height">
+        <uib-tab>
+            <uib-tab-heading>
+                Протокол&nbsp;
+                <!--
+                                <button class="btn btn-success btn-xs very-xs" ng-click="command.addProtocolItem()">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                -->
+            </uib-tab-heading>
+
+            <div class="full-height full-width"
+                 style="margin-top: 0;padding-top:5px;padding-bottom: 5px;">
+                <div style="overflow-y: auto; height: calc(100% - 30px);">
+
+                    <table ng-table class="table table-bordered" style="height: 100%;">
+                        <tr ng-repeat="mess in command.protocol track by $index">
+                            <td class="text-center" style="width: 10%" data-title="'Дата'">
+                                {{command.formatDate(mess,$index)}}
+                            </td>
+                            <td style="width: 40%" data-title="'Сообщение'"><p ng-bind-html="mess.message"></p></td>
+                            <td class="text-center" style="width: 10%" data-title="'Тип'">
+                                {{mess.engine.engineType.engineType}}
+                            </td>
+                            <td class="text-center" style="width: 10%" data-title="command.storage.fireUser.ACCESS.words.pch">{{command.getDept(mess)}}
+                            </td>
+                            <!--<td class="text-center" style="width: 10%" data-title="'Гос№'">{{mess.engine.gosNo}}</td>-->
+                            <td class="text-center" style="width: 20%" data-title="'Исполнитель'">
+                                {{mess.user.lastName}}
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div>
+                    <div class="col-xs-12" style="padding: 5px 0 0 5px;">
+                        <button ng-click="command.doPrint('ArrivedF6Coded')"
+                                class="button btn-sm btn-success">
+                            <span class="glyphicon glyphicon-print"></span>
+                            Форма 6
+                        </button>
+                        <button ng-click="command.doPrint((command.storage.forma6.isReadyForInvestigators)? 'FireLogArchive' : 'FireLog')"
+                                class="button btn-sm btn-success">
+                            <span class="glyphicon glyphicon-print"></span>
+                            Протокол
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Журнал редактирования">
+            <div class="full-height full-width"
+                 style="margin-top: 0;padding-top:5px;padding-bottom: 5px; overflow: auto">
+                <div class="row">
+                    <table ng-table class="table table-bordered" style="height: 100%;">
+                        <tr ng-repeat="edit in command.storage.dataOfStates.f6EditsList track by $index">
+                            <td class="text-center" data-title="'Дата'">
+                                {{edit.date | date: 'dd.MM.yyyy HH.mm'}}
+                            </td>
+                            <td data-title="'Поле'">{{edit.editField}}</td>
+                            <td data-title="'Было'">{{edit.oldValue | formatF6Edits}}</td>
+                            <td data-title="'Стало'">{{edit.newValue|formatF6Edits}}</td>
+                            <td data-title="'Фамилия'">{{edit.user.lastName}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>

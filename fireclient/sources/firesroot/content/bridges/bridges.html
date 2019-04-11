@@ -1,0 +1,109 @@
+<div class="container" style="width: 100%;height: 100%">
+    <div class="col-lg-12 col-md-12  full-height">
+        <div class="panel panel-default full-height">
+            <div class="panel-heading">
+                <strong>Время развода мостов</strong>
+            </div>
+            <div class="panel-body bridges-panel-body panel-body-full-height full-width">
+                <div class="row full-height">
+                    <div tabindex="-1" focus-on="focus-list" ng-keydown="bridgesCtrl.onKeydown($event)" class="col-xs-5" style="height: 100%;overflow: auto">
+                        <div class="list-group-item small clearfix"
+                             ng-repeat="bridge in bridgesCtrl.storage.bridges"
+                             ng-class="{active:bridge.id==bridgesCtrl.selectedBridge.id}"
+                             ng-click="bridgesCtrl.selectBridge(bridge)">
+                            <div class="col-xs-7">
+                                <b>{{bridge.bridgeName}}</b>
+                            </div>
+                            <div class="col-xs-4 bridge-time">
+                                <b ng-bind="bridge.times[0].bridgeTimeCloseH"></b>
+                                :
+                                <b ng-bind="bridge.times[0].bridgeTimeCloseM"></b>
+                                <i class="glyphicon glyphicon-arrow-right"></i>
+                                <b ng-bind="bridge.times[0].bridgeTimeOpenH"></b>
+                                :
+                                <b ng-bind="bridge.times[0].bridgeTimeOpenM"></b>
+                            </div>
+                            <div class="col-xs-1">
+                                    <span
+                                            ng-class="['bridge-indicator',{'bridge-indicator-red': !bridge.isEnabled},{'bridge-indicator-green': bridge.isEnabled}]"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-7 full-height">
+                        <div class="panel panel-default strong-border-panel full-height" ng-form="BridgeForm"
+                             ng-show="bridgesCtrl.selectedBridge">
+                            <div class="panel-heading">
+                                <h4>{{bridgesCtrl.selectedBridge.bridgeName}}</h4>
+
+                                <div class="row">
+                                    <div class="btn-group pull-left">
+                                        <button class="btn btn-success btn-xs"
+                                                ng-click="bridgesCtrl.addTime(bridgesCtrl.selectedBridge)"
+                                                uib-tooltip="Добавить время автоматического развода моста"
+                                                tooltip-trigger="mouseenter" tooltip-placement="right">
+                                            <i class="glyphicon glyphicon-plus"></i> Добавить
+                                        </button>
+                                        <button class="btn btn-primary btn-xs"
+                                                ng-if="!bridgesCtrl.selectedBridge.isEnabled"
+                                                ng-click="bridgesCtrl.openBridge(bridgesCtrl.selectedBridge)">
+                                            Свести
+                                        </button>
+                                        <button class="btn btn-info btn-xs"
+                                                ng-if="bridgesCtrl.selectedBridge.isEnabled"
+                                                ng-click="bridgesCtrl.closeBridge(bridgesCtrl.selectedBridge)">
+                                            Развести
+                                        </button>
+                                    </div>
+                                    <div class="btn-group pull-right">
+                                        <button class="btn btn-success btn-xs"
+                                                ng-click="bridgesCtrl.saveBridge(bridgesCtrl.selectedBridge)"
+                                                ng-disabled="bridgesCtrl.disableSave()">
+                                            <i class="glyphicon glyphicon-floppy-disk"></i> Подтвердить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body bridge-times">
+                                <div>
+                                    <div class="well well-sm row vertical-align"
+                                         ng-repeat="time in bridgesCtrl.selectedBridge.times"
+                                         style="position: relative;">
+                                        <div class="col-xs-1">
+                                            <input type="checkbox" class="big-check-box"
+                                                   ng-model="time.isEnabled"
+                                                   ng-change="bridgesCtrl.timeStateChanged(bridgesCtrl.selectedBridge,time)"/>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <div uib-timepicker ng-model="time.bridgeTimeClose"
+                                                            ng-change="bridgesCtrl.bridgeTimeCloseChanged(bridgesCtrl.selectedBridge,time)"
+                                                            show-meridian="false"
+                                                            show-spinners="false"></div>
+                                        </div>
+                                        <div class="col-xs-1"><i class="glyphicon glyphicon-arrow-right"></i>
+                                        </div>
+                                        <div class="col-xs-3">
+
+                                            <div uib-timepicker ng-model="time.bridgeTimeOpen"
+                                                            ng-change="bridgesCtrl.bridgeTimeOpenChanged(bridgesCtrl.selectedBridge,time)"
+                                                            show-meridian="false"
+                                                            show-spinners="false"></div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="text-right full-width">
+                                                <button class="btn btn-danger"
+                                                        ng-click="bridgesCtrl.deleteTime(bridgesCtrl.selectedBridge,time)">
+                                                    Удалить время <i class="glyphicon glyphicon-remove"></i></button>
+                                            </div>
+                                        </div>
+                                        <span class="label label-danger"
+                                              ng-show="!time.correct">Время открытия больше времени закрытия</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

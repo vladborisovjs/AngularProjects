@@ -1,0 +1,197 @@
+@order-nav-item-height: 26px;
+
+.order-content-wrapper,
+.protocol-content-wrapper,
+.protocolF6-content-wrapper{
+
+    .panel,
+    .tabs-full-height{
+        border: 0;
+        border-radius: 0;
+    }
+
+    .tabs-full-height{
+        border-left: 1px solid rgba(0, 0, 0, 1);
+
+        .nav-tabs{
+            height: auto;
+
+            > .nav-item{
+                height: auto;
+                background: @panels-background;
+                border-bottom: 1px solid rgba(0, 0, 0, 1);
+
+                &.active{
+                    border: 0;
+                    background: none;
+
+                    &:first-of-type{
+                        border-right: 1px solid rgba(0, 0, 0, 1);
+                    }
+
+                    &:not(:last-of-type):not(:first-of-type){
+                        border-left: 1px solid rgba(0, 0, 0, 1);
+                        border-right: 1px solid rgba(0, 0, 0, 1);
+                    }
+
+                    &:last-of-type{
+                        border-left: 1px solid rgba(0, 0, 0, 1);
+                    }
+
+                    > a{
+                        background: none;
+                    }
+
+                }
+
+                > a{
+                    padding: 0;
+                    height: @order-nav-item-height;
+                    line-height: @order-nav-item-height - 4px;
+                    vertical-align: middle;
+                    color: initial;
+                    border-radius: 0;
+                    border-bottom: 0;
+                }
+            }
+        }
+
+        .tab-content{
+            padding-top: 5px;
+        }
+    }
+}
+
+.order-buttons() {
+    margin: 0 auto;
+    padding: 4px 8px;
+    display: block;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .4);
+    font-size: 1rem;
+
+    .text-shadow-on-light;
+}
+
+.audio-action-buttons{
+    position: relative;
+    text-align: center;
+    padding: 15px 0 0 0;
+    //margin: 50% 0 0 0;
+    //transform: translateY(-50%);
+
+    > button{
+        .order-buttons();
+
+        &:not(:first-of-type){
+            margin-top: 6px;
+        }
+    }
+}
+
+.button-order-log{
+    .order-buttons();
+
+    margin-top: 5px;
+}
+
+.audioPlayback{
+    position: relative;
+
+    &:after{
+        display: block;
+        font-family: 'Glyphicons Halflings';
+        content: '\e038';
+        font-size: 1.5rem;
+        position: absolute;
+        //color: rgba(217, 39, 0, 1);
+        left: -6px;
+        top: -12px;
+        //.text-shadow-on-light;
+        //text-shadow: 0 0 2px rgba(0, 0, 0, .8);
+        animation: playBack 1s infinite;
+        animation-direction: alternate;
+    }
+}
+
+@keyframes playBack{
+    0%{
+        color: rgba(230, 40, 0, 1);
+        text-shadow: 0 0 1px rgba(0, 0, 0, .8);
+    }
+    40%{
+        color: rgba(230, 40, 0, .75);
+        text-shadow: 0 0 1px rgba(0, 0, 0, .5);
+    }
+    60%{
+        color: rgba(230, 40, 0, .50);
+        text-shadow: 0 0 1px rgba(0, 0, 0, .3);
+    }
+    100%{
+        color: rgba(230, 40, 0, .25);
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    }
+
+}
+
+table.table-order112{
+
+    > thead{
+
+        > tr{
+
+            > th{
+                border: none;
+                padding: 2px 5px;
+                text-align: center;
+            }
+        }
+    }
+
+    > tbody{
+
+        > tr{
+
+            > td{
+                padding: 2px 5px;
+                white-space: nowrap;
+                border-top: 1px solid rgba(0, 0, 0, .25);
+
+                &:last-of-type{
+                    white-space: normal;
+                }
+            }
+        }
+    }
+}
+
+.order-form{
+
+    .row{
+        padding-bottom: 4px;
+
+    }
+}
+
+.subDistrictWrapper{
+    position: relative;
+    z-index: 9999;
+}
+
+@zIndex: 100;
+@rowCount: 19;
+@row-name: row-;
+.order-fields-wrapper(@i: @rowCount) when (@i >= 1){
+    .order-fields-wrapper > .@{row-name}@{i}{
+        position: relative;
+        z-index: @zIndex + @rowCount - @i;
+    }
+
+    .order-fields-wrapper(@i - 1);
+}
+
+.order-fields-wrapper();
+
+.order-found-object{
+    background: lighten(rgb(255, 13, 0), 40%);
+}

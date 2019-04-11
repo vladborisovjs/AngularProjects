@@ -1,0 +1,392 @@
+<div class="col-xs-2" style="height: 100%;overflow: auto">
+    <div id={{dept.id}} class="list-group-item small clearfix"
+         ng-repeat="dept in bydeptTech.storage.fireDepartments | orderBy: bydeptTech.getNumDept"
+         style="padding: 0 0 0 7px;line-height: 25px;"
+         ng-click="bydeptTech.selectDept(dept)" ng-class="{active:dept==bydeptTech.selectedDept}">
+        <div class="col-xs-10">
+            <span class="glyphicon glyphicon-search"></span>
+            <span><b>{{dept.fireDeptName}}</b></span></div>
+        <div class="col-xs-2 pull-right">
+            <span title="КАРАУЛ НЕ СМЕНЁН" style="font-size: 10px; cursor: default"
+                  class="label label-danger pull-right"
+                  ng-if="bydeptTech.isDeptNeedToSaveCaraul(dept)">
+                <i class="fa fa-exchange"></i></span></div>
+    </div>
+</div>
+<div class="col-xs-10" style="height: 100%" ng-show="bydeptTech.selectedDept">
+    <div class="row" style="height: 100%">
+        <div class="col-md-12 " style="height: 100%">
+            <div class="panel panel-default" style="height: 100%">
+                <div class="panel-heading" style="height: 41px">
+                    <div class="col-sm-8">
+                        Техника в {{bydeptTech.storage.fireUser.ACCESS.words.pch}}
+                        №{{bydeptTech.selectedDept.fireDeptName}} (текущий караул:
+                        {{bydeptTech.selectedDept.totalCaraulNum}}) <span title="КАРАУЛ НЕ СМЕНЁН"
+                                                                          style="font-size: 11px; cursor: default"
+                                                                          class="label label-danger"
+                                                                          ng-if="bydeptTech.isDeptNeedToSaveCaraul(dept)">СМЕНА КАРАУЛА <i
+                            class="fa fa-exchange"></i></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-primary btn-xs" ng-click="bydeptTech.showHideEngines()">
+                            <span class="glyphicon"
+                                  ng-class="{'glyphicon-eye-open':(!!bydeptTech.storage.dataOfStates.bydept.hideEngines === true), 'glyphicon-eye-close':(!!bydeptTech.storage.dataOfStates.bydept.hideEngines === false)}"></span>
+                        </button>
+
+                    </div>
+                    <div class="col-sm-1">
+<!--
+                        <button class="btn btn-success btn-xs"
+                                ng-click="bydeptTech.showPathFromPchToFire()">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                        </button>
+-->
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary btn-xs" ng-show="bydeptTech.showCombatNotesButton()"
+                                ng-click="bydeptTech.toCombatNotes(bydeptTech.selectedDept)">
+                            Строевые записки
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="panel-body panel-body-full-height" style="overflow: auto;padding: 0">
+                    <table ng-table class="table table-bordered" style="width: 100%;height: 10px">
+                        <!--ng-repeat="fireEngine in bydeptTech.selectedDept.fireEngines | orderBy: bydeptTech.engineTypeSortingAlgorythm"-->
+                        <tr ng-repeat="fireEngine in bydeptTech.selectedDept.fireEngines | orderBy : bydeptTech.engineStatusSortingAlgorythm track by $index"
+                            ng-class="bydeptTech.accentByEngineState(fireEngine)">
+                            <td class="plus-column text-center"
+                                ng-show="bydeptTech.storage.selectedFire && !bydeptTech.storage.selectedFire.isReadyForF6"
+                                data-title="'+'">
+                                <!--
+                                                                <button class="btn btn-danger btn-xs" ng-click="bydeptTech.addToFire(fireEngine)"
+                                                                        ng-show="bydeptTech.showAddToFireButton(fireEngine) && fireEngine.fireEngineState.canUse === true">
+                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                </button>
+                                -->
+                                <button class="btn btn-danger btn-xs" ng-click="bydeptTech.addToFire(fireEngine)"
+                                        ng-show="bydeptTech.showAddToFireButton(fireEngine)">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+
+                            </td>
+                            <td class="disl-column text-center" data-title="'Дисл'">
+                                <button ng-click="bydeptTech.showDislocationChangeDialogue($event,fireEngine)"
+                                        class="btn btn-link btn-xs btn-relocation">
+                                    {{bydeptTech.getDislocation(fireEngine)}}
+                                </button>
+                            </td><!--
+                            <td class="rast-column text-center" data-title="'Расст.'">
+                                {{bydeptTech.getDistanceToEngineFromFire(fireEngine)}}
+                            </td>-->
+                                 <!--
+                                                             <td class="gosno-column text-center" data-title="'Гос.№'">
+                                                                 {{fireEngine.gosNo}}<br>
+                                                                 <span class="engine-markDesc">{{fireEngine.markDesc}}</span>
+                                                             </td>
+                                 -->
+                            <td class="gosno-column text-center" data-title="'Гос.№'">
+                                <button class="btn btn-link  btn-xs" ng-click="bydeptTech.showHistory(fireEngine)">
+                                    {{fireEngine.gosNo}}<br>
+                                    <span class="engine-markDesc">{{fireEngine.markDesc}}</span>
+                                </button>
+
+                            </td>
+                            <td class="type-column text-center" data-title="'Тип'">
+                                <button class="btn btn-link  btn-xs engine-type-button"
+                                        ng-click="bydeptTech.changeToByTypes(fireEngine.engineType.engineType)">
+                                    {{fireEngine.engineType | engineTypeDecorator: fireEngine.isFirstTank:
+                                    fireEngine.asGD}}
+                                </button>
+
+                            </td>
+                                 <!--
+                                                             <td class="status-column text-center" data-title="'Статус'">
+                                                                 <div class="table-text-class"
+                                                                      ng-show="(bydeptTech.getEngineStatus(fireEngine).name!='НА ПОЖАРЕ' && bydeptTech.getEngineStatus(fireEngine).name!='СЛЕДУЕТ')">
+                                                                     {{bydeptTech.getEngineStatus(fireEngine).name}}
+                                                                 </div>
+                                                                 <span ng-hide="(bydeptTech.getEngineStatus(fireEngine).name!='НА ПОЖАРЕ' && bydeptTech.getEngineStatus(fireEngine).name!='СЛЕДУЕТ')">
+                                                                 {{bydeptTech.getEngineStatus(fireEngine).name}}
+                                                                 <div class="table-text-class">&rarr;{{bydeptTech.findActiveFire(fireEngine).num}}</div>
+                                                             </span>
+                                                                 <div class="table-text-class"
+                                                                      ng-show="bydeptTech.getEngineStatus(fireEngine).name=='ВП'">
+                                                                     {{bydeptTech.getEngineReplacementEngineFromCaraul(fireEngine)}}
+                                                                 </div>
+                                                             </td>
+                                 -->
+
+
+                                 <!--
+
+
+                                                             <td class="state-column text-center" data-title="'Состояние'">
+
+                                                                 <button class="btn btn-link btn-xs"
+                                                                         ng-show="(fireEngine.fireEngineState.name!='НА ПОЖАРЕ' && fireEngine.fireEngineState.name!='СЛЕДУЕТ') || bydeptTech.storage.isRoot"
+                                                                         ng-click="bydeptTech.showStateChangeDialogue($event,fireEngine)">
+                                                                     {{fireEngine.fireEngineState.name}}
+                                                                 </button>
+                                                                 <span ng-hide="(fireEngine.fireEngineState.name!='НА ПОЖАРЕ' && fireEngine.fireEngineState.name!='СЛЕДУЕТ')">
+                                                                 {{fireEngine.fireEngineState.name}}
+                                                                 <button class="btn btn-link" ng-click="bydeptTech.replaceToOrder(fireEngine)">&rarr;{{bydeptTech.findActiveFire(fireEngine).num}}</button>
+                                                             </span>
+
+
+                                                                 <button class="btn btn-link btn-xs" ng-show="fireEngine.fireEngineState.name=='ВП'"
+                                                                         ng-click="bydeptTech.showReplacementDialogue($event,fireEngine)">
+                                                                     {{bydeptTech.getRelocationEngineById(fireEngine)}}
+                                                                 </button>
+                                                                 <button ng-show="fireEngine.fireEngineState.name==='ПЕРЕДИСЛОКАЦИЯ'"
+                                                                         ng-click="bydeptTech.completeDislocation(fireEngine,bydeptTech.selectedDept)"
+                                                                         class="btn btn-success btn-xxs"><i class="fa fa-check"></i>
+                                                                 </button>
+                                                             </td>
+
+                                 -->
+
+
+                            <td class="state-column text-center" data-title="'Состояние по С.З.'">
+
+                                {{fireEngine.fireEngineStatus.name}}
+                            </td>
+                            <td class="state-column text-center" data-title="'Состояние'">
+
+                                <button class="btn btn-link btn-xs"
+                                        ng-show="fireEngine.fireEngineState.name || bydeptTech.storage.isRoot"
+                                        ng-click="bydeptTech.showStateChangeDialogue($event,fireEngine)">
+                                    {{fireEngine.fireEngineState.name}}
+                                </button>
+                                <span ng-hide="(fireEngine.fireEngineState.name!='НА ПОЖАРЕ' && fireEngine.fireEngineState.name!='СЛЕДУЕТ')">
+                                <!--{{fireEngine.fireEngineState.name}}-->
+                                <button class="btn btn-link" ng-click="bydeptTech.replaceToOrder(fireEngine)">&rarr;{{bydeptTech.findActiveFire(fireEngine).num}}</button>
+                            </span>
+
+
+                                <button class="btn btn-link btn-xs" ng-show="fireEngine.fireEngineState.name=='ВП'"
+                                        ng-click="bydeptTech.showReplacementDialogue($event,fireEngine)">
+                                    {{bydeptTech.getRelocationEngineById(fireEngine)}}
+                                </button>
+                                <button ng-show="fireEngine.fireEngineState.name==='ПЕРЕДИСЛОКАЦИЯ'"
+                                        ng-click="bydeptTech.completeDislocation(fireEngine,bydeptTech.selectedDept)"
+                                        class="btn btn-success btn-xxs"><i class="fa fa-check"></i>
+                                </button>
+                            </td>
+
+
+                            <td class="fio-column text-center" data-title="'Ф.И.О.'">
+
+                                <div class="table-text-class">
+                                    {{fireEngine.lastUpdater.lastName}}
+                                            &nbsp;
+                                            {{fireEngine.lastUpdater.firstName}}
+                                </div>
+                            </td>
+
+                                 <!--
+                                                             <td class="fio-column text-center" data-title="'Ф.И.О.'">
+
+                                                                 <div class="table-text-class">
+                                                                     {{bydeptTech.currEngine.lastUpdater.lastName}}
+                                                                     &nbsp;
+                                                                     {{bydeptTech.currEngine.lastUpdater.firstName}}
+                                                                 </div>
+                                                             </td>
+                                 -->
+
+
+                                 <!--
+
+                                                             <td class="fio-column text-center" data-title="'Ф.И.О.'">
+
+                                                                 <div class="table-text-class">
+                                                                     {{fireEngine.fireEngineState.userChangeState.lastName}}
+                                                                     &nbsp;
+                                                                     {{fireEngine.fireEngineState.userChangeState.firstName}}
+                                                                     &lt;!&ndash;{{bydeptTech.userChangeState(fireEngine)}}&ndash;&gt;
+                                                                 </div>
+                                                             </td>
+                                 -->
+
+
+                            <td class="text-center comment-column" style="width: 31%" data-title="'Комментарий'"
+                                ng-click="bydeptTech.showCommentInput(fireEngine,$event,$index)">
+                                <div style="width: 100%; height:100%">
+                                    <span class="full-height full-width"
+                                          ng-hide="bydeptTech.commentObject.engineId === fireEngine.idFireEngine">
+                                        {{fireEngine.comment}}
+                                        <button class="btn btn-xs btn-default pull-right"
+                                                ng-click="bydeptTech.showCommentInput(fireEngine,$event);">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    </span>
+                                    <div class="input-group full-width full-height"
+                                         ng-show="bydeptTech.commentObject.engineId === fireEngine.idFireEngine">
+                                        <input type="text" class="full-height form-control"
+                                               style="padding: 0"
+                                               id="engine-comment-{{$index}}"
+                                               ng-keypress="bydeptTech.onEnterEmitComment($event)"
+                                               placeholder="Комментарий"
+                                               ng-model="bydeptTech.commentObject.comment">
+                                        <span class="input-group-btn full-height">
+                                            <button class="btn btn-xs btn-success full-height" type="button"
+                                                    ng-click="bydeptTech.emitComment($event)">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button class="btn btn-xs btn-default full-height" type="button"
+                                                    ng-click="bydeptTech.closeCommentInput($event)">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                          </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="equip-column" data-title="'Экип'">
+                                <div style="width: 100%; height:100%">
+                                    <span ng-repeat="equip in fireEngine.equipmentsOnBoard">
+                                    <div class="btn btn-info btn-xs disabled" data-toggle="tooltip"
+                                         title={{equip.name}}>
+                                        <span class="glyphicon" ng-class="equip.eqType.icon"
+                                              style="color:{{equip.eqType.iconColor}}"
+                                              aria-hidden="true"> </span>
+                                    </div>
+                                    </span>
+                                </div>
+                            </td>
+
+
+                            <td class="text-center equip-column" data-title="'Вкл'">
+                                <div class="engine-in-use-wrapper">
+
+                                    <i class="fa fa-plus-square-o engine-in-use" aria-hidden="true"
+                                       ng-click="bydeptTech.toggleEngineState(true, fireEngine)"
+                                       ng-model="fireEngine.fireEngineState.canUse"
+                                       ng-if="fireEngine.fireEngineState.canUse === false"></i>
+
+                                    <i class="fa fa-check-square engine-in-use-checked" aria-hidden="true"
+                                       ng-click="bydeptTech.toggleEngineState(false, fireEngine)"
+                                       ng-model="fireEngine.fireEngineState.canUse"
+                                       ng-if="fireEngine.fireEngineState.canUse === true"></i>
+
+
+                                    <!--
+                                                                        <label for="setStatusAuto{{$index}}" title="автоматический">а.</label>
+                                                                        <input type="checkbox" ng-model="fireEngine.fireEngineState.canUseAutomaticMode" id="setStatusAuto{{$index}}" title="автоматический" ng-click="bydeptTech.setEngineStatus(fireEngine, $event)">
+                                                                        &nbsp;
+                                                                        <label for="setStatusManual{{$index}}" title="ручной">р.</label>
+                                                                        <input type="checkbox" ng-model="fireEngine.fireEngineState.canUseManualMode" id="setStatusManual{{$index}}" title="ручной" ng-click="bydeptTech.setEngineStatus(fireEngine, $event)">
+                                    -->
+
+                                </div>
+                            </td>
+
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" style="position: absolute;height: 300px;width: 300px; z-index: 3;"
+     ng-style="{top:bydeptTech.position.top,left:bydeptTech.position.left}" ng-show="bydeptTech.showStatesList">
+    <div class=" panel panel-info small">
+        <!--<div class="panel-heading" style="height: 46px;width: 100%">-->
+        <div class="panel-heading" style="width: 100%">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-xs-12"><span>Доступно для {{bydeptTech.currEngine.engineType.engineType}} {{bydeptTech.currEngine.gosNo}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    Код: <input type="text" class="form-control full-height input-extra-small"
+                                                style="width: calc(100% - 4em); display: inline"
+                                                ng-model="bydeptTech.codeInput"
+                                                ng-keydown="bydeptTech.selectTypedCodeItem($event)" id="codeInput">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button ng-click="bydeptTech.closeStatuseChangeDialogue()" class="btn btn-danger btn-xs"><span
+                            class="glyphicon glyphicon-remove"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" style="max-height: 265px;overflow: auto; width: 100%">
+            <table ng-table class="table table-bordered">
+                <tr ng-repeat="state in bydeptTech.possibleStates | orderBy: 'code' | filter: bydeptTech.codeFilter"
+                    ng-click="bydeptTech.onChangeState(state)"
+                    ng-class="{'typedCodeF6':bydeptTech.codeCorrect(state)}"
+                    class="forma-field">
+                    <th data-title="'Код'" width="5%">{{state.code}}</th>
+                    <th data-title="'Наименование'" width="95%">{{state.name}}</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="position: absolute;height: 300px;width: 300px;; z-index: 3;"
+     ng-style="{top:bydeptTech.position.top,left:bydeptTech.position.left}" ng-show="bydeptTech.showReplacementList">
+    <div class=" panel panel-info small">
+        <div class="panel-heading" style="height: 46px;width: 100%">
+            <div class="col-md-10">
+                <span>Доступно для {{bydeptTech.currEngine.engineType.engineType}} {{bydeptTech.currEngine.gosNo}}</span>
+            </div>
+            <div class="col-md-2">
+                <button ng-click="bydeptTech.closeReplacementDialogue()" class="btn btn-danger btn-xs"><span
+                        class="glyphicon glyphicon-remove"></span></button>
+
+            </div>
+        </div>
+        <div class="panel-body" style="max-height: 265px;overflow: auto;">
+            <div class="row" ng-repeat="eng in bydeptTech.possibleRelocations">
+                <span><button ng-click="bydeptTech.changeStateWithReloc(eng)" class="btn btn-link btn-xs">
+                    {{eng.engineType.engineType}}
+                    {{eng.gosNo}}
+                </button></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="position: absolute;height: 400px;width: 350px; z-index: 3;"
+     ng-style="{top:bydeptTech.position.top,left:bydeptTech.position.left}" ng-show="bydeptTech.showDislocationList">
+    <div class=" panel panel-info small">
+        <div class="panel-heading" style="height: 46px;width: 100%">
+            <div class="col-md-10">
+                <span>Доступно для {{bydeptTech.currEngine.engineType.engineType}} {{bydeptTech.currEngine.gosNo}}</span>
+            </div>
+            <div class="col-md-2">
+                <button ng-click="bydeptTech.closeDislocationChangeDialogue()" class="btn btn-danger btn-xs"><span
+                        class="glyphicon glyphicon-remove"></span></button>
+            </div>
+        </div>
+        <div class="panel-body" style="max-height: 365px;overflow: auto;">
+            <div class="row">
+                <!--<div class="col-xs-3" ng-repeat="dislocation in bydeptTech.possibleDislocations | orderBy:'fireDeptName'">
+                    <button ng-click="bydeptTech.onChangeDislocation(dislocation)" class="btn btn-link btn-xs">-->
+
+                <div class="col-xs-3" ng-repeat="dislocation in bydeptTech.possibleDislocations">
+                    <button ng-click="bydeptTech.onChangeDislocation(dislocation)" class="btn btn-link btn-xs">
+                        {{dislocation.fireDeptName}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer" style="font-size: 1rem;">
+            <input type="checkbox" ng-model="bydeptTech.longRelocation">&nbsp;Длительная передислокация
+        </div>
+
+    </div>
+</div>

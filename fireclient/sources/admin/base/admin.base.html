@@ -1,0 +1,114 @@
+<div class="multi-views">
+
+    <div class="admin-row row-2">
+
+        <div class="admin-cell cell-2" ng-dblclick="adminBase.maximizeWindow($event);">
+
+            <div class="cell-header clearfix">
+                <div class="pull-left toUpperCase">Открытые сессии</div>
+                                <div class="pull-right as-clickable" data-ng-click="adminBase.getUsersOnline()"><i class="fa fa-repeat" aria-hidden="true"></i></div>
+            </div>
+
+            <div class="cell-body">
+                <div class="admin-scrollable-container">
+
+                    <table ng-table="adminBase.openSessionsTable" class="table table-bordered">
+                        <tr ng-repeat="user in adminBase.storage.superadmin.usersOnline | orderBy: 'uid'">
+                        <!--<tr ng-repeat="user in adminBase.storage.superadmin.usersOnline track by user.pwd">-->
+                            <td data-title="'uid'" class="text-center" ng-bind-html="user.uid"></td>
+                            <td data-title="'from'" class="text-center" ng-bind-html="user.pwd"></td>
+                            <td data-title="'role'" class="text-center" ng-bind-html="user.role"></td>
+                            <td data-title="'firstName'" class="text-center" ng-bind-html="user.firstName">
+                            </td>
+                            <td data-title="'lastName'" class="text-center" ng-bind-html="user.lastName"></td>
+                        </tr>
+
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="admin-cell cell-2" ng-dblclick="adminBase.maximizeWindow($event);">
+
+            <div class="cell-header clearfix">
+                <div class="pull-left toUpperCase">Ошибки от сервера <span ng-if="!!adminBase.storage.superadmin.consoleError.length === true">( {{adminBase.storage.superadmin.consoleError.length}} )</span></div>
+                <div class="pull-right as-clickable" data-ng-click="adminBase.clearHistory('consoleError')"><i class="fa fa-file" aria-hidden="true"></i></div>
+
+            </div>
+
+            <div class="cell-body">
+                <div class="admin-scrollable-container">
+
+                    <table ng-table="adminBase.errorsFromServerTable" class="table table-bordered">
+                        <tr ng-repeat="error in adminBase.storage.superadmin.consoleError | orderBy: 'timestamp':true">
+                            <td data-title="'timestamp'" class="text-center">
+                                {{error.timestamp | date: 'dd.MM.yyyy HH:mm:ss'}}
+                            </td>
+                            <td data-title="'message'" class="text-center" ng-bind-html="error.message"></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="admin-row row-2">
+
+        <div class="admin-cell cell-2" ng-dblclick="adminBase.maximizeWindow($event);">
+            <div class="cell-header clearfix">
+                <div class="pull-left toUpperCase">Отладка <span ng-if="!!adminBase.storage.superadmin.consoleDebug.length === true">( {{adminBase.storage.superadmin.consoleDebug.length}} )</span></div>
+                <div class="pull-right as-clickable" data-ng-click="adminBase.clearHistory('consoleDebug')"><i class="fa fa-file" aria-hidden="true"></i></div>
+
+            </div>
+
+            <div class="cell-body">
+                <div class="admin-scrollable-container">
+                    <table ng-table="adminBase.debugFromServerTable" class="table table-bordered">
+                        <tr ng-repeat="error in adminBase.storage.superadmin.consoleDebug | orderBy: 'timestamp':true">
+                            <td data-title="'timestamp'" class="text-center">
+                                {{error.timestamp | date: 'dd.MM.yyyy HH:mm:ss'}}
+                            </td>
+                            <td data-title="'message'" class="text-center" ng-bind-html="error.message"></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-cell cell-2" ng-dblclick="adminBase.maximizeWindow($event);">
+
+            <div class="cell-header clearfix">
+                <div class="pull-left toUpperCase">Консоль <span ng-if="!!adminBase.storage.superadmin.consoleInfo.length === true">( {{adminBase.storage.superadmin.consoleInfo.length}} )</span></div>
+                <div class="pull-right as-clickable" data-ng-click="adminBase.clearHistory('consoleInfo')"><i class="fa fa-file" aria-hidden="true"></i></div>
+
+            </div>
+
+            <div class="cell-body">
+                <div class="admin-scrollable-container">
+
+
+
+
+                    <table ng-table="adminBase.consoleFromServerTable" class="table table-bordered">
+                        <tr ng-repeat="console in adminBase.storage.superadmin.consoleInfo | orderBy: 'timestamp':true track by $index ">
+                            <td data-title="'timestamp'" class="text-center">
+                                {{console.timestamp | date: 'dd.MM.yyyy HH:mm:ss'}}
+                            </td>
+                            <td data-title="'message'" class="text-center" ng-bind-html="console.message"></td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

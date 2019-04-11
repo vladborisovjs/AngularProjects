@@ -1,0 +1,112 @@
+<div class="container-fluid" ng-controller="Footer as footer" style="width: 100%;height:100%; overflow-x: auto">
+    <div class="row text-nowrap footer-engines">
+
+<!-- TODO: Рабочая версия строки быстрого набора техники 2 -->
+<!--
+
+
+    <div ng-repeat="engineType in footer.storage.engineTypesQuickSet" class="quick-set-holder" ng-style="{'background': engineType[0].color}">
+
+        <div data-ng-repeat="type in engineType" class="type-in-list clearfix">
+            <div class="pull-left">{{type.engineType}}</div>
+            <div class="pull-left" ng-show="!!type.countCanUse === true">
+                <i class="fa fa-truck" aria-hidden="true"></i>
+            </div>
+            <div class="pull-right"><b>{{type.countCanUse}}</b> ({{type.engineCount}})</div>
+        </div>
+
+    </div>
+-->
+
+
+
+
+<!-- TODO: Рабочая версия строки быстрого набора техники 1 -->
+        <div ng-repeat="engineType in footer.storage.fireEngineTypes | groupEngineTypes | orderBy: 'group'" title="{{footer.getEngineDescription(engineType.engineTypeName)}}">
+
+            <button class="btn btn-default btn-sm btn-footer" type="button" ng-click="footer.selectType(engineType)" ng-style="{'background': engineType.color}" ng-disable="!!footer.storage.selectedFire === false">
+                {{engineType.engineType}}<br>{{engineType.countCanUse}}({{engineType.engineCount}})
+            </button>
+<!--
+            <div class="btn-group btn-group-vertical">
+                <button class="btn btn-sm btn-default footer-button" type="button"
+                        ng-click="footer.onAddEngineToFire(engineType)" ng-disabled="footer.disableAdviseBtn(engineType) || !!footer.storage.selectedFire === false">
+                    <span ng-bind="(!!footer.storage.selectedFire === true)? (footer.storage.fireUser.ACCESS.words.pch + ' ' + engineType.deptName) : '-'"></span><br><span ng-bind="(!!footer.storage.selectedFire === true)? engineType.deptDist : ''"></span>
+                </button>
+                <button class="btn btn-sm btn-default footer-button" type="submit"  ng-click="footer.showPathFromPchToFire(engineType)" ng-disabled="footer.disableAdviseBtn(engineType) || !!footer.storage.selectedFire === false">
+                    карта
+                </button>
+            </div>
+-->
+
+
+
+        </div>
+
+
+
+
+
+
+
+<!--
+        <div ng-repeat="engineType in footer.storage.fireEngineTypes | filter: footer.filerForGroup | orderBy: 'group'">
+
+            <button class="btn btn-default btn-sm btn-footer" type="button" ng-click="footer.selectType(engineType)" ng-style="{'background': engineType.color}">
+                {{engineType.engineType}}<br>{{footer.countCanUse(engineType)}}
+            </button>
+            &lt;!&ndash;
+                 ng-repeat="adviseObj in footer.storage.enginesAdvise | orderBy: footer.engineTypeSortingAlgorythm"&ndash;&gt;
+
+            <div class="btn-group btn-group-vertical">
+
+                &lt;!&ndash;ng-disabled="footer.disableAdviseBtn(adviseObj)"&ndash;&gt;
+                <button class="btn btn-sm btn-default footer-button" type="button"
+                         ng-click="footer.onAddEngineToFire(adviseObj)">
+                    <span> {{footer.getEngineAdvise}}{{adviseObj.deptName}}<br>{{adviseObj.deptDist}}</span>
+                </button>
+                &lt;!&ndash;ng-disabled="footer.disableAdviseBtn(adviseObj)"&ndash;&gt;
+                <button class="btn btn-sm btn-default footer-button" type="submit"  ng-click="footer.showPathFromPchToFire(adviseObj)">
+                    карта
+                </button>
+            </div>
+
+        </div>
+-->
+        <!--
+                <button class="btn btn-default btn-sm btn-footer" ng-class="footer.defineColor(engineTypeObj)" type="button"
+                        ng-repeat="engineTypeObj in footer.storage.enginesByTypes | orderBy: footer.engineTypeSortingAlgorythm"
+                        ng-click="footer.selectType(engineTypeObj)" style="width: 55px; padding: 5px 0;">
+                     {{engineTypeObj.engineType}}<br>{{engineTypeObj.engineCount}} ({{engineTypeObj.countCanUse}})
+                </button>
+        -->
+    </div>
+    <!--
+        <div class="row text-nowrap" ng-show="!footer.showAdvise()">
+            <div class="btn-group btn-group-vertical" ng-repeat="engineTypeObj in footer.storage.enginesByTypes">
+                <button class="btn btn-sm btn-default footer-button" type="button"
+                        ng-disabled="true" style="width: 55px">
+                    <span>-</span>
+                </button>
+                <button class="btn btn-sm btn-default footer-button" type="button"
+                        ng-disabled="true" style="width: 55px">
+                    <span>карта</span>
+                </button>
+            </div>
+        </div>
+        <div class="row text-nowrap" ng-show="footer.showAdvise()">
+            <div class="btn-group btn-group-vertical" ng-repeat="adviseObj in footer.storage.enginesAdvise | orderBy: footer.engineTypeSortingAlgorythm">
+                <button class="btn btn-sm btn-default footer-button" type="button"
+                        ng-disabled="footer.disableAdviseBtn(adviseObj)" ng-click="footer.onAddEngineToFire(adviseObj)"
+                        style="width: 55px">
+                    <span> {{adviseObj.deptName}}<br>{{adviseObj.deptDist}}</span>
+                </button>
+                <button class="btn btn-sm btn-default footer-button" type="submit"
+                        ng-disabled="footer.disableAdviseBtn(adviseObj)" style="width: 55px"
+                        ng-click="footer.showPathFromPchToFire(adviseObj)">
+                    карта
+                </button>
+            </div>
+        </div>
+    -->
+</div>

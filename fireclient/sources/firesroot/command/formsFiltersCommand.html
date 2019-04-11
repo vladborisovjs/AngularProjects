@@ -1,0 +1,104 @@
+<div class="panel-group nopm" style="height: 100%">
+    <div>
+        <div class="panel panel-default text-center">
+            <div class="panel-heading" style="padding: 2px 0"><b>Фильтры</b></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input date-range-picker class="form-control date-picker full-width" type="text"
+                               ng-model="command.datePicker" placeholder="Выберите даты"
+                               min="'1970-01-01'" options="command.datePickerOptions"/>
+<!--
+                        <input date-range-picker class="form-control date-picker full-width" type="text"
+                               ng-model="command.datePicker" placeholder="Выберите даты"
+                               min="'1970-01-01'" max="command.now" options="command.datePickerOptions"/>
+-->
+                    </div>
+                </div>
+<!--
+                <div class="row">
+                    <div class="col-xs-6">
+                        <button class="btn btn-default full-width"
+                                ng-click="command.changePeriod();">
+                            За сутки
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-default full-width" ng-click="command.changePeriod();">Смена
+                        </button>
+                    </div>
+                </div>
+-->
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span style="padding-top: 5px">Приказ №</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="number" min="0" class="form-control" placeholder="Приказ №"
+                               ng-model="command.storage.form6Filters.orderNum">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span style="padding-top: 5px">{{command.storage.fireUser.ACCESS.words.pch}} №</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" placeholder="{{command.storage.fireUser.ACCESS.words.pch}} №" ng-model="command.storage.form6Filters.deptName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Адресная строка</label>
+                        <input type="text" class="form-control" placeholder="Улица дом" ng-model="command.storage.form6Filters.addressString">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Район</label>
+                        <input data-typeahead-wait-ms="150"
+                               type="text"
+                               placeholder="Район"
+                               ng-disabled="command.storage.form6Filters.address.region.code===1141"
+                               ng-model="command.storage.form6Filters.district"
+                               uib-typeahead="district as (district) for district in command.storage.districts | filter: command.storage.form6Filters.district"
+                               class="form-control"
+                               typeahead-select-on-blur="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Регион</label>
+                        <input type="text"
+                               placeholder="Регион"
+                               ng-model="command.storage.form6Filters.region.text"
+                               uib-typeahead="region as (region.text+' '+region.code) for region in command.storage.regions | filter: command.filters.region.text"
+                               class="form-control"
+                               typeahead-on-select='command.selectRegion($item)'
+                               typeahead-select-on-blur="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Исполнитель</label>
+                        <input type="text" class="form-control" placeholder="Исполнитель"
+                               ng-model="command.storage.form6Filters.operator">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <button class="btn btn-success full-width" ng-disabled="!command.datePicker"
+                                ng-click="command.applyFilters();">
+                            Применить
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-default full-width" ng-click="command.cancelFilters();">Очистить
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

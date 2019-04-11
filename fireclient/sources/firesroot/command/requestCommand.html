@@ -1,0 +1,207 @@
+<div class="panel panel-default text-center">
+    <div class="panel-heading">Фильтр списка отчетов</div>
+    <div class="panel-body nopm"></div>
+</div>
+<div id="filterPeriod">
+    <div class="panel-body nopm" style="margin-top: 0;padding:5px">
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="margin-bottom:10px;padding: 10px">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group " >
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button id="monthbtnBlock" class="btn btn-success full-width" ng-click="reqCom.cancelDateFilter();" type="button" data-toggle="collapse" data-target=".collapseForMonthBlock"aria-expanded="false" style="margin-bottom: 5px" >
+                                    Месяц
+                                    </button>
+                                </div>
+                                <div class="col-xs-6">    
+                                    <button id="quarterbtnBlock" class="btn btn-success full-width" ng-click="reqCom.cancelDateFilter();" type="button" data-toggle="collapse" data-target=".collapseForQuarterBlock"aria-expanded="false" style="margin-bottom: 5px">
+                                    Квартал
+                                    </button>         
+                                </div>
+                                <div class="col-xs-6">                       
+                                    <button id="halfyearbtnBlock" class="btn btn-success full-width" ng-click="reqCom.cancelDateFilter(); " 
+                                    type="button" data-toggle="collapse" data-target=".collapseForHalfYearBlock" aria-expanded="false" 
+                                    style="margin-bottom: 5px">
+                                    Полугодие
+                                    </button>             
+                                </div>
+                                <div class="col-xs-6">                       
+                                    <button id="rangeDateBlock" class="btn btn-success full-width" ng-click="reqCom.cancelDateFilter(); " type="button" data-toggle="collapse" aria-controls=".collapseForDateRangeBlock" data-target=".collapseForDateRangeBlock" aria-expanded="false" 
+                                    style="margin-bottom: 5px">
+                                    Свободная дата
+                                    </button>             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body nopm" style="padding: 5px">
+                    <div class="collapse collapseForMonthBlock" data-parent="#filterPeriod" 
+                    style="margin-bottom: 5px">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Месяц</label>
+                                    <ui-select class="full-width" ng-disabled="disabled"
+                                    ng-model="reqCom.storage.clientSettings.periods.listMonths.selected" theme="bootstrap" style="width:100%;">
+                                        <ui-select-match placeholder="Выберите месяц" 
+                                        allow-clear="true">
+                                        <span>{{reqCom.storage.clientSettings.periods.listMonths.selected.name}}</span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                        repeat="month in reqCom.storage.clientSettings.periods.listMonths | filter:search">
+                                        <div ng-bind-html="month.name | filter:search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse collapseForQuarterBlock" data-parent="#filterPeriod" style="margin-bottom: 5px">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Квартал</label>
+                                    <ui-select class="full-width" ng-disabled="disabled"
+                                    ng-model="reqCom.storage.clientSettings.periods.listQuarters.selected" theme="bootstrap" style="width:100%;">
+                                        <ui-select-match placeholder="Выберите квартал" allow-clear="true">
+                                        <span>{{reqCom.storage.clientSettings.periods.listQuarters.selected.name}}</span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                        repeat="quarter in reqCom.storage.clientSettings.periods.listQuarters | filter:search">
+                                        <div ng-bind-html="quarter.name | filter:search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse collapseForHalfYearBlock" data-parent="#filterPeriod" style="margin-bottom: 5px">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Полугодие</label>
+                                    <ui-select class="full-width" ng-disabled="disabled"
+                                    ng-model="reqCom.storage.clientSettings.periods.listHalfYear.selected" theme="bootstrap" style="width:100%;">
+                                        <ui-select-match placeholder="Выберите полугодие" allow-clear="true">
+                                        <span>{{reqCom.storage.clientSettings.periods.listHalfYear.selected.name}}</span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                        repeat="halfyear in reqCom.storage.clientSettings.periods.listHalfYear | filter:search">
+                                        <div ng-bind-html="halfyear.name | filter:search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapseForYearBlock" data-ng-init="reqCom.getYears()"
+                    style="margin-bottom: 5px;">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Год</label>
+                                    <ui-select class="full-width" ng-disabled="disabled"
+                                    ng-model="reqCom.listYears.selected" theme="bootstrap"
+                                    style="width:100%;">
+                                        <ui-select-match placeholder="Выберите год" allow-clear="true">
+                                        <span>{{reqCom.listYears.selected.name}}</span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                        repeat="year in reqCom.listYears | filter:$select.search">
+                                        <div ng-bind-html="year.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse collapseForDateRangeBlock">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="row">
+                                    <label>Диапазон дат</label>
+                                    <input date-range-picker class="form-control date-picker" type="text" ng-model="reqCom.datePicker" placeholder="Выберите даты" min="'1970-01-01'" max="reqCom.today" options="reqCom.datePickerOptions"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 5px">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Отчеты</label>
+                                    <ui-select class="full-width" ng-disabled="disabled" ng-model="reqCom.storage.dataOfStates.docs.typeDoc.selected"theme="bootstrap" style="width:100%;">
+                                        <ui-select-match placeholder="Выберите отчеты" allow-clear="true">
+                                        <span>{{$select.selected}}</span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                        repeat="statrepo in reqCom.storage.dataOfStates.docs.listOfDocTypes | filter:$select.search">
+                                        <div ng-bind-html="statrepo | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel-body nopm" style="padding:10px">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="btn-group btn-group-justified">
+                <div class="btn-group">
+                    <div class="col-xs-6">
+                        <button class="btn btn-success full-width" ng-disabled="!reqCom.datePicker" ng-click="reqCom.mainFilter()">
+                        Принять
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-default full-width" ng-click="reqCom.cancelDateFilter()"> 
+                        Очистить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default text-center">
+    <div class="panel-heading">Генерация статистических отчетов</div>
+    <div class="panel-body nopm"></div>
+</div>
+<div class="panel-body nopm" style="margin-top: 0;padding:15px">
+    <div class="row">
+        <div class="col-xs-12 buttons-margin-5px">
+            <button ng-repeat="incidentType in reqCom.includeStatReports" ng-click="reqCom.doPrint(incidentType)" class="button btn-sm btn-success full-width"
+            style="text-align: left">
+                <span class="glyphicon glyphicon-print"></span>
+                {{reqCom.storage.statReports[incidentType].short_name}}
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery('.collapse').on('show.bs.collapse', function () {
+        jQuery('.collapse.in').each(function(){
+            jQuery(this).collapse('hide');
+        });
+    });
+    jQuery('#rangeDateBlock').click(function() {
+        jQuery('.collapseForYearBlock').hide();
+    });
+    jQuery('#monthbtnBlock').click(function(){
+        jQuery('.collapseForYearBlock').show();
+    });
+    jQuery('#quarterbtnBlock').click(function(){
+        jQuery('.collapseForYearBlock').show();
+    });
+    jQuery('#halfyearbtnBlock').click(function(){
+        jQuery('.collapseForYearBlock').show();
+    });
+</script>

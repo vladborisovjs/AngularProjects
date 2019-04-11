@@ -1,0 +1,215 @@
+@admin-cell-border-dark: rgba(8, 8, 8, .35);
+@admin-cell-border-light: rgba(255, 255, 255, .45);
+@admin-cell-border-radius: 4px;
+.admin-box-shadow{
+    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.16);
+}
+
+.multi-views{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: auto;
+    padding: 5px;
+}
+
+.admin-row{
+    //position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+
+    &&.row-2{
+        height: 50%;
+    }
+
+}
+
+.admin-cell{
+
+    height: ~'calc(100% - 10px)';
+
+    .admin-box-shadow;
+    background: @panels-background;
+    border-right: 1px solid @admin-cell-border-dark;
+    border-bottom: 1px solid @admin-cell-border-dark;
+    border-top: 1px solid @admin-cell-border-light;
+    border-left: 1px solid @admin-cell-border-light;
+    border-radius: @admin-cell-border-radius;
+    overflow: hidden;
+
+    &&.cell-2{
+        width: ~'calc(50% - 10px)';
+    }
+
+    > .cell-header{
+        background: #a4a4a4;
+        width: 100%;
+        background: @panel-heading-background;
+        font-size: .9rem !important;
+        font-weight: 400 !important;
+        border-radius: 0;
+        padding: 0 10px;
+        //padding: 8px 10px;
+        text-align: center;
+        //color: @panel-heading-color;
+        //color: #e9e9e9;
+        color: #363636;
+        height: 32px;
+        line-height: 32px;
+        vertical-align: middle;
+        overflow: hidden;
+        border-bottom: 1px solid darken(@panel-heading-background, 15%);
+
+
+        //.text-shadow-on-dark;
+        //.text-shadow-on-light;
+    }
+
+
+    > .cell-body{
+        height: ~'calc(100% - 32px)';
+    }
+
+    &&.fill-window{
+
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+    }
+
+}
+
+.admin.content-wrapper{
+
+    .admin-scrollable-container{
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+
+    *{
+        cursor: default;
+    }
+
+    table.ng-table{
+
+        border: 0;
+        width: 100%;
+
+        thead > tr{
+            border: 0;
+
+            th.header{
+                padding-top: 5px;
+                padding-bottom: 5px;
+                border-bottom: 0;
+                background: #a8d2f5;
+                //background: rgba(66, 139, 202, 0.61);
+                border: 0;
+                border-left: 1px solid #71b4f6;
+                border-right: 1px solid #71b4f6;
+                border-bottom: 1px solid #71b4f6;
+                /*
+                border-left: 1px solid rgba(66, 139, 202, 1);
+                border-right: 1px solid rgba(66, 139, 202, 1);
+                border-bottom: 1px solid rgba(66, 139, 202, 1);
+                */
+                color: @main-letters-color;
+                text-shadow: none;
+                font-weight: normal;
+                /*
+                color: rgb(255, 255, 255);
+                font-weight: normal;
+                .text-shadow-on-light;
+                */
+            }
+        }
+
+        tr{
+
+            &:nth-child(1n){
+                background: @row-nth-child-1;
+            }
+
+            &:nth-child(2n){
+                background: @row-nth-child-2;
+            }
+
+            td{
+                padding: 3px 5px;
+                text-align: left;
+                border-color: rgb(190, 190, 190);
+            }
+        }
+    }
+
+    .as-clickable{
+
+        > i{
+            font-weight: 400;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px 7px;
+            border-radius: 50%;
+            //border: 1px solid rgba(98, 98, 98, 0);
+
+            &:hover{
+                background: rgba(0, 0, 0, .3);
+                //background: rgba(255, 255, 255, .20);
+
+                //border-bottom: 1px solid rgba(0, 0, 0, .4);
+                //border-right: 1px solid rgba(0, 0, 0, .4);
+                //border: 1px solid rgba(255, 255, 255, .7);
+                //box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3) inset;
+            }
+
+            &:active{
+                color: rgba(255, 255, 255, 1);
+                background: rgba(34, 165, 0, 0.4);
+                //border: none;
+            }
+
+        }
+    }
+
+    .ng-table-pager{
+        display: none;
+    }
+
+    .ui-grid-header-cell-primary-focus{
+        outline: none;
+    }
+
+}
+
+.admin-info{
+    background: rgba(255, 255, 255, .5);
+    border: 1px solid #000000;
+    padding: 5px;
+}
+
+.admin-command-wrapper{
+
+    //button[class~="default-gray-button"]{
+    button[class~="btn"]{
+
+        color: #000000;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, .3) !important;
+        cursor: pointer;
+        *{
+            cursor: pointer;
+        }
+
+    }
+
+}

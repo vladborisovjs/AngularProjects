@@ -1,0 +1,178 @@
+<div class="hw100" style="overflow: auto; position:relative;">
+    <div ng-show="fireBase.isExpand">
+        <table ng-table class="table nopm table-bordered text-center fire-base-table">
+<!--            <tr ng-repeat="activeFire in fireBase.storage.activeFires | orderBy: ['isReadyForF6','-startDate']"
+                ng-click="fireBase.selectFire(activeFire)"
+                class="noselect cursor pulse"
+                ng-class="[fireBase.chooseBackgroundColor(activeFire),{'old-fire': fireBase.isOldFire(activeFire)}]"  ng-dblclick="fireBase.selectFireStrict(activeFire); fires.getDocumentBySource('order')">-->
+
+
+            <tr ng-repeat="activeFire in fireBase.storage.activeFires"
+                ng-click="fireBase.selectFire(activeFire)"
+                class="noselect cursor pulse"
+                ng-class="[fireBase.chooseBackgroundColor(activeFire),{'old-fire': fireBase.isOldFire(activeFire)}]">
+<!--
+            <tr ng-repeat="activeFire in fireBase.storage.activeFires"
+                ng-click="fireBase.selectFire(activeFire)"
+                class="noselect cursor pulse"
+                ng-class="[fireBase.chooseBackgroundColor(activeFire),{'old-fire': fireBase.isOldFire(activeFire)}]">
+-->
+
+                <td header-class="'firebase-header-class'" style="width: 3%" data-title="'№ПП'" ng-class="{'fire-status-danger': activeFire.fireStatus.code != 8}">{{$index+1}}</td>
+                <td  ng-class="{'documentIsEditing': fireBase.storage.listLocksObj[(activeFire.id + ':forma')]}" header-class="'firebase-header-class'" style="width: 3%" data-title="'Стат'">
+                    <i class="{{activeFire.fireStatus.icon}}"></i>
+                </td>
+<!--
+                <td header-class="'firebase-header-class'" style="width: 3%" data-title="'Стат'"><i
+                        ng-style="{color:activeFire.fireStatus.iconColor}" ng-class="activeFire.fireStatus.icon"></i>
+                    <div>{{activeFire.fireStatus.iconColor}}</div>
+                </td>
+-->
+                <td header-class="'firebase-header-class'" style="width: 3%" data-title="'№Прик'">
+                    {{activeFire.historicalNum | historicalNumFilter}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 8%" data-title="'ПЧ'">
+                    {{activeFire.firePlace.pchName}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 3%" data-title="'Ф6'">
+                    <i class="fa fa-check"
+                       ng-show="activeFire.f6savedBy!=null"
+                       uib-tooltip="{{activeFire.f6savedBy.lastName}}"
+                       tooltip-trigger="mouseenter"></i>
+                </td>
+                <td header-class="'firebase-header-class'" class="beUpperCase" style="width: 22%" data-title="'Адрес'">
+                    {{activeFire.firePlace | firePlaceFilter}}
+                </td>
+                <td header-class="'firebase-header-class'" class="beUpperCase" style="width: 22%" data-title="'Район'">
+                    {{activeFire.firePlace.address.district}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 7%" data-title="'Ранг'">
+                    {{activeFire.rank.sidfirerank}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 7%" data-title="'Техн'">
+                    {{fireBase.formatedTech(activeFire)}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 10%" data-title="'Время начала'">
+                    {{activeFire.startDate | date:'dd-MM-yy HH:mm'}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 13%" data-title="'Состояние'">
+                    {{activeFire.fireStatus.status}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 5%" data-title="'Ранг(MAX)'">
+                    {{activeFire.maxRank}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 10%" data-title="'Тип'">
+                    {{activeFire.incidentType.name | abbreviation}}
+                </td>
+                <td header-class="'firebase-header-class'" style="width: 10%" data-title="'Исполн'"><span
+                        class="lastname-span-ellipsis">{{activeFire.user.lastName}}</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-repeat="activeFire in fireBase.storage.activeFires | activeFiresSort track by activeFire.id"
+         style="padding-top: 5px;margin: 0"
+         ng-hide="fireBase.isExpand">
+        <table width="100%" class="table table-bordered text-center table-condensed noselect cursor"
+               style="padding: 0;margin: 0"
+               ng-click="fireBase.selectFire(activeFire)" ng-class="fireBase.chooseBackgroundColor(activeFire)">
+            <tbody>
+
+            <tr>
+                <td width="50px" rowspan="3" class="vert-align">
+                    <div style="display:table;width:100%;">
+                        <div style="display:table-cell;vertical-align:middle;">
+                            <div style="text-align:center;"><i ng-style="{color:activeFire.fireStatus.iconColor}"
+                                                               class="fa-2x" ng-class="activeFire.fireStatus.icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <b>Тип </b><br>
+                                        {{activeFire.incidentType.name}}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>№ </b><br>{{activeFire.historicalNum | historicalNumFilter}}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <b>ПЧ</b><br>{{activeFire.firePlace.pchName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <b>Город </b><br>{{activeFire.firePlace.address.settName}}
+                                    </div>
+                                    <div class="col-xs-4 text-capitalize">
+                                        <b>Адрес </b><br>
+                                        {{activeFire.firePlace.address.street}}
+                                        {{activeFire.firePlace.address.house}}<br>
+                                        {{activeFire.firePlace.crossStreet.street}}
+                                    </div>
+                                    <div class="col-xs-2 text-capitalize">
+                                        <b>Район </b><br>{{activeFire.firePlace.address.district}}
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <b>Время начала </b><br>{{activeFire.startDate | date:'dd-MM-yy HH:mm'}}
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <b>Ранг </b><br>{{activeFire.rank.sidfirerank}}
+                                        {{fireBase.formatModif(activeFire)}}
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <b>Ранг(MAX) </b><br>{{activeFire.maxRank}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <b>Объект </b></br>
+                                {{activeFire.firePlace.fireObject.nameobject}}
+                            </div>
+                            <div class="col-xs-2">
+                                <b>Состояние </b></br>
+                                {{activeFire.fireStatus.status}}
+                            </div>
+                            <div class="col-xs-2">
+                                <b>Техника </b></br>
+                                {{fireBase.formatedTech(activeFire)}}
+                            </div>
+                            <div class="col-xs-1">
+                                <b>Этаж </b></br>{{activeFire.floor}} / {{activeFire.floors}}
+                            </div>
+                            <div class="col-xs-2">
+                                <b>Исполн. </b></br>{{activeFire.user.uid}} {{activeFire.user.firstName}}
+                                {{activeFire.user.lastName}}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container collapse-button-wrapper">
+        <button class="btn btn-default btn-xs" ng-click="fireBase.collapse()"><i ng-class="fireBase.btnStyle"></i>
+        </button>
+    </div>
+</div>

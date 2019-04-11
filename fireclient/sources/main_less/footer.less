@@ -1,0 +1,94 @@
+.footer-wrapper{
+    height: @footer-height;
+    padding: 0 3px !important;
+    background: @navbar-background;
+    position: relative;
+
+    > .footer{
+        height: 100%;
+
+        /*
+
+        //TODO: Рабочая версия строки быстрого набора техники 2
+        .footer-engines{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            height: 100%;
+
+            > div.quick-set-holder{
+                width: auto;
+                flex-grow: 1;
+                padding: 1px 0 0 0;
+                height: 100%;
+                position: relative;
+                overflow-x: hidden;
+                overflow-y: auto;
+                white-space: normal;
+                padding: 2px 5px;
+                border-right: 1px solid rgba(0, 0, 0, .3);
+                border-top: 1px solid rgba(0, 0, 0, .3);
+                border-bottom: 1px solid rgba(0, 0, 0, .3);
+
+                &:first-child{
+                    border-left: 1px solid rgba(0, 0, 0, .3);
+                }
+
+                > .type-in-list{
+                    cursor: pointer;
+                    width: 100%;
+                    font-size: 1rem;
+                    padding: 1px 0;
+
+                    > div{
+                        width: 33.3%;
+                        text-align: center;
+
+                        .text-shadow-on-dark;
+
+                        &:first-child{
+                            text-align: left;
+                        }
+                        &:nth-child(2){
+                            color: rgba(0 ,0 ,0 , .85);
+                        }
+                        &:last-child{
+                            text-align: right;
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+
+        }
+        */
+
+
+
+
+        //TODO: Рабочая версия строки быстрого набора техники 1
+            .footer-engines{
+                display: table;
+
+                > div{
+                    display: table-cell;
+                    width: 65px;
+                    padding: 1px 0 0 0;
+
+                    > *{
+                        width: 65px;
+                    }
+
+                    > button{
+                        display: block;
+                        padding: 5px 1px;
+                    }
+
+                }
+
+            }
+
+    }
+
+
+}

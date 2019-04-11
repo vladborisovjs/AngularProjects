@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html ng-app="mapApp">
+<head lang="ru">
+    <meta charset="UTF-8">
+    <title>Карта</title>
+    <link rel="stylesheet" href="css/map-1634c697be.css">
+    <script src="js/map-42ad7cbe47.js"></script>
+    <script src="config.js"></script>
+
+
+</head>
+<body ng-controller="FireMap as fireMap">
+<!--<script type="text/ng-template" id="template/typeahead/typeahead-popup.html">
+    <ul class="dropdown-menu" ng-if="isOpen()" ng-style="{top: position.top+'px', left: position.left+'px'}" style="display: block;" role="listbox" aria-hidden="{{!isOpen()}}">
+        <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option" id="{{match.id}}">
+            <div typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+        </li>
+    </ul>
+</script>-->
+
+
+
+<script type="text/ng-template" id="uib/template/typeahead/typeahead-popup.html">
+    <ul class="dropdown-menu" ng-show="isOpen() && !moveInProgress"
+        ng-style="{top: position().top+'px', left: position().left+'px'}" style="display: block;" role="listbox"
+        aria-hidden="{{!isOpen()}}">
+        <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }"
+            ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option" id="{{::match.id}}">
+            <div uib-typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+        </li>
+    </ul>
+
+</script>
+
+<script type="text/ng-template" id="uib/template/typeahead/typeahead-match.html">
+    <a tabindex="-1" ng-bind-html="match.label | uibTypeaheadHighlight:query"></a>
+</script>
+
+
+
+
+<div class="container-fluid map-main-wrapper">
+    <div class="row input-wrapper">
+        <div class="col-xs-10" style="margin-top: 1px;">
+            <div class="row">
+                <div class="col-xs-8 nopm">
+<!--
+                    ng-model="fireMap.streetSearch" typeahead-min-length="3"
+                    uib-typeahead="adr as adr.streetname +' '+ adr.settname for adr in fireMap.storage.address.streets "
+-->
+
+
+
+                    <input type="text" ng-model="fireMap.streetSearch" typeahead-min-length="3"
+                           uib-typeahead="adr as adr.street + ((adr.regName === adr.district)? ' (' + adr.raionNames + ') ': (!!adr.district === true)? ' (' + adr.district + ') ' : '') for adr in fireMap.storage.address.streets "
+                           class="form-control onmap-input"
+                           typeahead-on-select="fireMap.onSelectStreet($item, $model, $label)"
+                           typeahead-focus-first="true" placeholder="Поиск улицы" typeahead-wait-ms="500"
+                           ng-click="fireMap.clearSearches()"
+                           id="street"
+                           style="overflow-y: scroll; overflow-x: hidden;">
+<!--
+                    <input type="text" ng-model="fireMap.streetSearch" typeahead-min-length="3"
+                           uib-typeahead="adr as adr.street +' '+ adr.raionName for adr in fireMap.storage.address.streets "
+                           class="form-control onmap-input"
+                           typeahead-on-select="fireMap.onSelectStreet($item, $model, $label)"
+                           typeahead-focus-first="true" placeholder="Поиск улицы" typeahead-wait-ms="500"
+                           ng-click="fireMap.clearSearches()"
+                           id="street"
+                           style="overflow-y: scroll; overflow-x: hidden;">
+-->
+                </div>
+                <div class="col-xs-4 nopm">
+                    <ui-select ng-model="fireMap.houseSearch" class="onmap-input"
+                               on-select="fireMap.onSelectHouse($item, $model, $label)">
+                        <ui-select-match class="onmap-input" placeholder="Выберите дом">
+                            {{fireMap.houseSearch.house}}
+                        </ui-select-match>
+                        <ui-select-choices class="onmap-input"
+                                           repeat="hou in fireMap.storage.address.houses | filter: {house : $select.search}">
+                            {{hou.house}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 nopm">
+                    <input type="text" ng-model="fireMap.objSearch"
+                           typeahead-min-length="3"
+                           uib-typeahead="obj as (obj.fireObject.nameobject + ' <div class=\'map-obj-address \'>' + obj.street + ' ' + obj.house + '</div>') for obj in fireMap.storage.address.objectsSearch"
+                           class="form-control onmap-input"
+                           typeahead-on-select="fireMap.onSelectObject($item, $model, $label)"
+                           typeahead-focus-first="true"
+                           placeholder="Поиск объекта" typeahead-wait-ms="500"
+                           ng-click="fireMap.clearSearches($item)"
+                           typeahead-input-formatter="fireMap.formatObj($model)"
+                           id="obj">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-2 full-height nopm">
+            <button type="button" class="btn btn-default full-height full-width nopm"
+                    ng-click="fireMap.clearSearches();">Очистить поиск
+            </button>
+        </div>
+    </div>
+    <div class="row" style="height: calc(100vh - 50px);">
+        <div class="col-xs-12 nopm">
+            <div id='map' class="bigMap"></div>
+        </div>
+    </div>
+    <div class="btn btn-default map-toggle-objects-button" id="toggleButton"
+         ng-click="fireMap.toggleObjectsLayerVisible()">Слой объектов
+        <i class="fa fa-check" ng-show="fireMap.isObjectsLayerVisible()"></i>
+        <i class="fa fa-ban" ng-hide="fireMap.isObjectsLayerVisible()"></i>
+    </div>
+    <div class="contextMenu map-context-menu"
+         ng-show="fireMap.showContextMenu"
+         ng-style="{top:fireMap.position.top,left:fireMap.position.left}">
+        <div class="container-fluid nopm">
+            <div class="row" ng-show="fireMap.storage.listOfMotorways.length>0">
+                <div class="col-xs-12">
+                    <button ng-repeat="way in fireMap.storage.listOfMotorways" class="btn btn-default"
+                            style="width:50%;"
+                            ng-class="{'btn-warning':fireMap.chosenPointPosition == way}"
+                            ng-click="fireMap.choosePosPoint(way)">{{way | wayfilter}}
+                    </button>
+                    <button class="btn btn-default full-width"
+                            ng-class="{'btn-warning':fireMap.chosenPointPosition == null}"
+                            ng-click="fireMap.choosePosPoint(null)">Город
+                    </button>
+                </div>
+            </div>
+            <!--<div class="row" style="height: 10px" ng-show="fireMap.storage.listOfMotorways.length>0"></div>-->
+            <!-- ng-show="fireMap.storage.pointObjectInfo"-->
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="map-incident-button" ng-repeat="incident in fireMap.storage.incidentTypes"
+                            ng-click="fireMap.chooseSolution(incident)">{{incident.name}}
+                    </button>
+                    <div class="row map-point-info-wrapper" ng-show="fireMap.storage.pointObjectInfo !== null">
+                        <div ng-bind="fireMap.storage.pointObjectInfo.settName"></div>
+                        <div ng-bind="fireMap.storage.pointObjectInfo.district"></div>
+                        <div ng-bind-template="{{fireMap.storage.pointObjectInfo.street}} {{fireMap.storage.pointObjectInfo.house}}"></div>
+                    </div>
+                    <button ng-click="fireMap.closeSolutions()" class="btn btn-danger btn-xs full-width map-cancel-button"><span
+                            class="glyphicon glyphicon-remove"></span></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="websocket-visual-box" class="websocket-state-circle"></div>
+<!--
+<div class="fullscreen-connection-problem no-print" ng-show="fireMap.storage.socketStatus.isReconnecting" id="fullscreen-connection-problem">
+    <div>
+        Нарушено соединение с сервером. <span class="blink_me">Ожидайте.</span>
+    </div>
+</div>
+-->
+
+
+
+
+<!--
+<div class="showSentTicket" ng-click="fireMap.switchViewTicketList()" ng-show="fireMap.showSentTicket == true">
+    <div ng-show="fireMap.storage.socketStatus.showTicketList == true">
+        <div>Список тикетов</div>
+        <div class="row clearfix" ng-repeat="ticket in fireMap.storage.socketStatus.lastTicket">
+            <div class="col-xs-2">
+                {{ticket.from}}:
+            </div>
+            <div class="col-xs-4">
+                {{ticket.time}}
+            </div>
+            <div class="col-xs-6">
+                {{ticket.ticket}}
+            </div>
+        </div>
+    </div>
+
+    <div ng-hide="fireMap.storage.socketStatus.showTicketList == true">
+        <div>Последний тикет</div>
+        <div class="row clearfix">
+
+            <div class="col-xs-2">
+                {{fireMap.storage.socketStatus.lastTicket[fireMap.storage.socketStatus.lastTicket.length - 1].from}}:
+            </div>
+            <div class="col-xs-4">
+                {{fireMap.storage.socketStatus.lastTicket[fireMap.storage.socketStatus.lastTicket.length - 1].time}}
+            </div>
+            <div class="col-xs-6">
+                {{fireMap.storage.socketStatus.lastTicket[fireMap.storage.socketStatus.lastTicket.length - 1].ticket}}
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+-->
+
+
+
+
+
+
+
+
+<!--
+<div class="showSentTicket" ng-click="fireMap.switchViewTicketList()" ng-show="fireMap.showSentTicket == true">
+    <div ng-show="fireMap.storage.socketStatus.showTicketList == true">
+        <div>Список тикетов</div>
+        <table>
+
+            <tr ng-repeat="ticket in fireMap.storage.socketStatus.lastTicket">
+                <td>
+                    {{ticket.from}}:
+                </td>
+                <td>
+                    {{ticket.emit}}
+                </td>
+                <td>
+                    {{ticket.time}}
+                </td>
+                <td>
+                    {{ticket.ticket}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-hide="fireMap.storage.socketStatus.showTicketList == true">
+        <div>Последний тикет</div>
+        <table>
+            <tr>
+
+                <td>
+                    {{fireMap.storage.socketStatus.lastTicket[fireMap.storage.socketStatus.lastTicket.length - 1].from}}:
+                </td>
+                <td>
+                    {{fireMap.storage.socketStatus.lastTicket[fireMap.storage.socketStatus.lastTicket.length - 1].emit}}
+                </td>
+                <td>
+                    {{fireMap.storage.socketStatus.lastTicket[fireMap.storage.socketStatus.lastTicket.length - 1].time}}
+                </td>
+                <td>
+                    {{fireMap.storage.socketStatus.lastTicket[fireMap.storage.socketStatus.lastTicket.length - 1].ticket}}
+                </td>
+
+
+            </tr>
+        </table>
+    </div>
+</div>-->
+
+
+<div class="showSentTicket" ng-show="!!fireMap.showSentTicket === true">
+    <div>
+        <span>Номер сокета</span>
+        <span ng-bind="fireMap.storage.socketStatus.socketId"></span>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+<div class="container-fluid full-height">
+    <div class="row full-height protocol-content-wrapper">
+        <div class="nopm full-height" ng-class="protocol.stateCalledFrom == 'archive'? 'col-xs-12' : 'col-xs-7'">
+            <div class="clearfix">
+                <button class="btn btn-success btn-sm pull-right" type="button" ng-click="protocol.appendToProtocol()"
+                        ng-show="protocol.stateCalledFrom == 'archive'">Добавить запись
+                </button>
+            </div>
+            <!--            <div>{{protocol.stateCalledFrom}}:&nbsp;{{protocol.selectedFire.id}}</div>-->
+            <div ui-grid="protocol.gridOptions" ui-grid-auto-resize class="protocol-grid"></div>
+        </div>
+        <div class="col-xs-5 full-height nopm" ng-show="protocol.stateCalledFrom !== 'archive'">
+            <uib-tabset justified="true" class="tabs-full-height">
+                <uib-tab ng-model="techTab" active="techTab.active">
+                    <uib-tab-heading>
+                        <info-about-recruited-engine engines="protocol.storage.selectedFire.orders"></info-about-recruited-engine> &nbsp;
+                        Техника
+                    </uib-tab-heading>
+                    <div class="row" style="height: 70%;overflow-y: auto; margin: 0;">
+
+                        <div class="col-xs-6 full-height" style="padding: 0 2px 0 0;">
+                            <div style="overflow-x:hidden;  padding: 0;width: 100%">
+                                <table ng-table class="table table-bordered small text-center nopm">
+                                    <tr class=""
+                                        ng-repeat="currorder in protocol.selectedFire.orders | orderBy: protocol.engineTypeSortingAlgorythm">
+                                        <td style="width: 16%" data-title="'+'">
+                                            <button ng-show="protocol.engineStatuse(currorder)=='СЛЕДУЕТ'"
+                                                    class="btn btn-xs btn-primary default-gray-button"
+                                                    ng-click="protocol.onArriveEngineToFire(currorder)">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+<!--
+                                            <button ng-show='currorder.fireEngine.idFireEngine.length>0'
+                                                    class="btn btn-xs btn-success default-gray-button"
+                                                    ng-click="protocol.showPathFromPchToFire(currorder)">
+                                                <span class="glyphicon glyphicon-map-marker"></span>
+                                            </button>
+-->
+                                        </td>
+                                        <td style="width: 52%;padding: 0" data-title="protocol.storage.fireUser.ACCESS.words.pchEngine">
+                                            <div class="col-sm-3 nopm">
+                                                <div ng-click="protocol.goToDept(currorder)" class="btn-link"
+                                                     style="padding-left: 0; cursor: pointer">
+                                                    {{currorder.departmentName}}{{protocol.getDislocation(currorder)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 nopm">
+                                                <div style="padding-left: 0; cursor: pointer"
+                                                     ng-click="protocol.goToType(currorder)"
+                                                     class="btn-link" title="{{currorder.orderAs.engineType}}">
+                                                    {{currorder.fireEngine.engineType | engineTypeDecorator:
+                                                    currorder.fireEngine.isFirstTank: currorder.fireEngine.asGD}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 nopm">
+                                                <div style="padding-left: 0;padding-right: 0; cursor: pointer"
+                                                     ng-click="protocol.goToDept(currorder)"
+                                                     class="btn-link">{{currorder.fireEngine.gosNo}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="width:25%" data-title="'Состояние'">
+                                            {{protocol.engineStatuse(currorder)}}
+                                        </td>
+                                        <td style="width: 7%" data-title="'-'">
+                                            <button class="btn btn-xs btn-danger"
+                                                    ng-click="protocol.onRemoveEngineFromFire(currorder)">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+                            <div class="panel panel-default small full-height">
+                                <div class="panel-heading"
+                                     style="padding: 5px 0 0 0;  vertical-align: middle; text-align: center">
+                                    <span>Донабор</span>
+                                </div>
+                                <div class="panel-body panel-body-order-engines">
+                                    <div style="overflow: auto">
+                                        <table ng-table class="table table-bordered small text-center"
+                                               style="margin: 0">
+                                            <tr ng-repeat="orderSrc in protocol.storage.selectedFire.addOrders | orderBy: protocol.engineTypeSortingAlgorythm">
+                                                <!--
+                                                                                    <tr ng-repeat="order in orderEdit.storage.dataOfStates.editFireOrder.fireAct.addOrders | orderBy: orderEdit.engineTypeSortingAlgorythm">
+                                                -->
+
+
+                                                <td data-title="'Тип'" title="{{orderSrc.orderAs.engineType}}">
+                                                    {{orderSrc.fireEngine.engineType |
+                                                    engineTypeDecorator: orderSrc.fireEngine.isFirstTank:
+                                                    orderSrc.fireEngine.asGD}}
+                                                </td>
+                                                <td data-title="protocol.storage.fireUser.ACCESS.words.pch">
+                                                    {{orderSrc.departmentName}}{{order.getDislocation(orderSrc)}}
+                                                </td>
+                                                <td data-title="'№'">{{orderSrc.fireEngine.gosNo}}</td>
+                                                <td data-title="'-'">
+                                                    <button class="btn-danger"
+                                                            ng-click="protocol.onRemoveOrder(orderSrc)">
+                                                        <span class="glyphicon glyphicon-minus"></span>
+                                                    </button>
+<!--
+                                                    <button class="btn-success"
+                                                            ng-click="protocol.showPathFromPchToFire(orderSrc)">
+                                                        <span class="glyphicon glyphicon-map-marker"></span>
+                                                    </button>
+-->
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="margin: 10px 0 0 0;">
+
+                        <div class="col-xs-6 full-height" style="padding: 0 2px 0 0;"></div>
+                        <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+
+                            <div style="height: auto;white-space: normal; border: #ff6354 solid 1px; padding: 2px 2px 0 2px;"
+                                 ng-show="protocol.selectedFire.notFoundOrders && protocol.selectedFire.notFoundOrders.length > 0"
+                                 uib-tooltip="Список ненабранной техники">
+                                <div ng-repeat="missedEngine in protocol.selectedFire.notFoundOrders"
+                                     class="btn btn-danger btn-xs"
+                                     style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;"
+                                     ng-click="protocol.goToByTypes(missedEngine.type.engineType)">
+                                    {{missedEngine.type.engineType}}<span
+                                        class="badge">{{missedEngine.count}}</span>
+                                    <button class="btn btn-default btn-xxs"
+                                            ng-click="protocol.removeMissedEngine(missedEngine); $event.stopPropagation();">
+                                        <i
+                                                class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!--                <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+
+                                            <div style="height: auto;white-space: normal; border: #ff6354 solid 1px; padding: 2px 2px 0 2px;"
+                                                 ng-show="!!protocol.selectedFire !== false"
+                                                 class="col-md-12 btn-group nopm"
+                                                 uib-tooltip="Список ненайденной техники при доборе">
+                                    <span ng-repeat="missedEngine in protocol.storage.selectedFire.missingOrders"
+                                          class="label label-danger"
+                                          style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;">
+                                        {{missedEngine.type.engineType}}<span class="badge">{{missedEngine.count}}</span>
+                                    </span>
+                                            </div>
+
+
+                                        </div>-->
+                    </div>
+
+
+                    <div class="row" style="margin: 10px 0 0 0;">
+
+                        <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+
+
+<!--
+
+                            <div class="col-md-12 default-gray-border"
+                                 style="padding: 2px 2px 0 2px;">
+                    <span ng-repeat="(key, value) in protocol.infoAboutRecruitedEngine(protocol.storage.selectedFire.orders)"
+                          class="label label-primary default-gray-button"
+                          style="font-size: 12px; display: inline-block; margin: 0 3px 2px 0;">
+                        {{key}}<span class="badge">{{value}}</span>
+                    </span>
+
+
+                            </div>
+-->
+
+
+                        </div>
+                        </div>
+
+
+                        <div class="row" style="margin: 0;">
+
+                            <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+                            </div>
+                            <div class="col-xs-6 full-height" style="padding: 0 0 0 2px;">
+                                <button id="flow-create-fire"
+                                        ng-show="protocol.storage.selectedFire.addOrders.length > 0"
+                                        ng-click="protocol.addEnginesToFire()"
+                                        class="btn btn-success full-width full-height default-gray-button btn-create-fire" style="width: 100%;">
+                                    Подтвердить технику
+                                </button>
+
+                            </div>
+                        </div>
+
+
+                </uib-tab>
+                <uib-tab heading="Оповещение">
+                    <div style="height: 100%; overflow-x: hidden;">
+                        <div class="row" style="overflow-x: hidden;overflow-y: auto; height: 95%;">
+                            <div class="col-xs-12">
+                                <div class="row" ng-repeat="personToNotify in protocol.fireNotificationsCopy">
+                                    <div class="col-xs-2">
+                                        <input style="height: 30px;width: 30px;" type="checkbox"
+                                               ng-model="personToNotify.checked">
+                                        <button ng-click="protocol.deletePersonToNotifications($index)"
+                                                ng-show="!personToNotify.id" type="submit"
+                                                class="btn btn-danger btn-xs"><span
+                                                class="glyphicon glyphicon-minus"></span></button>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div ng-show="personToNotify.id"><b>Должность:</b>
+                                                    <br/>{{personToNotify.who}}
+                                                </div>
+                                                <div ng-show="!personToNotify.id">
+                                                    <b>Должность:</b>
+                                                    <br/><input class="form-control input-sm input-extra-small"
+                                                                type="text"
+                                                                ng-model="personToNotify.who">
+                                                </div>
+                                            </div>
+                                            <!--Должность-->
+                                            <div class="col-xs-6">
+                                                <div ng-show="personToNotify.id"><b>Телефон:</b>
+                                                    <br/>{{personToNotify.phone}}
+                                                </div>
+                                                <div ng-show="!personToNotify.id">
+                                                    <b>Телефон:</b>
+                                                    <br/><input class="form-control input-sm input-extra-small"
+                                                                type="text" ng-model="personToNotify.phone">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row full-width">
+                                            <input type="text"
+                                                   class="form-control input-sm input-extra-small"
+                                                   placeholder="Сообщение"
+                                                   ng-change="protocol.autoCheckbox(personToNotify)"
+                                                   ng-model="personToNotify.message"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 5%">
+                            <div role="group" class="btn-group full-width">
+                                <button class="btn btn-warning" style="width: 15%"
+                                        ng-click="protocol.addPersonToNotifications()">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                <button class="btn btn-success" style="width: 65%"
+                                        ng-click="protocol.sendFireNotifications()">
+                                    Оповестить
+                                </button>
+                                <button class="btn btn-danger" style="width:20%;"
+                                        ng-click="protocol.clearFireNotifications()">
+                                    Отмена
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Инф.Внеш.Сист.">
+                    <div style="height: 50%;">
+                        <div class="panel panel-default full-height">
+                            <div class="panel-heading">
+                                Карточка Внеш.Сист.
+                                №{{protocol.selectedFire.card112WithBean.card112.nEmergencyCardId}}<br>
+                                Состояние: {{protocol.selectedFire.card112WithBean.card112 | textOf112nCardState}}
+                            </div>
+                            <div class="panel-body panel-body-full-height" style="overflow: auto;font-size: 11px;">
+                                <div class="row">
+                                    <div class="col-xs-6">Оператор</div>
+                                    <div class="col-xs-6">{{protocol.selectedFire.card112WithBean.card112.strCreator}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Адрес</div>
+                                    <div class="col-xs-6">{{protocol.selectedFire.card112WithBean.card112 |
+                                                          address112Filter}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Номер помещения</div>
+                                    <div class="col-xs-6">{{protocol.selectedFire.card112WithBean.card112.strRoom}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Фамилия (Заявитель)</div>
+                                    <div class="col-xs-6">
+                                        {{protocol.selectedFire.card112WithBean.card112.strDeclarantLastName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Имя (Заявитель):</div>
+                                    <div class="col-xs-6">
+                                        {{protocol.selectedFire.card112WithBean.card112.strDeclarantName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Отчество (Заявитель):</div>
+                                    <div class="col-xs-6">
+                                        {{protocol.selectedFire.card112WithBean.card112.strDeclarantMiddleName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Телефон (Заявитель)</div>
+                                    <div class="col-xs-6">{{protocol.selectedFire.card112WithBean.card112.strCgPN}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">Телефон (куда звонили)</div>
+                                    <div class="col-xs-6">{{protocol.selectedFire.card112WithBean.card112.strCdPN}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">Описание:</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <textarea rows="4" style="width: 100%" class="form-control"
+                                                      ng-model="protocol.selectedFire.card112WithBean.card112.strIncidentDescription">
+
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 50%; overflow: auto">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Время</th>
+                                <th>Пользователь</th>
+                                <th>Сообщение</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="protocolItem in protocol.selectedFire.card112ChangedRequest.protocols112">
+                                <td>{{protocolItem.date}}</td>
+                                <td>{{protocolItem.user}}</td>
+                                <td>{{protocolItem.message}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+            <!--<div class="full-width"
+                 ng-show="protocol.storage.dataOfStates.protocol.orderMode==='info'">
+                <div class="panel panel-default" style="height: 100%;width: 100%">
+                    <div class="panel-heading" style="height: 5%; margin: 0">Сообщение</div>
+                    <div class="panel-body "
+                         style="height: 95%;overflow-y: auto;overflow-x:hidden;  padding: 0;width: 100%">
+                        <div class="row">
+                            <textarea class="form-control" rows="15" ng-model="protocol.infoFromFire"
+                                      id="orderMessageBox"></textarea>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <div class="col-sm-6">
+                                <button style="width: 100%" class="btn btn-default"
+                                        ng-disabled="protocol.infoFromFire.length==0"
+                                        ng-click="protocol.sendInfoMessage()">Сохранить
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button style="width: 100%" class="btn btn-default" ng-click="protocol.cancelInfo()">
+                                    Закрыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>

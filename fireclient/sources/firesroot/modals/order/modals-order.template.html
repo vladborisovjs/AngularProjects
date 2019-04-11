@@ -1,0 +1,31 @@
+<div class="modal-window modal-info">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">{{orderCtrl.title}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <table class="table table-order112">
+            <thead>
+            <tr>
+                <th>Время</th>
+                <th>Пользователь</th>
+                <th>Сообщение</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="card112log in orderCtrl.text.card112WithBean.protocols112log">
+                <td>{{card112log.date | date:'d.MM.y hh:mm:ss'}}</td>
+                <td>{{card112log.user}}</td>
+                <td>{{card112log.message}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="orderCtrl.ok()">OK</button>
+    </div>
+</div>
+
+
+<!--        <i class="glyphicon"
+           ng-class="{'glyphicon-info-sign' : alertCtrl.type === 'info', 'glyphicon-remove-circle': alertCtrl.type === 'error' , 'glyphicon-warning-sign': alertCtrl.type === 'warning'}"></i>
+-->

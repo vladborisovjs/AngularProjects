@@ -1,0 +1,204 @@
+<div class="modal-window modal-info" >
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">
+        Печать отчета: {{PeriodCtrl.report.name}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-xs-12" >
+            <label>Выберите период</label>
+            <div class="btn-group btn-group-justified">
+                <div class="btn-group ">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button id="monthbtn" class="btn btn-success full-width"  type="button" ng-click="PeriodCtrl.cancelDateFilter();" data-toggle="collapse" data-target=".collapseForMonthPeriod"aria-expanded="false" 
+                            style="margin-bottom: 5px" >
+                            Месяц
+                            </button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button id="quarterbtn" class="btn btn-success full-width"  type="button" ng-click="PeriodCtrl.cancelDateFilter();" data-toggle="collapse" data-target=".collapseForQuarterPeriod"aria-expanded="false" style="margin-bottom: 5px">
+                            Квартал
+                            </button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button id="halfyearbtn" class="btn btn-success full-width"  type="button" ng-click="PeriodCtrl.cancelDateFilter();" data-toggle="collapse" data-target=".collapseForHalfYearPeriod" aria-expanded="false" style="margin-bottom: 5px">
+                            Полугодие
+                            </button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button id="rangeDate" class="btn btn-success full-width"  type="button" ng-click="PeriodCtrl.cancelDateFilter();" data-toggle="collapse" aria-controls=".collapseForDateRange" data-target=".collapseForDateRange" aria-expanded="false" style="margin-bottom: 5px">
+                            Свободная дата
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body nopm" style="padding: 5px">
+                <div class="collapse collapseForMonthPeriod" data-parent="#filterPeriod" 
+                style="margin-bottom: 5px">
+                    <div class="card card-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Месяц</label>
+                                    <ui-select class="full-width" ng-disabled="disabled"
+                                     ng-model="PeriodCtrl.storage.clientSettings.periods.listMonths.selected" theme="bootstrap" style="width:100%;">
+                                        <ui-select-match placeholder="Выберите месяц" allow-clear="true">
+                                        <span>{{PeriodCtrl.storage.clientSettings.periods.listMonths.selected.name}}</span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                        repeat="month in PeriodCtrl.storage.clientSettings.periods.listMonths | filter:search">
+                                        <div ng-bind-html="month.name | filter:search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse collapseForQuarterPeriod" data-parent="#filterPeriod" style="margin-bottom: 5px">
+                    <div class="card card-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Квартал</label>
+                                <ui-select class="full-width" ng-disabled="disabled"
+                                    ng-model="PeriodCtrl.storage.clientSettings.periods.listQuarters.selected" theme="bootstrap" style="width:100%;">
+                                <ui-select-match placeholder="Выберите квартал" 
+                                    allow-clear="true">
+                                <span>{{PeriodCtrl.storage.clientSettings.periods.listQuarters.selected.name}}</span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="quarter in PeriodCtrl.storage.clientSettings.periods.listQuarters | filter:search">
+                                <div ng-bind-html="quarter.name | filter:search"></div>
+                                </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse collapseForHalfYearPeriod" data-parent="#filterPeriod" style="margin-bottom: 5px">
+                    <div class="card card-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Полугодие</label>
+                                <ui-select class="full-width" ng-disabled="disabled"
+                                    ng-model="PeriodCtrl.storage.clientSettings.periods.listHalfYear.selected" theme="bootstrap" style="width:100%;">
+                                    <ui-select-match placeholder="Выберите полугодие" allow-clear="true">
+                                    <span>{{PeriodCtrl.storage.clientSettings.periods.listHalfYear.selected.name}}</span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="halfyear in PeriodCtrl.storage.clientSettings.periods.listHalfYear | filter:search">
+                                    <div ng-bind-html="halfyear.name | filter:search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapseForYearPeriod" data-ng-init="PeriodCtrl.getYears()"
+                style="margin-bottom: 5px;">
+                    <div class="card card-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Год</label>
+                                <ui-select class="full-width" ng-disabled="disabled"
+                                ng-model="PeriodCtrl.listYears.selected" theme="bootstrap"
+                                style="width:100%;">
+                                    <ui-select-match placeholder="Выберите год"
+                                    allow-clear="true">
+                                    <span>{{PeriodCtrl.listYears.selected.name}}</span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                    repeat="year in PeriodCtrl.listYears | filter:$select.search">
+                                    <div ng-bind-html="year.name | highlight: $select.search">
+                                    </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse collapseForDateRange">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="row">
+                                <label>Диапазон дат</label>                                    
+                                <input date-range-picker class="form-control date-picker" type="text" ng-model="PeriodCtrl.datePicker" placeholder="Выберите даты" min="'1970-01-01'" max="PeriodCtrl.today" options="PeriodCtrl.datePickerOptions"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-ng-init="PeriodCtrl.getOtherYears()" style="margin-bottom: 5px;padding: 15px"
+     ng-if="PeriodCtrl.report.name=='Аналитическая справка' ||
+            PeriodCtrl.report.name=='ЧС по регионам' ||
+            PeriodCtrl.report.name=='Сравнительная таблица' ||
+            PeriodCtrl.report.name=='Сравнение по типам'">
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <label>Сравнить с</label>
+                <ui-select class="full-width" ng-disabled="disabled"
+                ng-model="PeriodCtrl.listOtherYears.selected" theme="bootstrap"
+                style="width:100%;">
+                    <ui-select-match placeholder="Выберите год" allow-clear="true">
+                    <span>{{PeriodCtrl.listOtherYears.selected.name}}</span>
+                    </ui-select-match>
+                    <ui-select-choices
+                    repeat="year in PeriodCtrl.listOtherYears | filter:$select.search">
+                    <div ng-bind-html="year.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-bottom: 5px;padding: 15px" ng-if="PeriodCtrl.report.name=='Краткий детализированный отчет' ||
+                        PeriodCtrl.report.name=='Подробный детализированный отчет'">
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <label>Статус</label>
+                <ui-select class="full-width" ng-disabled="disabled"
+                ng-model="PeriodCtrl.listStatus.selected" theme="bootstrap"
+                style="width:100%;">
+                    <ui-select-match placeholder="Статус" allow-clear="true">
+                    <span>{{PeriodCtrl.listStatus.selected.name}}</span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="status in PeriodCtrl.listStatus | filter:$select.search">
+                    <div ng-bind-html="status.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="PeriodCtrl.ok()">
+    Показать
+    </button>
+    <button class="btn btn-warning" type="button" ng-click="PeriodCtrl.cancel();PeriodCtrl.cancelDateFilter()">
+    Отмена
+    </button>
+</div>
+<script>
+    jQuery('.collapse').on('show.bs.collapse', function () {
+        jQuery('.collapse.in').each(function(){
+            jQuery(this).collapse('hide');
+        });
+    });
+    jQuery('#rangeDate').click(function() {
+        jQuery('.collapseForYearPeriod').hide();
+    });
+    jQuery('#monthbtn').click(function(){
+        jQuery('.collapseForYearPeriod').show();
+    });
+    jQuery('#quarterbtn').click(function(){
+        jQuery('.collapseForYearPeriod').show();
+    });
+    jQuery('#halfyearbtn').click(function(){
+        jQuery('.collapseForYearPeriod').show();
+    });
+</script>
