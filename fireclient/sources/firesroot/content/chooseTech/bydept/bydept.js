@@ -38,8 +38,6 @@
         vm.showHideEngines = accentByEngineState.showHideEngines;
 
 
-
-
         vm.showCommentInput = function(engine, event, index){
             event.stopPropagation();
             vm.commentObject.engineId = engine.idFireEngine;
@@ -547,10 +545,7 @@
 
 
         vm.showAddToFireButton = function(fireEngine){
-
-
-            console.log(vm.selectedFire);
-            // console.log(fireEngine, ' < >', fireEngine.fireEngineState.name, ' -- 2 -- ', fireEngine.fireEngineState.canUse);
+           // console.log(fireEngine, ' < >', fireEngine.fireEngineState.name, ' -- 2 -- ', fireEngine.fireEngineState.canUse);
 
             if(fireEngine !== undefined){
                 var name = fireEngine.fireEngineState.name;
@@ -641,12 +636,12 @@
         };
 
         vm.addToFire = function(engine){
-            if(angular.isDefined(vm.selectedFire) && angular.isDefined(vm.selectedDept)){
+            if(angular.isDefined(vm.storage.selectedFire) && angular.isDefined(vm.selectedDept)){
                 var command = {
                     deptId: vm.selectedDept.id,
                     engineId: engine.idFireEngine,
-                    fireActId: vm.selectedFire.id,
-                    fireAct: vm.selectedFire
+                    fireActId: vm.storage.selectedFire.id,
+                    fireAct: vm.storage.selectedFire
                 };
                 ws.$emit('addEngineToFireManually', command);
             }

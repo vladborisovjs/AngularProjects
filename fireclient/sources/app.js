@@ -52,16 +52,16 @@
 
 
 
-/*
+            /*
 
-            'app.deptsNote',
-            'app.deptsNote.bydept',
-            'app.deptsNote.garrison',
-            'app.deptsNote.asoGarrison',
-            'app.deptsNote.protocol',
-            'app.deptsNote.headCaraul',
+             'app.deptsNote',
+             'app.deptsNote.bydept',
+             'app.deptsNote.garrison',
+             'app.deptsNote.asoGarrison',
+             'app.deptsNote.protocol',
+             'app.deptsNote.headCaraul',
 
-*/
+             */
 
 
 
@@ -572,7 +572,7 @@
                 isCUKS: false,
 
                 periods: {
-                    listMonths :[
+                    listMonths: [
                         {name: "Январь", indexMonth: 0},
                         {name: "Февраль", indexMonth: 1},
                         {name: "Март", indexMonth: 2},
@@ -586,22 +586,22 @@
                         {name: "Ноябрь", indexMonth: 10},
                         {name: "Декабрь", indexMonth: 11}
                     ],
-                    listQuarters : [
+                    listQuarters: [
                         {name: 'Первый квартал'},
                         {name: 'Второй квартал'},
                         {name: 'Третий квартал'},
                         {name: 'Четвертый квартал'}
                     ],
-                    listHalfYear : [
+                    listHalfYear: [
                         {name: 'Первое полугодие'},
                         {name: 'Второе полугодие'}
                     ],
-                    listStatus : [
+                    listStatus: [
                         {name: 'Угроза ЧС'},
                         {name: 'Чс'}
                     ],
-                    includeStatReports : [
-                        'analitics_reference','emergency_district','emergency_type',
+                    includeStatReports: [
+                        'analitics_reference', 'emergency_district', 'emergency_type',
                         'emergency_monitor', 'compare_table',
                         'compare_type', 'details_short',
                         'details_full'
@@ -783,7 +783,7 @@
 
                     var url = PRINTURL + req.reportName + '.html?' + req.request + '&j_username=jasperadmin&j_password=jasperadmin';
 
-console.log('>>>', url);
+                    // console.log('>>>', url);
 
 
                     /*
@@ -1611,19 +1611,19 @@ console.log('>>>', url);
 
 
 
-/*
-                    hotkeys.add({
-                        combo: 'f8',
-                        description: 'Строевые записки',
-                        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                        callback: function(event){
-                            if(!$state.is('login')){
-                                event.preventDefault();
-                                $state.go('fires.deptsNote.bydept');
-                            }
-                        }
-                    });
-*/
+                    /*
+                     hotkeys.add({
+                     combo: 'f8',
+                     description: 'Строевые записки',
+                     allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                     callback: function(event){
+                     if(!$state.is('login')){
+                     event.preventDefault();
+                     $state.go('fires.deptsNote.bydept');
+                     }
+                     }
+                     });
+                     */
 
                     hotkeys.add({
                         combo: 'f8',
@@ -1788,12 +1788,12 @@ console.log('>>>', url);
                         };
                         storage.terra = message.terra;
 
-/*
-                        storage.ranksList = {
-                            ranksList: message.ranksList,
-                            occupList: message.occupList
-                        };
-*/
+                        /*
+                         storage.ranksList = {
+                         ranksList: message.ranksList,
+                         occupList: message.occupList
+                         };
+                         */
 
 
                         angular.merge(storage.bridges, message.bridges);
@@ -1935,10 +1935,12 @@ console.log('>>>', url);
 
                         // storage.fireDepartmentsArchive = message.fireDepartmentsArchive;
 
-
-/*
-                        storage.dataOfStates.bydept.fireDepartments = angular.copy(storage.fireDepartments);
-*/
+                        if(!storage.dataOfStates.bydept.hasOwnProperty('fireDepartments')){
+                            storage.dataOfStates.bydept.fireDepartments = {
+                                dept: angular.copy(storage.fireDepartments),
+                                date: message.date
+                            };
+                        }
 
                         storage.fireDepartments = angular.copy(message.fireDepartmentsArchive);
                         storage.dataOfStates.frontNotesArchive.date = message.date;
@@ -2053,14 +2055,14 @@ console.log('>>>', url);
                          storage.controllers.bydept.getEnginesState(storage.controllers.bydept.selectedDept);
                          }
                          */
-/*
-                        if($state.is('fires.deptsNote.bydepts')){
-                            if(!!dept === true && dept.id === storage.controllers.bydepts.selectedDept.id){
-                                // storage.controllers.bydept.initializeCurrentDeptAndCaraul(dept.id);
-                            }
-                            storage.controllers.bydepts.lostTechnique();
-                        }
-*/
+                        /*
+                         if($state.is('fires.deptsNote.bydepts')){
+                         if(!!dept === true && dept.id === storage.controllers.bydepts.selectedDept.id){
+                         // storage.controllers.bydept.initializeCurrentDeptAndCaraul(dept.id);
+                         }
+                         storage.controllers.bydepts.lostTechnique();
+                         }
+                         */
 
                     }
 
@@ -2995,12 +2997,12 @@ console.log('>>>', url);
                                 if(!!storage.selectedFire === true){
                                     storage.selectedFire = Object.assign({}, message.fireAct);
                                 }
-/*
-                                if($state.is('fires.newFireOrder')){
-                                    storage.dataOfStates.newFireOrder.fireAct = angular.copy(message.fireAct);
-                                    // storage.dataOfStates.newFireOrder.fireAct = message.fireAct;
-                                }
-*/
+                                /*
+                                 if($state.is('fires.newFireOrder')){
+                                 storage.dataOfStates.newFireOrder.fireAct = angular.copy(message.fireAct);
+                                 // storage.dataOfStates.newFireOrder.fireAct = message.fireAct;
+                                 }
+                                 */
 
                                 storage.selectedFire = null;
                                 storage.selectedFire = Object.assign({}, message.fireAct);
@@ -3008,16 +3010,16 @@ console.log('>>>', url);
 
                                 // storage.dataOfStates.editFireOrder.fireAct = angular.copy(message.fireAct);
 
-/*
-                                storage.dataOfStates.editFireOrder.listOfAdditionalTech = message.fireAct.potentialOrders.map(function(eng){
-                                    return {
-                                        fireDeptName: eng.departmentName,
-                                        deptId: eng.fireEngineDept,
-                                        engine: eng.fireEngine
-                                    }
+                                /*
+                                 storage.dataOfStates.editFireOrder.listOfAdditionalTech = message.fireAct.potentialOrders.map(function(eng){
+                                 return {
+                                 fireDeptName: eng.departmentName,
+                                 deptId: eng.fireEngineDept,
+                                 engine: eng.fireEngine
+                                 }
 
-                                });
-*/
+                                 });
+                                 */
 
                                 // storage.dataOfStates.editFireOrder.listOfAdditionalTech = (message.fireAct.potentialEngines instanceof Array && message.fireAct.potentialEngines.length > 0)? message.fireAct.potentialEngines : [];
 
@@ -3389,11 +3391,11 @@ console.log('>>>', url);
                         globalSelectFire(message.fireAct);
                     }
 
-/*
-                    if($state.is('fires.newFireOrder')){
-                        storage.dataOfStates.newFireOrder.fireAct = message.fireAct;
-                    }
-*/
+                    /*
+                     if($state.is('fires.newFireOrder')){
+                     storage.dataOfStates.newFireOrder.fireAct = message.fireAct;
+                     }
+                     */
                     $rootScope.$apply();
                 });
 

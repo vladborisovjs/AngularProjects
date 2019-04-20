@@ -18,13 +18,13 @@ if(chsData !== undefined){
                     "type": "reference",
                     "repeat": "storage.chsDict.chsTypes",
                     "check": "Справочник Вид ЧС "
-                }, {
+                }, /*{
                     "fieldname": "chs1_2",
                     "code": "1.2.",
                     "name": "Область, район (объект ЧС)",
                     "type": "text",
                     "defval": "Адрес, объект"
-                }, {
+                },*/ {
                     "fieldname": "chs1_3",
                     "code": "1.3.",
                     "name": "Площадь района (объекта) предполагаемой ЧС",

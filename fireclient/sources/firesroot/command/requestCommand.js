@@ -129,6 +129,7 @@
         };
 
         vm.applyFreeDateFilter = function(){
+            if (vm.datePicker.endDate != undefined) {
             let date = vm.datePicker.endDate.valueOf();
             vm.year.setTime(date);
             vm.saveCurrentYear = vm.year.getFullYear();
@@ -137,6 +138,7 @@
                 creationDateTo: vm.datePicker.endDate.valueOf(),
                 freeDate: true,
             };
+            }
         };
 
         vm.mainFilter = function() {
@@ -151,6 +153,7 @@
             } else {
                 vm.applyFreeDateFilter();
             }
+            console.log(vm.command);
             ws.$emit('getDocsByTags', vm.command);
         };
 

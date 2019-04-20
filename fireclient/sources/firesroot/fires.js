@@ -1358,6 +1358,16 @@
         };
 
 
+        vm.goIncindentCards = function(endDate){
+
+            if(endDate !== undefined){
+            $state.go('fires.archive', {
+                endDate: endDate
+            });
+            }
+        };
+
+
         vm.toArch = function(){
 
             $state.go('fires.firesbase', {
@@ -1378,11 +1388,62 @@
 
 
 
+
+
+/*        vm.userImitation = function(){
+            var users = ['d0', 'd1', 'u1', 'u2', 'u3', 'u4', 'u5', 'admin'],
+                zils = {},
+                login = {
+                    caller: {state: "login", function: "login"},
+                    dates: [1555412789992],
+                    from: "cuks",
+                    lastBuildDate: "1555409832518",
+                    locale: "rus",
+                    password: null,
+                    user: null,
+                    event: "login"
+                }
+
+
+            for(var i = 0, l = users.length; i < l; i++){
+
+                zils[users[i]] = $window.open('http://localhost:63342/fireclient/index.html');
+
+                login.user = users[i];
+                login.password = '1';
+
+
+                zils[users[i]]['autoLogin'] = (function(login){
+                    return function(){
+
+                        console.log('>>>', login);
+
+                        ws.$emit('login', login);
+
+
+                    }
+
+                })(login);
+
+
+                // zils[users[i]]['active']();
+
+
+
+
+
+            }
+            console.log('>>>', zils);
+        };*/
+
+
+
         $scope.$on('$viewContentLoaded', function(event){
 
             $timeout(function(){
                 vm.scrollToCursor();
             }, 100);
+
 
         });
 

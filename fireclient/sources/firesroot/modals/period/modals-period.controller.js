@@ -131,6 +131,7 @@ function PeriodController($uibModalInstance, $log, $scope, ws, storage, $locatio
     };
 
     vm.applyFreeDateFilter = function(){
+        if (vm.datePicker.endDate != undefined) {
         let date = vm.datePicker.endDate.valueOf();
         vm.year.setTime(date);
         vm.saveCurrentYear = vm.year.getFullYear();
@@ -139,6 +140,7 @@ function PeriodController($uibModalInstance, $log, $scope, ws, storage, $locatio
             dateTo: vm.datePicker.endDate.valueOf(),
             freeDate: true,
         };
+    }
     };
 
     vm.addParameters = function() {

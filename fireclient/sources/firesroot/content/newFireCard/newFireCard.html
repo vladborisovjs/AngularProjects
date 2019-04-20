@@ -682,7 +682,7 @@
                                                 <label>Статус ЧС</label>
                                                 <div ng-class="!!newFireCard.fireAct.rank === true? 'critical-field-filled': 'critical-field'">
                                                     <ui-select data-step-control="10"
-                                                               ng-model="newFireCard.fireAct.chsStatuse"
+                                                               ng-model="newFireCard.fireAct.chsStatus"
                                                                class="full-width">
                                                         <ui-select-match>
                                                             {{$select.selected.value}}
@@ -868,8 +868,7 @@
 
                                         <div class="pull-right" style="margin-top: 5px;">
 
-                                            <button class="btn btn-sm btn-info" ng-click="newFireCard.downloadEvent()"
-                                                    ng-show="newFireCard.storage.fireUser.ACCESS.states.newFireCard.buttons.unloadingToTheStaffTable">
+                                            <button class="btn btn-sm btn-info" ng-click="newFireCard.downloadEvent()" ng-show="!!newFireCard.fireAct.startDate === true && newFireCard.storage.fireUser.ACCESS.states.newFireCard.buttons.unloadingToTheStaffTable">
                                                 Выгрузка в штабной стол
                                             </button>
                                         </div>

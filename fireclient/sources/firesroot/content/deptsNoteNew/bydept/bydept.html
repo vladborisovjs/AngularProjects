@@ -50,11 +50,13 @@
 
 
 <div ng-class="(!!bydepts.selectedDept === false || bydepts.selectedDept.fireDeptType === 0)? 'without-info' : ''">
+<!--
 
     <button class="btn-success" style="position: absolute; left: 305px; top: 5px; z-index: 99999;"
             ng-click="bydepts.showIt()">show selectedDept
     </button>
 
+-->
 
     <fieldset class="full-height new-fire-card border-free">
 
@@ -908,6 +910,44 @@
 
 
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div class="col-xs-10 full-height">
 
                         <div class="col-md-12 full-height" style="overflow-y: auto;"
@@ -936,7 +976,7 @@
                                         Дата: {{bydepts.page.activeDeptNote.date|date:'dd-MM-yy HH:mm'}}
                                     </div>
                                     <div class="col-xs-3">
-                                        Пожарная Часть: {{bydepts.page.activeDeptNote.fireDepartment.fireDeptName}}
+                                        СЧ: {{bydepts.page.activeDeptNote.fireDepartment.fireDeptName}}
                                     </div>
                                     <div class="col-xs-2">
                                         Караул № {{bydepts.page.activeDeptNote.fireDepartment.totalCaraulNum}}
@@ -952,10 +992,15 @@
                                     </div>
                                 </div>
                                 <div class="row mid-note-row">
-                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 full-height" style="overflow-y:auto">
+
+
+
+
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full-height" style="overflow-y:auto">
                                         <div class="panel panel-default full-height no-padding no-margin">
                                             <div class="panel-heading">
-                                                Техника в ПЧ
+                                                Техника в СЧ
                                             </div>
                                             <div class="panel-body panel-body-full-height mid-row-panel-body">
                                                 <table ng-table class="table table-bordered"
@@ -999,6 +1044,13 @@
                                                             {{bydepts.findEngineInCaraul(bydepts.currentCaraul,
                                                             fireEngine).baseCrewCount}}
                                                         </td>
+
+
+
+
+
+<!--
+
                                                         <td class="text-center gdzs-column" data-title="'ГДЗС'">
                                                             <span ng-if="bydepts.showGDZS(fireEngine)">{{bydepts.findEngineInCaraul(bydepts.currentCaraul, fireEngine).smokeProtectionCrewCount}}</span>
                                                             <span ng-if="bydepts.showGD(fireEngine)">{{bydepts.findEngineInCaraul(bydepts.currentCaraul, fireEngine).additionalSmokeProtectionCrewCount}}</span>
@@ -1006,10 +1058,24 @@
                                                         <td class="text-center po-column" data-title="'ПО'">
                                                             <span ng-if="bydepts.showPO(fireEngine)">{{bydepts.getFoamOnEngine(fireEngine.idFireEngine).foamerCount}}</span>
                                                         </td>
+
+-->
+
+
+
+
+
+
+
                                                         <td class="text-center comment-column" style="width: 21%"
                                                             data-title="'Комментарий'">
                                                             {{fireEngine.comment}}
                                                         </td>
+
+
+
+<!--
+
                                                         <td class="text-center equip-column" data-title="'Экип'">
                                                             <div style="width: 100%; height:100%">
                                     <span ng-repeat="equip in fireEngine.equipmentsOnBoard">
@@ -1021,11 +1087,26 @@
                                     </span>
                                                             </div>
                                                         </td>
+
+-->
+
+
+
+
+
+
+
+
                                                     </tr>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
+
+
+
+<!--
+
                                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 full-height" style="overflow-y:auto">
                                         <div class="panel panel-default full-height no-padding no-margin">
                                             <div class="panel-heading">
@@ -1043,9 +1124,15 @@
                                             </div>
                                         </div>
                                     </div>
+
+-->
+
+
+
+
                                 </div>
                                 <div class="row bot-note-row">
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 full-height">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 full-height">
                                         <div class="panel panel-default full-height no-padding no-margin">
                                             <div class="panel-heading">Личный состав</div>
                                             <div class="panel-body panel-body-full-height">
@@ -1057,7 +1144,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 full-height">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 full-height">
                                         <div class="panel panel-default full-height no-padding no-margin">
                                             <div class="panel-heading">Отсутствуют</div>
                                             <div class="panel-body panel-body-full-height">
@@ -1070,6 +1157,13 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+
+
+<!--
+
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 full-height">
                                         <div class="panel panel-default full-height no-padding no-margin">
                                             <div class="panel-heading">Должностные лица</div>
@@ -1084,12 +1178,21 @@
                                             </div>
                                         </div>
                                     </div>
+
+-->
+
+
+
+
+
                                 </div>
                                 <div class="row scnd-bot-note-row">
+<!--
                                     <div class="col-xs-6">
                                         ПО на складе: {{bydepts.page.activeDeptNote.fireDepartment.foamOnStock}}
                                     </div>
-                                    <div class="col-xs-6">
+-->
+                                    <div class="col-xs-12">
                                         Коммент.: {{bydepts.currentCaraul.addInfo}}
                                     </div>
                                 </div>
@@ -1260,7 +1363,8 @@
     <div>
 
         <div class="info-head">
-            <span>ЛС, караул № {{bydepts.currentCaraul.caraulNum}}</span>
+            <!--<span>ЛС, караул № {{bydepts.currentCaraul.caraulNum}}</span>-->
+            <span>ЛС караула</span>
         </div>
         <div class="info-body">
 

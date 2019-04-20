@@ -190,6 +190,12 @@
 
         $scope.$on('$viewContentLoaded', function(event){
             ws.$emit('dictionary', {locale: 'rus'});
+/*
+            console.log('>>>', $window);
+            if($window.hasOwnProperty('autoLogin')){
+                $window.autoLogin();
+            }
+*/
         });
 
 

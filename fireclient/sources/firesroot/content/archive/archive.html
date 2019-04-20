@@ -53,6 +53,14 @@
 
                 </table>
             </uib-tab>
+
+
+
+
+
+
+
+
             <uib-tab heading="Документы"
                      select="archive.selectDoc(archive.storage.dataOfStates.archiveCommand.activeFire.fireAct)">
                 <table ng-table class="table table-bordered text-center">
@@ -84,6 +92,43 @@
                     </tr>
                 </table>
             </uib-tab>
+
+
+
+
+
+
+
+            <uib-tab heading="Формы ЧС"
+                     select="archive.selectDoc(archive.storage.dataOfStates.archiveCommand.activeFire.fireAct)">
+                <table ng-table class="table table-bordered text-center">
+                    <thead>
+                    <th style="width: 5%"><b>№</b></th>
+                    <th style="width: 10%"><b>Название</b></th>
+                    <th style="width: 10%"><b>Тип</b></th>
+                    <th style="width: 10%"><b>Исполн</b></th>
+                    <th style="width: 15%"><b>Дата</b></th>
+                    <th style="width: 5%"><b>Откр.</b></th>
+                    </thead>
+                    <tr ng-repeat="doc in archive.storage.dataOfStates.archiveCommand.activeFire.fireAct.docLibraryEntities">
+                        <td>{{$index + 1}}</td>
+                        <td>{{archive.matchTable[doc.description]}}</td>
+                        <td>{{doc.mimeType}}</td>
+                        <td>{{doc.user}}</td>
+                        <td>{{doc.creationDate | date:'dd-MM-yy HH:mm'}}</td>
+                        <td class="text-center" data-title="'Откр.'">
+                            <a class="btn btn-primary btn-xs full-width" target="_blank" href="{{archive.PRINTURL_CHS + doc.file}}">
+                                <span class="glyphicon glyphicon-file"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+
+
+
+
+
             <uib-tab heading="Аудио">
                 <div class="panel-body">
                     <audio src="beep.mp3" controls></audio>

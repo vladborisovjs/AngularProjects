@@ -11,6 +11,12 @@
     </div>
 </div>
 
+<!--
+<div style="position: absolute; left: 10px; top: 10px; width: 20px; height: 20px; background: black; z-index: 99999999;" ng-click="fires.userImitation()"></div>
+-->
+
+
+
 <h1 class="marquee" id="marquee" ng-show="fires.showMarquee()">
     <!--<span ng-bind="fires.storage.dictionary['1']"></span>-->
     <span>{{fires.getWord('Произошло изменение версии программы. Выйдите на страницу входа. Нажмите Shift-F5.')}}</span>
@@ -161,7 +167,7 @@
                     <b ng-show="fires.storage.selectedFire">
                         <i ng-style="{color:fires.storage.selectedFire.fireStatus.iconColor}"
                            ng-class="fires.storage.selectedFire.fireStatus.icon" class=""></i>
-                        {{fires.storage.selectedFire.fireStatus.status}}
+                        {{fires.storage.selectedFire.fireStatus.statusAlt}}
                     </b>
                     <b ng-hide="fires.storage.selectedFire">-</b>
                 </td>
@@ -317,17 +323,23 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li ui-sref-active="active"
-                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.subMenu.reports">
+
+
+
+
+
+
+
+                                        <li ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.subMenu.reports">
                                             <a ui-sref="fires.docs">{{fires.getWord('Отчеты')}}
                                         </li>
 
 
-                                        <li ui-sref-active="active"
-                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.subMenu.reports">
-                                            <a class="dropdown-toggle" ui-sref="fires.requestReports"  data-toggle="dropdown" role="button" aria-haspopup="true"
-                                               aria-expanded="false" tooltip="Документы" tooltip-trigger="mouseenter"
-                                               tooltip-placement="bottom">Запрос отчетов
+
+
+
+                                        <li ng-show="fires.storage.fireUser.ACCESS.mainMenu.documentation.subMenu.reports">
+                                            <a ui-sref="fires.requestReports" tooltip="Документы">Запрос отчетов
                                             </a>
                                         </li>
 
@@ -348,8 +360,7 @@
                                        ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.view">{{fires.getWord('Архивы')}}<span
                                             class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li ui-sref-active="active"><a ui-sref="fires.archive"
-                                                                       ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.archiveOfFires">{{fires.getWord('Архив ' + fires.storage.fireUser.ACCESS.words.incidents)}}
+                                        <li ui-sref-active="active"><a ng-click="fires.goIncindentCards(false)" ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.archiveOfFires">{{fires.getWord('Архив ' + fires.storage.fireUser.ACCESS.words.incidents)}}
                                             <!--<span
                                                     class="nav-hot-keys">(F6)</span>--></a>
                                         </li>
@@ -360,10 +371,28 @@
                                                     class="nav-hot-keys">(F7)</span>&ndash;&gt;</a>
                                         </li>
 -->
+
+
+
+
+
+
+                                        <li ui-sref-active="active"
+                                            ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.cards"><a  ng-click="fires.goIncindentCards(true)">{{fires.getWord('Карточки ' + fires.storage.fireUser.ACCESS.words.incidents)}}</a>
+                                        </li>
+
+
+<!--
                                         <li ui-sref-active="active"
                                             ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.cards"><a
                                                 ui-sref="fires.fireCards">{{fires.getWord('Карточки ' + fires.storage.fireUser.ACCESS.words.incidents)}}</a>
                                         </li>
+
+
+-->
+
+
+
                                         <li ui-sref-active="active"
                                             ng-show="fires.storage.fireUser.ACCESS.mainMenu.archives.subMenu.warNotes">
                                             <a ng-click="fires.archiveNotes()">{{fires.getWord('Строевые записки')}}</a>

@@ -23,8 +23,25 @@
                         });
                     });
 
+                    var result = [];
 
-                    storage.archFireActs = message
+                    if($stateParams.endDate !== undefined && $stateParams.endDate === 'true'){
+
+                        message.forEach(function(mess){
+                            if((!!mess.fireAct.endDate).toString() == $stateParams.endDate){
+                                result.push(mess);
+                            }
+
+                        });
+
+                    } else {
+                        result = message;
+                    }
+
+
+
+                    // storage.archFireActs = message
+                    storage.archFireActs = result;
                 }
                 storage.hideLoadingOverlay = true;
                 $rootScope.$apply();
@@ -32,12 +49,21 @@
             });
         }]);
 
-    Archive.$inject = ['$log', '$scope', 'ws', 'storage', '$location', '$state', '$stateParams', '$filter'];
+    Archive.$inject = ['$log', '$scope', 'ws', 'storage', '$location', '$state', '$stateParams', '$filter', 'modalsService', 'printRequest', 'PRINTURL_CHS'];
 
-    function Archive($log, $scope, ws, storage, $location, $state, $stateParams, $filter){
+    function Archive($log, $scope, ws, storage, $location, $state, $stateParams, $filter, modalsService, printRequest, PRINTURL_CHS){
         var vm = this;
         vm.storage = storage;
         vm.stateCalledFrom = $state.current.name || null;
+        vm.matchTable = {
+            emergency_1: '1/ЧС',
+            emergency_2: '2/ЧС',
+            emergency_3: '3/ЧС',
+            emergency_4: '4/ЧС',
+            emergency_fire: 'Пожар'
+        };
+        vm.PRINTURL_CHS = PRINTURL_CHS;
+
 
 
 
@@ -62,35 +88,35 @@
 
 
         var columnDefs = [
-/*, {
-                name: 'Дата приказа',
-                field: "fireAct.ordered",
-                cellFilter: "date: 'dd-MM-yy HH:mm:ss'",
-                width: 150,
-                enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
-                }
-            }*/
-/*
-            {
-                name: 'Ред Ф6',
-                cellTemplate: '<button class="btn-sm btn-default" ng-click="grid.appScope.goEditF6(row)">Ред.</button>',
-                width: 80,
-                enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
-                }
-            },
+            /*, {
+             name: 'Дата приказа',
+             field: "fireAct.ordered",
+             cellFilter: "date: 'dd-MM-yy HH:mm:ss'",
+             width: 150,
+             enableColumnMenu: false,
+             cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+             return row.entity.isCanceled ? "grid-canceled-row" : '';
+             }
+             }*/
+            /*
+             {
+             name: 'Ред Ф6',
+             cellTemplate: '<button class="btn-sm btn-default" ng-click="grid.appScope.goEditF6(row)">Ред.</button>',
+             width: 80,
+             enableColumnMenu: false,
+             cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+             return row.entity.isCanceled ? "grid-canceled-row" : '';
+             }
+             },
 
-*/
+             */
             {
                 name: '№',
                 field: "fireAct.numFireAct",
                 width: 50,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             },
 
@@ -99,8 +125,8 @@
                 field: "fireAct.firePlace.pchName",
                 width: 60,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }, {
                 name: 'Адрес',
@@ -113,8 +139,8 @@
                 sortingAlgorithm: function(a, b, rowA, rowB, direction){
                     return vm.compareFirePlace(a, b, rowA, rowB, direction);
                 },
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
 
             }, {
@@ -126,8 +152,8 @@
                 sortingAlgorithm: function(a, b, rowA, rowB, direction){
                     return vm.compareFirePlace(a, b, rowA, rowB, direction);
                 },
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }, {
                 name: 'Населенный пункт',
@@ -138,8 +164,8 @@
                 sortingAlgorithm: function(a, b, rowA, rowB, direction){
                     return vm.compareFirePlace(a, b, rowA, rowB, direction);
                 },
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }, {
                 name: 'Время начала',
@@ -148,32 +174,32 @@
                 width: 150,
                 filterCellFiltered: true,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             },
 
 
-/*
+            /*
 
-            {
-                name: 'Ранг',
-                field: "fireAct.rank.sidfirerank",
-                width: (vm.storage.fireUser.ACCESS.commonSwitches.rank === true)? 60 : 0,
-                enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
-                }
-            }, {
-                name: 'Ранг(МАХ)',
-                field: "fireAct.maxRank",
-                width: (vm.storage.fireUser.ACCESS.commonSwitches.rankMax === true)? 90 : 0,
-                enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
-                }
-            },
-*/
+             {
+             name: 'Ранг',
+             field: "fireAct.rank.sidfirerank",
+             width: (vm.storage.fireUser.ACCESS.commonSwitches.rank === true)? 60 : 0,
+             enableColumnMenu: false,
+             cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+             return row.entity.isCanceled ? "grid-canceled-row" : '';
+             }
+             }, {
+             name: 'Ранг(МАХ)',
+             field: "fireAct.maxRank",
+             width: (vm.storage.fireUser.ACCESS.commonSwitches.rankMax === true)? 90 : 0,
+             enableColumnMenu: false,
+             cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+             return row.entity.isCanceled ? "grid-canceled-row" : '';
+             }
+             },
+             */
 
 
 
@@ -183,40 +209,40 @@
                 field: "fireAct.incidentType.name",
                 width: 80,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }, {
                 name: 'Комментарий',
                 field: "fireAct.comment",
                 width: 350,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }, {
                 name: 'Статус',
                 cellTemplate: "<span>{{grid.appScope.archive.isFireCanceled(row.entity)}}</span>",
                 width: 70,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }, {
                 name: 'Исполн',
                 field: 'fireAct.user.lastName',
                 width: 100,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }, {
                 name: 'Источник',
                 field: 'fireAct.incidentSource.text',
                 width: 150,
                 enableColumnMenu: false,
-                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    return row.entity.isCanceled ? "grid-canceled-row" : '';
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex){
+                    return row.entity.isCanceled? "grid-canceled-row" : '';
                 }
             }
         ];
@@ -230,6 +256,7 @@
                 vm.protocolGridApi.selection.selectRow(vm.gridOptions.data[0]);
             }
         );
+        //endDate
         vm.gridOptions = {
             columnDefs: columnDefs,
             data: storage.archFireActs,
@@ -241,14 +268,14 @@
             multiSelect: false,
             fastWatch: true,
             // rowTemplate:'<div ng-class="{ \'grid-inactive-row\': row.entity.isCanceled }"> <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid" class="ui-grid-cell" ng-class="{ "ui-grid-row-header-cell": col.isRowHeader }"  ui-grid-cell></div></div>'
-/*            rowTemplate: '<div ng-class="{ \'grid-inactive-row\': row.entity.isCanceled }">' +
-            '  <div ng-if="row.entity.merge">{{row.entity.title}}</div>' +
-            '  <div ng-if="!row.entity.merge" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell role="gridcell"></div>' +
-            '</div>'*/
-/*
+            /*            rowTemplate: '<div ng-class="{ \'grid-inactive-row\': row.entity.isCanceled }">' +
+             '  <div ng-if="row.entity.merge">{{row.entity.title}}</div>' +
+             '  <div ng-if="!row.entity.merge" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell role="gridcell"></div>' +
+             '</div>'*/
+            /*
 
-            rowTemplate: '<div ng-class="{ \'grid-canceled-row\': row.entity.isCanceled }" <div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"  class="ui-grid-cell" ui-grid-cell></div></div>'
-*/
+             rowTemplate: '<div ng-class="{ \'grid-canceled-row\': row.entity.isCanceled }" <div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"  class="ui-grid-cell" ui-grid-cell></div></div>'
+             */
 
         };
 
@@ -297,7 +324,7 @@
         vm.compareFirePlace = function(a, b, rowA, rowB, direction){
             var str1 = $filter('firePlaceFilter')(a);
             var str2 = $filter('firePlaceFilter')(b);
-            return (str1 > str2) ? 1 : -1
+            return (str1 > str2)? 1 : -1
         };
         vm.chooseBackgrownColor = function(activeFire){
             if(activeFire == storage.dataOfStates.archiveCommand.activeFire){
@@ -307,6 +334,7 @@
                 return ''
             }
         };
+
 
         vm.selectDoc = function(fireAct){
 

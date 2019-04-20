@@ -59,7 +59,7 @@
             })
 */
             .state('fires', {
-                url: '/fires?fireId&deptId&fireType&engineId&paramState&additionalType&calledFrom&scrollTo',
+                url: '/fires?fireId&deptId&fireType&engineId&paramState&additionalType&calledFrom&scrollTo&endDate',
                 abstract: true,
                 templateUrl: 'sources/firesroot/fires.html',
                 controller: 'Fires',

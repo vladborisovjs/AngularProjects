@@ -107,7 +107,7 @@
 
                 }
             });
-            return 'ПЧ№ ' + pchNames.join(', ');
+            return 'CO ' + pchNames.join(', ');
         };
 
 

@@ -90,7 +90,7 @@
                     {{activeFire.startDate | date:'dd-MM-yy HH:mm'}}
                 </td>
                 <td header-class="'firebase-header-class'" style="width: 13%" data-title="fireBase.getWord('Состояние')">
-                    {{activeFire.fireStatus.status}}
+                    {{activeFire.fireStatus.statusAlt}}
                 </td>
                 <td header-class="'firebase-header-class'" style="width: 5%" data-title="fireBase.getWord('Ранг(MAX)')"  ng-show="fireBase.storage.fireUser.ACCESS.fireList.rankMax !== false">
                     {{activeFire.maxRank}}

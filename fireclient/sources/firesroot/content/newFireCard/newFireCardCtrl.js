@@ -8,9 +8,9 @@
         }]);
 
 
-    NewFireCard.$inject = ['$log', '$scope', 'ws', 'storage', '$location', '$stateParams', '$state', '$cookies', '$timeout', 'getNumDept', 'houseSorting', 'objectsSorting', 'modalsService', '$http', 'HTTPURLDesktop', '$rootScope', '$window', 'growl', '$parse', '$compile', 'printRequest'];
+    NewFireCard.$inject = ['$log', '$scope', 'ws', 'storage', '$location', '$stateParams', '$state', '$cookies', '$timeout', 'getNumDept', 'houseSorting', 'objectsSorting', 'modalsService', '$http', 'HTTPURLDesktop', '$rootScope', '$window', 'growl', '$parse', '$compile', 'printRequest', 'FileSaver'];
 
-    function NewFireCard($log, $scope, ws, storage, $location, $stateParams, $state, $cookies, $timeout, getNumDept, houseSorting, objectsSorting, modalsService, $http, HTTPURLDesktop, $rootScope, $window, growl, $parse, $compile, printRequest){
+    function NewFireCard($log, $scope, ws, storage, $location, $stateParams, $state, $cookies, $timeout, getNumDept, houseSorting, objectsSorting, modalsService, $http, HTTPURLDesktop, $rootScope, $window, growl, $parse, $compile, printRequest, FileSaver){
         ws.$on('findAnything', function(message){
 
             // console.log('message >', message);
@@ -184,7 +184,6 @@
                                  console.log('------------------- 2> ', storage.dataOfStates.newFireCard.housesArray);
                                  */
 
-
                                 storage.dataOfStates.newFireCard.housesNumbersArray = numbers;
                                 break;
 
@@ -194,9 +193,13 @@
                                 } else {
                                     storage.dataOfStates.newFireCard.pchArray = [];
                                     for(var i = 0, l = storage.fireDepartments.length; i < l; i++){
-                                        storage.dataOfStates.newFireCard.pchArray.push(
-                                            {pch: storage.fireDepartments[i].fireDeptName}
-                                        );
+                                        if(storage.fireDepartments[i].fireDeptType !== 0){
+                                            storage.dataOfStates.newFireCard.pchArray.push(
+                                                {
+                                                    pch: storage.fireDepartments[i].fireDeptName
+                                                }
+                                            );
+                                        }
                                     }
                                 }
                                 break;
@@ -367,7 +370,7 @@
             naStreet: true,
             house: null,
             naHouse: true,
-            regName: vm.storage.terra.name
+            regName: (!!vm.storage.terra === true)? vm.storage.terra.name : null
         };
         var defaultRank = {
             "id": "54ace61c912c2836e697076d",
@@ -910,7 +913,7 @@
             storage.hideLoadingOverlay = false;
 
 
-            console.log('+++++++++++>>>', vm.fireAct.chs);
+            // console.log('+++++++++++>>>', vm.fireAct.chs);
 
             ws.$emit('route666', vm.fireAct);
         };
@@ -2334,280 +2337,280 @@
         };
 
         /*vm.emulateRequest = function(){
-            console.log('emulateRequest>>>');
-            var req = {
-                "chs1": {
-                    "chs1_1": {
-                        "id": "5c866fa756abda8d694a0eab",
-                        "table": 2,
-                        "sort": 4,
-                        "value": "Трансграничный",
-                        "$$hashKey": "object:807"
-                    },
-                    "chs1_2": null,
-                    "chs1_3": 4,
-                    "undefined": null,
-                    "chs1_4": "2019-02-25T21:00:00.000Z",
-                    "chs1_5": {
-                        "id": "5c866f6a56abda8d694a0eaa",
-                        "table": 2,
-                        "sort": 3,
-                        "value": "Республиканский",
-                        "$$hashKey": "object:809"
-                    },
-                    "chs1_6": "ываывап",
-                    "chs1_7": null,
-                    "chs1_8": null
-                },
-                "chs2": {
-                    "chs2_1": "чсмичсми",
-                    "chs2_2": {
-                        "id": "5c866f3756abda8d694a0ea8",
-                        "table": 2,
-                        "sort": 1,
-                        "value": "Локальный",
-                        "$$hashKey": "object:810"
-                    },
-                    "chs2_3": "2019-03-06T21:33:00.000Z",
-                    "chs2_4": null,
-                    "chs2_5": null,
-                    "chs2_6": null,
-                    "chs2_7": "чсмичсмичс",
-                    "chs2_8": "чсмичс",
-                    "chs2_9": null,
-                    "chs2_10": null,
-                    "chs2_11": "чсмичсми",
-                    "chs2_12": null,
-                    "chs2_13": null,
-                    "chs2_14": null,
-                    "chs2_15": null,
-                    "chs2_16": null,
-                    "chs2_17": null,
-                    "chs2_18": null,
-                    "chs2_19": null,
-                    "chs2_20": null,
-                    "chs2_21": null,
-                    "undefined": null,
-                    "chs2_22": null,
-                    "chs2_23": null,
-                    "chs2_24": null,
-                    "chs2_25": null,
-                    "chs2_26": null,
-                    "chs2_27": null,
-                    "chs2_28": null,
-                    "chs2_29": null,
-                    "chs2_32": null,
-                    "chs2_33": null,
-                    "chs2_34": null,
-                    "chs2_35": null,
-                    "chs2_36": null,
-                    "chs2_37": null,
-                    "chs2_38": null,
-                    "chs2_39": null,
-                    "chs2_40": null,
-                    "chs2_41": null,
-                    "chs2_42": null,
-                    "chs2_43": null,
-                    "chs2_44": null,
-                    "chs2_45": null,
-                    "chs2_46": null,
-                    "chs2_47": null,
-                    "chs2_48": null,
-                    "chs2_49": null,
-                    "chs2_50": null,
-                    "chs2_51": null,
-                    "chs2_52": null,
-                    "chs2_53": null,
-                    "chs2_54": null,
-                    "chs2_55": null,
-                    "chs2_56": null,
-                    "chs2_57": null,
-                    "chs2_58": null,
-                    "chs2_59": null,
-                    "chs2_60": null,
-                    "chs2_61": null,
-                    "chs2_62": null,
-                    "chs2_63": null,
-                    "chs2_64": null,
-                    "chs2_65": null,
-                    "chs2_66": null,
-                    "chs2_67": null,
-                    "chs2_68": null,
-                    "chs2_69": null,
-                    "chs2_70": null,
-                    "chs2_71": null,
-                    "chs2_72": null,
-                    "chs2_73": null,
-                    "chs2_74": null,
-                    "chs2_75": null,
-                    "chs2_76": null,
-                    "chs2_77": null,
-                    "chs2_78": null,
-                    "chs2_79": null,
-                    "chs2_80": null,
-                    "chs2_81": null,
-                    "chs2_82": null,
-                    "chs2_83": null,
-                    "chs2_84": null,
-                    "chs2_85": null,
-                    "chs2_86": null,
-                    "chs2_87": null,
-                    "chs2_88": null,
-                    "chs2_89": null,
-                    "chs2_90": null,
-                    "chs2_91": null,
-                    "chs2_92": null,
-                    "chs2_93": null,
-                    "chs2_94": null,
-                    "chs2_95": null,
-                    "chs2_96": null,
-                    "chs2_97": null,
-                    "chs2_98": null,
-                    "chs2_99": null,
-                    "chs2_100": null,
-                    "chs2_101": null,
-                    "chs2_102": null,
-                    "chs2_105": null,
-                    "chs2_106": null,
-                    "chs2_107": null,
-                    "chs2_110": null,
-                    "chs2_113": null,
-                    "chs2_114": null,
-                    "chs2_115": null,
-                    "chs2_116": null,
-                    "chs2_117": null,
-                    "chs2_118": null,
-                    "chs2_119": null,
-                    "chs2_120": null,
-                    "chs2_121": null,
-                    "chs2_122": null,
-                    "chs2_123": null
-                },
-                "chs3": {
-                    "chs3_1": null,
-                    "chs3_2": null,
-                    "chs3_3": null,
-                    "undefined": null,
-                    "chs3_4": null,
-                    "chs3_5": null,
-                    "chs3_6": null,
-                    "chs3_7": null,
-                    "chs3_8": null,
-                    "chs3_9": null,
-                    "chs3_10": null,
-                    "chs3_11": null,
-                    "chs3_12": null,
-                    "chs3_13": null,
-                    "chs3_14": null,
-                    "chs3_15": null,
-                    "chs3_16": null,
-                    "chs3_17": null,
-                    "chs3_18": null,
-                    "chs3_19": null,
-                    "chs3_20": null,
-                    "chs3_23": null,
-                    "chs3_26": null,
-                    "chs3_29": null,
-                    "chs3_30": null,
-                    "chs3_31": null,
-                    "chs3_32": null,
-                    "chs3_33": null,
-                    "chs3_34": "2019-03-13T21:00:00.000Z",
-                    "chs3_35": null,
-                    "chs3_36": null,
-                    "chs3_37": null,
-                    "chs3_38": null,
-                    "chs3_39": null,
-                    "chs3_40": null,
-                    "chs3_41": null,
-                    "chs3_43": null,
-                    "chs3_44": null,
-                    "chs3_45": null,
-                    "chs3_46": null,
-                    "chs3_47": null,
-                    "chs3_48": null,
-                    "chs3_49": null,
-                    "chs3_50": null,
-                    "chs3_51": null,
-                    "chs3_52": null,
-                    "chs3_53": null,
-                    "chs3_54": null,
-                    "chs3_55": null,
-                    "chs3_56": null,
-                    "chs3_60": null,
-                    "chs3_61": null,
-                    "chs3_62": null,
-                    "chs3_63": null,
-                    "chs3_64": null,
-                    "chs3_67": null,
-                    "chs3_69": null,
-                    "chs3_73": null,
-                    "chs3_76": null,
-                    "chs3_79": null,
-                    "chs3_82": null,
-                    "chs3_86": null,
-                    "chs3_87": null,
-                    "chs3_91": null,
-                    "chs3_94": null,
-                    "chs3_95": null,
-                    "chs3_96": null,
-                    "chs3_97": null,
-                    "chs3_98": null,
-                    "chs3_99": null,
-                    "chs3_27": {"0": "34кйцук", "1": null, "2": "ывапывап"},
-                    "chs3_28": {"0": null, "1": null, "2": 345235234},
-                    "chs3_42": {"0": "ывапыапрваыпр"},
-                    "chs3_70": {"0": "цвуапыв", "1": null, "2": "у346345"},
-                    "chs3_71": {"0": "ывапыв", "1": null, "2": "паропаро"},
-                    "chs3_72": {"0": 6, "1": null, "2": 346345}
-                },
-                "chs4": {
-                    "chs4_1": 5,
-                    "undefined": null,
-                    "chs4_2": null,
-                    "chs4_6": null,
-                    "chs4_10": null,
-                    "chs4_11": null,
-                    "chs4_12": null,
-                    "chs4_13": null,
-                    "chs4_14": null,
-                    "chs4_15": null,
-                    "chs4_18": null,
-                    "chs4_21": null,
-                    "chs4_24": null,
-                    "chs4_25": null,
-                    "chs4_26": null,
-                    "chs4_29": null,
-                    "chs4_32": null,
-                    "chs4_35": null,
-                    "chs4_38": null,
-                    "chs4_39": null,
-                    "chs4_42": null,
-                    "chs4_45": null,
-                    "chs4_48": null,
-                    "chs4_51": null,
-                    "chs4_52": null,
-                    "chs4_55": null,
-                    "chs4_58": null,
-                    "chs4_61": null,
-                    "chs4_64": null,
-                    "chs4_65": null,
-                    "chs4_66": null,
-                    "chs4_67": null,
-                    "chs4_68": null,
-                    "chs4_71": null,
-                    "chs4_74": null,
-                    "chs4_33": {"0": "3645346"},
-                    "chs4_34": {"0": 345634634}
-                }
-            };
+         console.log('emulateRequest>>>');
+         var req = {
+         "chs1": {
+         "chs1_1": {
+         "id": "5c866fa756abda8d694a0eab",
+         "table": 2,
+         "sort": 4,
+         "value": "Трансграничный",
+         "$$hashKey": "object:807"
+         },
+         "chs1_2": null,
+         "chs1_3": 4,
+         "undefined": null,
+         "chs1_4": "2019-02-25T21:00:00.000Z",
+         "chs1_5": {
+         "id": "5c866f6a56abda8d694a0eaa",
+         "table": 2,
+         "sort": 3,
+         "value": "Республиканский",
+         "$$hashKey": "object:809"
+         },
+         "chs1_6": "ываывап",
+         "chs1_7": null,
+         "chs1_8": null
+         },
+         "chs2": {
+         "chs2_1": "чсмичсми",
+         "chs2_2": {
+         "id": "5c866f3756abda8d694a0ea8",
+         "table": 2,
+         "sort": 1,
+         "value": "Локальный",
+         "$$hashKey": "object:810"
+         },
+         "chs2_3": "2019-03-06T21:33:00.000Z",
+         "chs2_4": null,
+         "chs2_5": null,
+         "chs2_6": null,
+         "chs2_7": "чсмичсмичс",
+         "chs2_8": "чсмичс",
+         "chs2_9": null,
+         "chs2_10": null,
+         "chs2_11": "чсмичсми",
+         "chs2_12": null,
+         "chs2_13": null,
+         "chs2_14": null,
+         "chs2_15": null,
+         "chs2_16": null,
+         "chs2_17": null,
+         "chs2_18": null,
+         "chs2_19": null,
+         "chs2_20": null,
+         "chs2_21": null,
+         "undefined": null,
+         "chs2_22": null,
+         "chs2_23": null,
+         "chs2_24": null,
+         "chs2_25": null,
+         "chs2_26": null,
+         "chs2_27": null,
+         "chs2_28": null,
+         "chs2_29": null,
+         "chs2_32": null,
+         "chs2_33": null,
+         "chs2_34": null,
+         "chs2_35": null,
+         "chs2_36": null,
+         "chs2_37": null,
+         "chs2_38": null,
+         "chs2_39": null,
+         "chs2_40": null,
+         "chs2_41": null,
+         "chs2_42": null,
+         "chs2_43": null,
+         "chs2_44": null,
+         "chs2_45": null,
+         "chs2_46": null,
+         "chs2_47": null,
+         "chs2_48": null,
+         "chs2_49": null,
+         "chs2_50": null,
+         "chs2_51": null,
+         "chs2_52": null,
+         "chs2_53": null,
+         "chs2_54": null,
+         "chs2_55": null,
+         "chs2_56": null,
+         "chs2_57": null,
+         "chs2_58": null,
+         "chs2_59": null,
+         "chs2_60": null,
+         "chs2_61": null,
+         "chs2_62": null,
+         "chs2_63": null,
+         "chs2_64": null,
+         "chs2_65": null,
+         "chs2_66": null,
+         "chs2_67": null,
+         "chs2_68": null,
+         "chs2_69": null,
+         "chs2_70": null,
+         "chs2_71": null,
+         "chs2_72": null,
+         "chs2_73": null,
+         "chs2_74": null,
+         "chs2_75": null,
+         "chs2_76": null,
+         "chs2_77": null,
+         "chs2_78": null,
+         "chs2_79": null,
+         "chs2_80": null,
+         "chs2_81": null,
+         "chs2_82": null,
+         "chs2_83": null,
+         "chs2_84": null,
+         "chs2_85": null,
+         "chs2_86": null,
+         "chs2_87": null,
+         "chs2_88": null,
+         "chs2_89": null,
+         "chs2_90": null,
+         "chs2_91": null,
+         "chs2_92": null,
+         "chs2_93": null,
+         "chs2_94": null,
+         "chs2_95": null,
+         "chs2_96": null,
+         "chs2_97": null,
+         "chs2_98": null,
+         "chs2_99": null,
+         "chs2_100": null,
+         "chs2_101": null,
+         "chs2_102": null,
+         "chs2_105": null,
+         "chs2_106": null,
+         "chs2_107": null,
+         "chs2_110": null,
+         "chs2_113": null,
+         "chs2_114": null,
+         "chs2_115": null,
+         "chs2_116": null,
+         "chs2_117": null,
+         "chs2_118": null,
+         "chs2_119": null,
+         "chs2_120": null,
+         "chs2_121": null,
+         "chs2_122": null,
+         "chs2_123": null
+         },
+         "chs3": {
+         "chs3_1": null,
+         "chs3_2": null,
+         "chs3_3": null,
+         "undefined": null,
+         "chs3_4": null,
+         "chs3_5": null,
+         "chs3_6": null,
+         "chs3_7": null,
+         "chs3_8": null,
+         "chs3_9": null,
+         "chs3_10": null,
+         "chs3_11": null,
+         "chs3_12": null,
+         "chs3_13": null,
+         "chs3_14": null,
+         "chs3_15": null,
+         "chs3_16": null,
+         "chs3_17": null,
+         "chs3_18": null,
+         "chs3_19": null,
+         "chs3_20": null,
+         "chs3_23": null,
+         "chs3_26": null,
+         "chs3_29": null,
+         "chs3_30": null,
+         "chs3_31": null,
+         "chs3_32": null,
+         "chs3_33": null,
+         "chs3_34": "2019-03-13T21:00:00.000Z",
+         "chs3_35": null,
+         "chs3_36": null,
+         "chs3_37": null,
+         "chs3_38": null,
+         "chs3_39": null,
+         "chs3_40": null,
+         "chs3_41": null,
+         "chs3_43": null,
+         "chs3_44": null,
+         "chs3_45": null,
+         "chs3_46": null,
+         "chs3_47": null,
+         "chs3_48": null,
+         "chs3_49": null,
+         "chs3_50": null,
+         "chs3_51": null,
+         "chs3_52": null,
+         "chs3_53": null,
+         "chs3_54": null,
+         "chs3_55": null,
+         "chs3_56": null,
+         "chs3_60": null,
+         "chs3_61": null,
+         "chs3_62": null,
+         "chs3_63": null,
+         "chs3_64": null,
+         "chs3_67": null,
+         "chs3_69": null,
+         "chs3_73": null,
+         "chs3_76": null,
+         "chs3_79": null,
+         "chs3_82": null,
+         "chs3_86": null,
+         "chs3_87": null,
+         "chs3_91": null,
+         "chs3_94": null,
+         "chs3_95": null,
+         "chs3_96": null,
+         "chs3_97": null,
+         "chs3_98": null,
+         "chs3_99": null,
+         "chs3_27": {"0": "34кйцук", "1": null, "2": "ывапывап"},
+         "chs3_28": {"0": null, "1": null, "2": 345235234},
+         "chs3_42": {"0": "ывапыапрваыпр"},
+         "chs3_70": {"0": "цвуапыв", "1": null, "2": "у346345"},
+         "chs3_71": {"0": "ывапыв", "1": null, "2": "паропаро"},
+         "chs3_72": {"0": 6, "1": null, "2": 346345}
+         },
+         "chs4": {
+         "chs4_1": 5,
+         "undefined": null,
+         "chs4_2": null,
+         "chs4_6": null,
+         "chs4_10": null,
+         "chs4_11": null,
+         "chs4_12": null,
+         "chs4_13": null,
+         "chs4_14": null,
+         "chs4_15": null,
+         "chs4_18": null,
+         "chs4_21": null,
+         "chs4_24": null,
+         "chs4_25": null,
+         "chs4_26": null,
+         "chs4_29": null,
+         "chs4_32": null,
+         "chs4_35": null,
+         "chs4_38": null,
+         "chs4_39": null,
+         "chs4_42": null,
+         "chs4_45": null,
+         "chs4_48": null,
+         "chs4_51": null,
+         "chs4_52": null,
+         "chs4_55": null,
+         "chs4_58": null,
+         "chs4_61": null,
+         "chs4_64": null,
+         "chs4_65": null,
+         "chs4_66": null,
+         "chs4_67": null,
+         "chs4_68": null,
+         "chs4_71": null,
+         "chs4_74": null,
+         "chs4_33": {"0": "3645346"},
+         "chs4_34": {"0": 345634634}
+         }
+         };
 
 
-            vm.fireAct.chs = req;
+         vm.fireAct.chs = req;
 
-            vm.reserveCars();
+         vm.reserveCars();
 
-        };*/
+         };*/
 
 
         vm.parseAnswer = function(){
@@ -2646,7 +2649,7 @@
                                      console.log('3+++++++++>>>', Object.keys(answer[i][j]));
                                      */
 
-                                    var fieldCount =  Math.max.apply(null, Object.keys(answer[i][j]));
+                                    var fieldCount = Math.max.apply(null, Object.keys(answer[i][j]));
 
 
                                     // if(!!fieldCount === true && !!node.childNodes === true && node.childNodes.length !== Object.keys(answer[i][j]).length){
@@ -2800,44 +2803,44 @@
 
                     nodes.node.innerHTML = '<ui-select-match>{{' + field.model + '.value}}</ui-select-match><ui-select-choices repeat="' + repeat + '| filter: $select.search"> <span ng-bind-html="field.value| highlight: $select.search"><span></ui-select-choices> </ui-select>';
 
-/*
-                    nodes.field = document.createElement('ui-select-match');
-                    nodes.node.appendChild(nodes.field);
-*/
+                    /*
+                     nodes.field = document.createElement('ui-select-match');
+                     nodes.node.appendChild(nodes.field);
+                     */
 
 
 
 
 
-/*
-                    nodes.field = document.createElement('ui-select-choices');
-                    nodes.node.setAttribute('repeat', 'full-width');
+                    /*
+                     nodes.field = document.createElement('ui-select-choices');
+                     nodes.node.setAttribute('repeat', 'full-width');
 
-                    nodes.node.appendChild(nodes.field);
-*/
-/*
-                    nodes.node = document.createElement('select');
-                    nodes.node.setAttribute('data-ng-model', field.model);
-                    nodes.node.setAttribute('class', 'table-dropdown');
-                    nodes.node.setAttribute('data-ng-options', 'x.id as x.value for x in newFireCard.' + field.repeat);
-*/
-
-
-
-
-/*
-                    var repeat = 'field in newFireCard.' + field.repeat;
-                    nodes.node.innerHTML = '<option style="display:none" value class></option><option ng-repeat="' + repeat + '" value="{{field}}">{{field.value}}</option>';
-*/
+                     nodes.node.appendChild(nodes.field);
+                     */
+                    /*
+                     nodes.node = document.createElement('select');
+                     nodes.node.setAttribute('data-ng-model', field.model);
+                     nodes.node.setAttribute('class', 'table-dropdown');
+                     nodes.node.setAttribute('data-ng-options', 'x.id as x.value for x in newFireCard.' + field.repeat);
+                     */
 
 
 
-/*
-                    nodes.node.setAttribute('data-ng-model', field.model);
-                    nodes.node.setAttribute('data-ng-options', 'o.value for o in newFireCard.' + field.repeat);
-                    nodes.node.setAttribute('data-ng-value', 'o.value');
-                    nodes.node.setAttribute('class', 'table-dropdown');
-*/
+
+                    /*
+                     var repeat = 'field in newFireCard.' + field.repeat;
+                     nodes.node.innerHTML = '<option style="display:none" value class></option><option ng-repeat="' + repeat + '" value="{{field}}">{{field.value}}</option>';
+                     */
+
+
+
+                    /*
+                     nodes.node.setAttribute('data-ng-model', field.model);
+                     nodes.node.setAttribute('data-ng-options', 'o.value for o in newFireCard.' + field.repeat);
+                     nodes.node.setAttribute('data-ng-value', 'o.value');
+                     nodes.node.setAttribute('class', 'table-dropdown');
+                     */
 
 
                     break;
@@ -3142,11 +3145,11 @@
                             root[childCopy.root][childCopy.fieldname] = {};
                         }
 
-/*
-                        if(!!root[childCopy.root][childCopy.fieldname][wrapper.childNodes.length - 1] === true){
-                            root[childCopy.root][childCopy.fieldname][wrapper.childNodes.length - 1] = null;
-                        }
-*/
+                        /*
+                         if(!!root[childCopy.root][childCopy.fieldname][wrapper.childNodes.length - 1] === true){
+                         root[childCopy.root][childCopy.fieldname][wrapper.childNodes.length - 1] = null;
+                         }
+                         */
                         childCopy.model = childCopy.model + '[' + [wrapper.childNodes.length - 1] + ']';
 
 
@@ -3192,36 +3195,56 @@
                     'request': 'fireId=' + vm.fireAct.id
                 }
             );
+            ws.$emit('generateClientRequestedReport', {
+                nameReport: reportName,
+                keyword: vm.storage.selectedFire.id,
+                parameters: {date: new Date().getTime()}
+            });
         };
 
 
 
 
-/*
-        vm.doPrint = function(reportName){
+        /*
+         vm.doPrint = function(reportName){
 
 
-            if(vm.storage.reports.hasOwnProperty(reportName) && !!vm.storage.reports[reportName].fields === true){
-                if(!vm.storage.reports[reportName].fields.hasOwnProperty('MODAL')){
-                    modalsService.reports(reportName);
-                } else {
-                    modalsService[vm.storage.reports[reportName].fields.MODAL](reportName);
+         if(vm.storage.reports.hasOwnProperty(reportName) && !!vm.storage.reports[reportName].fields === true){
+         if(!vm.storage.reports[reportName].fields.hasOwnProperty('MODAL')){
+         modalsService.reports(reportName);
+         } else {
+         modalsService[vm.storage.reports[reportName].fields.MODAL](reportName);
+         }
+         }
+
+         /!*
+         printRequest.init(
+         {
+         'reportName': reportName,
+         'fireActId': storage.forma6.fireActId
+         }
+         );
+         *!/
+
+
+         };
+         */
+
+        vm.getDefaultPCH = function(){
+
+            storage.dataOfStates.newFireCard.pchArray = [];
+            for(var i = 0, l = storage.fireDepartments.length; i < l; i++){
+                if(storage.fireDepartments[i].fireDeptType !== 0){
+                    storage.dataOfStates.newFireCard.pchArray.push(
+                        {
+                            pch: storage.fireDepartments[i].fireDeptName
+                        }
+                    );
                 }
             }
 
-            /!*
-             printRequest.init(
-             {
-             'reportName': reportName,
-             'fireActId': storage.forma6.fireActId
-             }
-             );
-             *!/
-
 
         };
-*/
-
 
 
 
@@ -3298,6 +3321,8 @@
                 vm.parseAnswer();
             }, 10);
 
+
+            vm.getDefaultPCH();
 
         });
 

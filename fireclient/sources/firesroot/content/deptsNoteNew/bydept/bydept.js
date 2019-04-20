@@ -3144,7 +3144,7 @@
                     tr.id = field + current;
 
 
-                    tr.innerHTML += '<td>{{bydepts.selectedDept.peopleList.' + field + '[' + current + '].ranksList.value}}</td><td>{{bydepts.selectedDept.peopleList.' + field + '[' + current + '].occupList.value}}</td><td><div><ui-select theme="bootstrap" data-ng-model="bydepts.selectedDept.peopleList.' + field + '[' + current + ']" reset-search-input="false"><ui-select-match class="ui-select-match">{{bydepts.selectedDept.peopleList.' + field + '[' + current + '].fio}}</ui-select-match><ui-select-choices class="ui-select-choices" repeat="x in bydepts.selectedDept.staff_list | filter: $select.search track by $index"> <span ng-bind-html="x.fio| highlight: $select.search"><span></ui-select-choices> </ui-select></div></td><td><button type="button" class="button btn-danger" ng-click="bydepts.removeStuff(' + current + ', \'' + field + '\')"> <span class="glyphicon glyphicon-minus"></span></button></td>';
+                    tr.innerHTML += '<td>{{bydepts.selectedDept.peopleList.' + field + '[' + current + '].occupList.value}}</td><td>{{bydepts.selectedDept.peopleList.' + field + '[' + current + '].ranksList.value}}</td><td><div><ui-select theme="bootstrap" data-ng-model="bydepts.selectedDept.peopleList.' + field + '[' + current + ']" reset-search-input="false"><ui-select-match class="ui-select-match">{{bydepts.selectedDept.peopleList.' + field + '[' + current + '].fio}}</ui-select-match><ui-select-choices class="ui-select-choices" repeat="x in bydepts.selectedDept.staff_list | filter: $select.search track by $index"> <span ng-bind-html="x.fio| highlight: $select.search"><span></ui-select-choices> </ui-select></div></td><td><button type="button" class="button btn-danger" ng-click="bydepts.removeStuff(' + current + ', \'' + field + '\')"> <span class="glyphicon glyphicon-minus"></span></button></td>';
 
 
 // console.log('tr.innerHTML>>>', tr.innerHTML);
@@ -3496,8 +3496,15 @@
             var name = '';
 
             if(!!dept === true){
-                if(!!dept.fireDeptSuffOwn === true){
-                    name = (dept.fireDeptName.replace(dept.fireDeptSuffOwn, '')).trim();
+                if(!!dept.fireDeptSuffOwn === true && dept.fireDeptName.indexOf(dept.fireDeptSuffOwn) !== -1){
+                // console.log('1 name>>>', dept.fireDeptName);
+                    name = (dept.fireDeptName.substring(dept.fireDeptName.indexOf(dept.fireDeptSuffOwn) + dept.fireDeptSuffOwn.length, dept.fireDeptName.length)).trim();
+/*
+                    console.log('2 suff>>', dept.fireDeptSuffOwn);
+                    console.log('3 rest>>>', name);
+                    console.log('------------------------------------------');
+*/
+                    // name = (dept.fireDeptName.replace(dept.fireDeptSuffOwn, '')).trim();
                 } else {
                     name = dept.fireDeptName;
                 }
@@ -4043,12 +4050,21 @@
 
         $scope.$on('$destroy', function(){
 
-
             if($state.$current.name !== 'fires.deptsNotes.bydept'){
+                ws.$emit('getDepts', null);
+/*
+                storage.fireDepartments = angular.copy(storage.dataOfStates.bydept.fireDepartments.dept);
+                storage.dataOfStates.frontNotesArchive.date = storage.dataOfStates.bydept.fireDepartments.date;
+console.log('>>>', storage.dataOfStates.frontNotesArchive.date);
 
 
-                // storage.fireDepartments = angular.copy({}, storage.dataOfStates.bydept.fireDepartments);
 
+                    delete storage.dataOfStates.bydept.fireDepartments;
+*/
+
+
+
+/*
                 ws.$emit(
                     'getArchivedDepts',
                     {
@@ -4056,11 +4072,12 @@
                         transition: false
                     }
                 );
+*/
 
 
             }
 
-            storage.dataOfStates.bydept.fireDepartments = vm.deptsTree = vm.selectedDept = vm.currentCaraul = null;
+            vm.deptsTree = vm.selectedDept = vm.currentCaraul = null;
 
         });
 

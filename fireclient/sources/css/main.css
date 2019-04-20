@@ -2216,6 +2216,9 @@ form.protocol-edit-list .row [class*="col-"] > input {
 
                 }*/
 }
+.content-view.card-holder-wrapper .ui-select-choices-row .ui-select-choices-row-inner {
+  width: 100%;
+}
 .content-view.card-holder-wrapper .ui-select-choices-row span {
   position: relative;
   display: inline-block;
